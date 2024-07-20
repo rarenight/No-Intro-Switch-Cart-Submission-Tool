@@ -21,7 +21,7 @@ Download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-
 
 You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) along with [NX Game Info](https://github.com/garoxas/NX_Game_Info) (and the appropriate prod.keys) before you get started.
 
-First, open the tool and click "Import NX Game Info". In the window that pops up, paste the output that NX Game Info provides you and press Import:
+First, open the tool with Python and click "Import NX Game Info". In the window that pops up, paste the output that NX Game Info provides you and press Import:
 
 ![1 nx game info output](https://github.com/user-attachments/assets/e4c83e0c-0cd5-47f7-bea0-d1a4f91dccbe)
 
