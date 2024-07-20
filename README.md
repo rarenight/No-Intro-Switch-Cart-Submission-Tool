@@ -2,8 +2,8 @@ To-do:
 - TESTING
 - Add multi-title cart support
 - Further polish, like a progress window for hash calculation
-- Integrate NX Game Info (and possibly other submodules like hactoolnet) directly into the script to eliminate manual copy and pasting
-- Compile into a user-friendly EXE
+- Integrate NX Game Info directly (and possibly other submodules like hactoolnet) to eliminate manual copy and pasting
+- Compile into a user-friendly EXE with all dependencies bundled in
 
 Readme:
 
