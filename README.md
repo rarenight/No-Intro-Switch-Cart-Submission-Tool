@@ -33,7 +33,7 @@ A custom dump date can be specified if your cart wasn't dumped the same day.
 
 Then click the "Media Info" tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
 
-![image](https://github.com/user-attachments/assets/ead683ec-0163-49f9-bc3f-9ef10deee4c4)
+![image](https://github.com/user-attachments/assets/4626e057-effb-482c-ac26-f00bd4869e5a)
 
 Click the File Info tab and then "Import Hashes." If you don't already have a Full XCI, click "Generate Full XCI" to build one.
 
