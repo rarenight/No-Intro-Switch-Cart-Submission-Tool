@@ -609,7 +609,7 @@ class GenerateFullXCIDialog(QDialog):
         
         self.state = 0
         
-        self.drag_drop_label = QLabel("Drag and Drop Initial Area Here")
+        self.drag_drop_label = QLabel("Drag and Drop Initial Area (.bin) Here")
         self.drag_drop_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.drag_drop_label)
         
@@ -626,13 +626,19 @@ class GenerateFullXCIDialog(QDialog):
         for url in event.mimeData().urls():
             file_path = url.toLocalFile()
             if self.state == 0:
-                self.initial_area_path = file_path
-                self.state = 1
-                self.drag_drop_label.setText("Drag and Drop Default XCI Here")
+                if file_path.endswith('.bin'):
+                    self.initial_area_path = file_path
+                    self.state = 1
+                    self.drag_drop_label.setText("Drag and Drop Default XCI (.xci) Here")
+                else:
+                    self.drag_drop_label.setText("Please drop a .bin file")
             elif self.state == 1:
-                self.default_xci_path = file_path
-                self.generate_full_xci()
-                self.accept()
+                if file_path.endswith('.xci'):
+                    self.default_xci_path = file_path
+                    self.generate_full_xci()
+                    self.accept()
+                else:
+                    self.drag_drop_label.setText("Please drop a .xci file")
     
     def generate_full_xci(self):
         default_xci_filename = os.path.basename(self.default_xci_path)
