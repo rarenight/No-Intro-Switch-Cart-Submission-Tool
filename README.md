@@ -11,7 +11,7 @@ So, you want to submit a Switch cart to No-Intro? I developed a quick and easy P
 
 You'll need Python installed and [NX Game Info](https://github.com/garoxas/NX_Game_Info) (with the appropriate prod.keys) before you get started.
 
-First, open the program and click "Import NX Game Info". In the window that pops up, paste the output and press Import:
+First, open the program and click "Import NX Game Info". In the window that pops up, paste the output that NX Game Info provides you and press Import:
 
 ![1 nx game info output](https://github.com/user-attachments/assets/e4c83e0c-0cd5-47f7-bea0-d1a4f91dccbe)
 
@@ -31,7 +31,6 @@ A custom dump date can be specified if your cart wasn't dumped the same day.
 Then click the "Media" tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
 
 ![image](https://github.com/user-attachments/assets/29e981dc-0b30-479d-a266-3b4f558b38e4)
-
 
 Click the File Info tab and then "Import Hashes." If you don't already have a Full XCI, click "Generate Full XCI" to build one.
 
