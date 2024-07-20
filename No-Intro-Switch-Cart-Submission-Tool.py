@@ -626,12 +626,12 @@ class GenerateFullXCIDialog(QDialog):
         for url in event.mimeData().urls():
             file_path = url.toLocalFile()
             if self.state == 0:
-                if file_path.endswith('.bin'):
+                if file_path.endswith('.bin') and os.path.getsize(file_path) == 512:
                     self.initial_area_path = file_path
                     self.state = 1
                     self.drag_drop_label.setText("Drag and Drop Default XCI (.xci) Here")
                 else:
-                    self.drag_drop_label.setText("Please drop a .bin file")
+                    self.drag_drop_label.setText("Please drop an Initial Area .bin file that has a size of 512 bytes")
             elif self.state == 1:
                 if file_path.endswith('.xci'):
                     self.default_xci_path = file_path
