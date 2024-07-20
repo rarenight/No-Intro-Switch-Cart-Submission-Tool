@@ -19,11 +19,18 @@ Then click the "Dump Info", fill out the Dumper and Tool fields, and click "Gene
 
 ![3 dump info](https://github.com/user-attachments/assets/3a413a70-84bb-4a49-b5b4-5d2c3efaf8a2)
 
+Then click the "Media" tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
+
+![image](https://github.com/user-attachments/assets/29e981dc-0b30-479d-a266-3b4f558b38e4)
+
+
 Click the File Info tab and then "Import Hashes." If you don't already have a full XCI, click "Generate Full XCI" to build one.
 
 Drag and drop the Default XCI, then Initial Area BIN file, then the Full XCI file into the windows and their hashes will auto-populate. Please note this takes a while for large files, please be patient.
 
-When all fields are populated, click "Generate Submission" and an XML file will be generated in your chosen directory.
+![image](https://github.com/user-attachments/assets/c4fb6a21-8dbc-463d-971a-8818834ff40a)
+
+When all fields are populated as shown in the above image, click "Generate Submission" and an XML file will be generated in your chosen directory.
 
 This program generates XML file that look like this:
 
