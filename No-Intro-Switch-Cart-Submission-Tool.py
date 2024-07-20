@@ -2,8 +2,8 @@ import sys
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QPlainTextEdit, QGroupBox, QRadioButton, QDialog, QTabWidget, QButtonGroup, QCheckBox, QDateEdit, QSizePolicy
 )
-from PyQt5.QtGui import QDragEnterEvent, QDropEvent
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtGui import QDragEnterEvent, QDropEvent, QRegExpValidator
+from PyQt5.QtCore import Qt, QDate, QRegExp
 import hashlib
 import zlib
 import xml.etree.ElementTree as ET
@@ -134,7 +134,23 @@ class XMLGeneratorApp(QMainWindow):
     def create_form_group(self, labels, layout):
         inputs = {}
         for label, explanation in labels:
-            if label == "PCB Serial":
+            if label == "Game Name":
+                line_edit = QLineEdit()
+                validator = QRegExpValidator(QRegExp("[^\\\\/:*?\"<>|`]+"))
+                line_edit.setValidator(validator)
+                line_edit.setMaximumHeight(30)
+                line_edit.setMaximumWidth(400)
+                line_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+                line_edit.textChanged.connect(self.update_display)
+                label_widget = QLabel(label)
+                label_widget.setMaximumWidth(400)
+                layout.addRow(label_widget, line_edit)
+                explanation_label = QLabel(explanation)
+                explanation_label.setWordWrap(True)
+                explanation_label.setMaximumWidth(400)
+                layout.addRow(explanation_label)
+                inputs[label] = line_edit
+            elif label == "PCB Serial":
                 combo_box = QComboBox()
                 combo_box.addItems(["", "▼", "▼ 10"])
                 combo_box.setEditable(True)
