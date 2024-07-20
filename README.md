@@ -1,19 +1,19 @@
-Latest version:
+# Versions
 
 v1.1 - 2024-07-20
 - Fixed NX Game Info title and version importing, now imports the entire title line, chooses the base Title ID as Game ID instead of the latest one, auto-changes colons into dashes, and excludes any parentheses present in the update column
 
-To-do:
+# To-do
 - TESTING
 - Add multi-title cart support
 - Further polish, like a progress window for hash calculation
 - Integrate NX Game Info directly (and possibly other submodules like hactoolnet) to eliminate manual copy and pasting
 - Compile into a user-friendly EXE with all dependencies bundled in
-
+- Add support for other systems? 👀
 
 **NOTE NOTE NOTE this is in EARLY ALPHA and has been MINIMALLY TESTED so it may BREAK at any time for any reason, use at your own risk and double check its output!**
 
-Readme:
+# Readme
 
 So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files.
 
