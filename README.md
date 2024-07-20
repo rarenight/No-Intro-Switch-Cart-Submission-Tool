@@ -5,11 +5,12 @@ To-do:
 - Integrate NX Game Info directly (and possibly other submodules like hactoolnet) to eliminate manual copy and pasting
 - Compile into a user-friendly EXE with all dependencies bundled in
 
+
+**NOTE NOTE NOTE this is in EARLY ALPHA and has been MINIMALLY TESTED so it may BREAK at any time for any reason, use at your own risk and double check its output!**
+
 Readme:
 
 So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files.
-
-**NOTE NOTE NOTE this is in EARLY ALPHA and has been MINIMALLY TESTED so it may BREAK at any time for any reason, use at your own risk and double check its output!**
 
 Download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/No-Intro-Switch-Cart-Submission-Tool-v1.0.py) (right click -> Save As).
 
