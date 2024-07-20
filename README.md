@@ -1,4 +1,5 @@
 Latest versions:
+
 v1.1 - 2024-07-20
 - Fixed NX Game Info title importing, now imports the entire line and auto-changes colons into dashes
 
