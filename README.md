@@ -28,7 +28,7 @@ Then click the "Dump Info", fill out the Dumper and Tool fields, and click "Gene
 
 A custom dump date can be specified if your cart wasn't dumped the same day.
 
-Then click the "Media" tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
+Then click the "Media Info" tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
 
 ![image](https://github.com/user-attachments/assets/29e981dc-0b30-479d-a266-3b4f558b38e4)
 
