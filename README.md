@@ -40,7 +40,7 @@ Drag and drop the Default XCI, then (Initial Area) BIN file, then the Full XCI f
 
 When all fields are populated as shown in the above image, click "Generate Submission" and an XML file will be generated in your chosen directory.
 
-This program generates XML file that look like this:
+This program generates an XML output file that looks like this:
 
 ![image](https://github.com/user-attachments/assets/6ba5ca81-21ae-453f-a038-6c76ca7620f4)
 
