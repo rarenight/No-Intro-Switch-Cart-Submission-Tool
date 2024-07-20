@@ -36,9 +36,9 @@ class XMLGeneratorApp(QMainWindow):
         self.import_button.clicked.connect(self.open_import_nx_game_info_dialog)
         self.basic_info_form_layout.addRow(self.import_button)
         self.basic_info_labels = [
-            ("Game Name", "Colons replaced with dashes, move titles to the end of the name, e.g. 'Legend of Zelda, The - Link's Awakening'"), 
+            ("Game Name", "All nouns, verbs, and adjectives are uppercase, move initial articles to the end of the name, intermediary link words are lowercase, colons are replaced with dashes, no \\ / : * ? \" < > | `, e.g. 'Legend of Zelda, The - A Link to the Past'"), 
             ("Region", "As listed on the cart, e.g., -USA = 'USA', -EUR = 'Europe', -JPN = 'Japan', -ASI = 'Asia', -CHT = 'Taiwan, Hong Kong'"), 
-            ("Languages", "Comma-separated in No-Intro terminology, e.g., English, Japanese, Korean, Simplified Chinese, Traditional Chinese is 'en,ja,ko,Zh-Hans,Zh-Hant'"), 
+            ("Languages", "Comma-separated in ISO 639-1 format, e.g., English, Japanese, Korean, Simplified Chinese, Traditional Chinese is 'en,ja,ko,Zh-Hans,Zh-Hant'"), 
             ("GameID1", "All base application Title IDs (ending in 000) comma-separated, no patches, no add-ons, e.g., '0100182014022000, 010065A014024000'")
         ]
         self.basic_info_inputs = self.create_form_group(self.basic_info_labels, self.basic_info_form_layout)
@@ -50,7 +50,7 @@ class XMLGeneratorApp(QMainWindow):
         self.source_details_layout = QFormLayout()
         self.source_details_labels = [
             ("Dumper", "Individual who dumped the game"),
-            ("Tool", "Tool used to dump the cart, e.g., 'nxdt_rw_poc v2.0.0 (rewrite-3c519cd-dirty)'")
+            ("Tool", "Tool used to dump the cart, e.g., 'nxdt_rw_poc v2.0.0 (rewrite-3c519cd-dirty)'"),
         ]
         self.source_details_inputs = self.create_form_group(self.source_details_labels, self.source_details_layout)
 
@@ -61,6 +61,7 @@ class XMLGeneratorApp(QMainWindow):
         self.source_details_inputs['Comment1'] = QPlainTextEdit()
         self.source_details_inputs['Comment1'].textChanged.connect(self.update_display)
         self.source_details_layout.addRow(QLabel("Card IDs"), self.source_details_inputs['Comment1'])
+        self.source_details_layout.addRow(QLabel("In this format:\nCard ID 1: <first four bytes>\nCard ID 2: <second four bytes>\nCard ID 3: <remaining four bytes>\nCRC32: <hash of Card ID BIN>"))
 
         self.custom_dump_date_checkbox = QCheckBox("Custom Dump Date (if different from today)")
         self.custom_dump_date_checkbox.stateChanged.connect(self.toggle_custom_dump_date)
