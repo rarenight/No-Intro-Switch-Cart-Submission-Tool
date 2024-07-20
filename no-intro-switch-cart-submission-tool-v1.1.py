@@ -8,12 +8,13 @@ import hashlib
 import zlib
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
+import csv
 import os
 
 class XMLGeneratorApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.1")
+        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.2")
         self.setGeometry(100, 100, 475, 475)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -36,7 +37,7 @@ class XMLGeneratorApp(QMainWindow):
         self.import_button.clicked.connect(self.open_import_nx_game_info_dialog)
         self.basic_info_form_layout.addRow(self.import_button)
         self.basic_info_labels = [
-            ("Game Name", "All nouns, verbs, and adjectives are uppercase, move initial articles to the end of the name, intermediary link words are lowercase, colons are replaced with dashes, no \\ / : * ? \" < > | `, e.g. 'Legend of Zelda, The - A Link to the Past'"), 
+            ("Game Name", "All nouns, verbs, and adjectives are uppercase, move initial articles to the end of the name, intermediary link words are lowercase, colons are replaced with dashes, no \\ / : * ? \" < > | , e.g. 'Legend of Zelda, The - A Link to the Past'"), 
             ("Region", "As listed on the cart, e.g., -USA = 'USA', -EUR = 'Europe', -JPN = 'Japan', -ASI = 'Asia', -CHT = 'Taiwan, Hong Kong'"), 
             ("Languages", "Comma-separated in ISO 639-1 format, e.g., English, Japanese, Korean, Simplified Chinese, Traditional Chinese is 'en,ja,ko,Zh-Hans,Zh-Hant'"), 
             ("GameID1", "All base application Title IDs (ending in 000) comma-separated, no patches, no add-ons, e.g., '0100182014022000, 010065A014024000'")
@@ -137,7 +138,7 @@ class XMLGeneratorApp(QMainWindow):
         for label, explanation in labels:
             if label == "Game Name":
                 line_edit = QLineEdit()
-                validator = QRegExpValidator(QRegExp("[^\\\\/:*?\"<>|`]+"))
+                validator = QRegExpValidator(QRegExp("[^\\\\/:*?\"<>|]+"))
                 line_edit.setValidator(validator)
                 line_edit.setMaximumHeight(30)
                 line_edit.setMaximumWidth(400)
@@ -508,23 +509,34 @@ class ImportNXGameInfoDialog(QDialog):
             "zh-CN": "Zh-Hans", "zh-TW": "Zh-Hant"
         }
         
-        for line in lines:
-            if line.startswith("├ Base Title ID:"):
-                game_info['title_id'] = line.split(":")[1].strip()
-            elif line.startswith("├ Title Name:"):
-                game_info['title_name'] = line.split(":", 1)[1].strip()
-            elif line.startswith("├ Display Version:"):
-                game_info['display_version'] = line.split(":")[1].strip()
-            elif line.startswith("├ Version:"):
-                version = line.split(":")[1].strip()
-                if "(" in version:
-                    version = version.split(" ")[0]
-                game_info['version'] = version
-            elif line.startswith("├ Languages:"):
-                languages = line.split(":")[1].strip().split(',')
+        if output.startswith("NX Game Info"):
+            for line in lines:
+                if "Base Title ID:" in line:
+                    game_info['title_id'] = line.split(":")[1].strip()
+                elif "Title Name:" in line:
+                    game_info['title_name'] = line.split(":", 1)[1].strip()
+                elif "Display Version:" in line:
+                    game_info['display_version'] = line.split(":")[1].strip()
+                elif "Version:" in line:
+                    version = line.split(":")[1].strip()
+                    if "(" in version:
+                        version = version.split(" ")[0]
+                    game_info['version'] = version
+                elif "Languages:" in line:
+                    languages = line.split(":")[1].strip().replace("\"", "").split(',')
+                    transformed_langs = set(lang_map.get(lang.strip(), lang.strip()) for lang in languages)
+                    game_info['languages'] = ','.join(sorted(transformed_langs))
+        elif output.startswith("# publisher NX Game Info"):
+            reader = csv.reader(lines[3:])
+            for fields in reader:
+                game_info['title_id'] = fields[1].strip()
+                game_info['title_name'] = fields[2].strip()
+                game_info['display_version'] = fields[3].strip()
+                game_info['version'] = fields[4].strip()
+                languages = fields[12].strip().replace("\"", "").split(',')
                 transformed_langs = set(lang_map.get(lang.strip(), lang.strip()) for lang in languages)
                 game_info['languages'] = ','.join(sorted(transformed_langs))
-        
+
         return game_info
 
 class ImportHashesDialog(QDialog):
