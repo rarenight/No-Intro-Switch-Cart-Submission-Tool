@@ -14,7 +14,7 @@ class XMLGeneratorApp(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.0")
-        self.setGeometry(100, 100, 450, 450)
+        self.setGeometry(100, 100, 475, 475)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
         
