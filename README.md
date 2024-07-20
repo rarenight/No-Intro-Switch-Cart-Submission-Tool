@@ -20,8 +20,7 @@ First, open the tool and click "Import NX Game Info". In the window that pops up
 
 ![1 nx game info output](https://github.com/user-attachments/assets/e4c83e0c-0cd5-47f7-bea0-d1a4f91dccbe)
 
-You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. It should also populate the version and update in File Info. If for whatever reason NXGameInfo messes up, you can always manually type the values.
-DOES NOT SUPPORT MULTI-TITLE CARTS YET.
+You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. It should also populate the version and update in File Info. If for whatever reason the NX Game Info import messes up, you can always manually type the values. **NOTE: THIS IMPORT TOOL DOES NOT SUPPORT MULTI-TITLE CARTS YET.**
 
 Add the applicable cart region so all fields are filled out:
 
