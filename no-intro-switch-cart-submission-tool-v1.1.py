@@ -13,7 +13,7 @@ import os
 class XMLGeneratorApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.1")
+        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.0")
         self.setGeometry(100, 100, 475, 475)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -516,7 +516,10 @@ class ImportNXGameInfoDialog(QDialog):
             elif line.startswith("├ Display Version:"):
                 game_info['display_version'] = line.split(":")[1].strip()
             elif line.startswith("├ Version:"):
-                game_info['version'] = line.split(":")[1].strip()
+                version = line.split(":")[1].strip()
+                if "(" in version:
+                    version = version.split(" ")[0]
+                game_info['version'] = version
             elif line.startswith("├ Languages:"):
                 languages = line.split(":")[1].strip().split(',')
                 transformed_langs = set(lang_map.get(lang.strip(), lang.strip()) for lang in languages)
