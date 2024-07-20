@@ -27,7 +27,7 @@ First, open the tool with Python and click "Import NX Game Info". In the window 
 
 You can also export the CSV values within NX Game Info (File -> Export -> CSV) and paste them here:
 
-![image](https://github.com/user-attachments/assets/5acb8262-4f51-4a29-9355-1764c4ae0a7d)
+![image](https://github.com/user-attachments/assets/7f717207-ff8a-4f48-90fd-82c66e5c6d26)
 
 You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. It should also populate the version and update in File Info. If for whatever reason the NX Game Info import messes up, you can always manually type the values. **NOTE: THIS IMPORT TOOL DOES NOT SUPPORT MULTI-TITLE CARTS YET.**
 
