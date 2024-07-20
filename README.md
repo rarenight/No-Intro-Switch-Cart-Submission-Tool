@@ -3,6 +3,7 @@ To-do:
 - Auto-format No-Intro titles
 - Further polish, like a progress window for the hash calculation
 
+Readme:
 
 So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files.
 
