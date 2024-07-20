@@ -42,11 +42,11 @@ Drag and drop the Default XCI, then (Initial Area) BIN file, then the Full XCI f
 
 When all fields are populated as shown in the above image, click "Generate Submission" and an XML file will be generated in your chosen directory.
 
-This program generates an XML output file that looks like this:
+This program generates an XML submission file that looks like this:
 
 ![image](https://github.com/user-attachments/assets/6ba5ca81-21ae-453f-a038-6c76ca7620f4)
 
-They can then be easily imported into No-Intro's backend in a standardized and uniform format:
+This XML submission file can then be easily imported into No-Intro's backend in a standardized and uniform format:
 
 ![image](https://github.com/user-attachments/assets/6fccc898-132a-4b50-81e0-5187a5e6edf8)
 
