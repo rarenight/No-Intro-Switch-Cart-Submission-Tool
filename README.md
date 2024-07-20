@@ -3,6 +3,7 @@ To-do:
 - Auto-format No-Intro titles
 - Further polish, like a progress window for the hash calculation
 - Integrate NX Game Info (and possibly other submodules like hactoolnet) directly into the script to eliminate manual copy and pasting
+- Compile into a user-friendly EXE
 
 Readme:
 
