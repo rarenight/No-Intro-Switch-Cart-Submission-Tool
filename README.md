@@ -37,7 +37,7 @@ Then click the "Media Info" tab and fill out all the values manually. A dropdown
 
 Click the File Info tab and then "Import Hashes." If you don't already have a Full XCI, click "Generate Full XCI" to build one.
 
-Drag and drop the Default XCI, then (Initial Area) BIN file, then the Full XCI file into the windows and their hashes will auto-populate. Please note this takes a while for large files, please be patient.
+Drag and drop the Default XCI, then (Initial Area) BIN file, then the Full XCI file into the window and their hashes will auto-populate. Please note this takes a while for large files, please be patient.
 
 ![image](https://github.com/user-attachments/assets/c4fb6a21-8dbc-463d-971a-8818834ff40a)
 
