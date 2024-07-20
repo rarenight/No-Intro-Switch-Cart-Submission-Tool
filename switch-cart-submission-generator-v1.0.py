@@ -644,7 +644,7 @@ class GenerateFullXCIDialog(QDialog):
             full_xci.write(b'\x00' * 3584)
             with open(self.default_xci_path, 'rb') as default_xci:
                 full_xci.write(default_xci.read())
-        os.startfile(os.path.dirname(full_xci_path))  # Open folder containing the generated Full XCI
+        os.startfile(os.path.dirname(full_xci_path))
 
 class GenerateCardIDDialog(QDialog):
     def __init__(self, parent=None):
