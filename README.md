@@ -7,7 +7,7 @@ Readme:
 
 So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files.
 
-**NOTE NOTE NOTE this is in EARLY ALPHA and has been MINIMALLY TESTED so it may BREAK at any time for any reason, use at your own risk!**
+**NOTE NOTE NOTE this is in EARLY ALPHA and has been MINIMALLY TESTED so it may BREAK at any time for any reason, use at your own risk and double check its output!**
 
 You'll need Python installed and [NX Game Info](https://github.com/garoxas/NX_Game_Info) (with the appropriate prod.keys) before you get started.
 
