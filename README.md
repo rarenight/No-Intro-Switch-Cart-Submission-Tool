@@ -25,7 +25,7 @@ Add the applicable cart region so all fields are filled out:
 
 ![2 game info](https://github.com/user-attachments/assets/353ab5ae-3358-404a-8cfc-6d5c9134481a)
 
-Then click the "Dump Info", fill out the Dumper and Tool fields, and click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool output into the window and the Card ID values should (hopefully) populate like this:
+Then click the "Dump Info", fill out the Dumper and Tool fields, and click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
 ![3 dump info](https://github.com/user-attachments/assets/3a413a70-84bb-4a49-b5b4-5d2c3efaf8a2)
 
