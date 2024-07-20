@@ -1,3 +1,9 @@
+To-do:
+- Add multi-title cart support
+- Auto-format No-Intro titles
+- Further polish, like a progress window for the hash calculation
+
+
 So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files.
 
 **NOTE NOTE NOTE this is in EARLY ALPHA and has been MINIMALLY TESTED so it may BREAK at any time for any reason, use at your own risk!**
