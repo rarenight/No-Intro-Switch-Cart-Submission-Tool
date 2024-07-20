@@ -297,12 +297,14 @@ class XMLGeneratorApp(QMainWindow):
         dialog.exec_()
     
     def import_nx_game_info(self, game_info):
-        self.basic_info_inputs['Game Name'].setText(game_info['title_name'])
+        cleaned_title_name = game_info['title_name'].replace(":", " -")
+        self.basic_info_inputs['Game Name'].setText(cleaned_title_name)
         self.basic_info_inputs['GameID1'].setText(game_info['title_id'])
         self.basic_info_inputs['Languages'].setText(game_info['languages'])
         self.file_inputs['Version 1'].setText("v" + game_info['display_version'])
         self.file_inputs['Update Type 1'].setText("v" + game_info['version'])
         self.update_display()
+
 
     def open_import_hashes_dialog(self):
         dialog = ImportHashesDialog(self)
@@ -510,7 +512,7 @@ class ImportNXGameInfoDialog(QDialog):
             if line.startswith("├ Title ID:"):
                 game_info['title_id'] = line.split(":")[1].strip()
             elif line.startswith("├ Title Name:"):
-                game_info['title_name'] = line.split(":")[1].strip()
+                game_info['title_name'] = line.split(":", 1)[1].strip()
             elif line.startswith("├ Display Version:"):
                 game_info['display_version'] = line.split(":")[1].strip()
             elif line.startswith("├ Version:"):
