@@ -509,7 +509,7 @@ class ImportNXGameInfoDialog(QDialog):
         }
         
         for line in lines:
-            if line.startswith("├ Title ID:"):
+            if line.startswith("├ Base Title ID:"):
                 game_info['title_id'] = line.split(":")[1].strip()
             elif line.startswith("├ Title Name:"):
                 game_info['title_name'] = line.split(":", 1)[1].strip()
