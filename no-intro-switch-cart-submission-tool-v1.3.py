@@ -325,7 +325,7 @@ class XMLGeneratorApp(QMainWindow):
             self.file_inputs["MD5 2"].setText(hashes['md5'])
             self.file_inputs["SHA1 2"].setText(hashes['sha1'])
             self.file_inputs["SHA256 2"].setText(hashes['sha256'])
-        elif category == "Full XCI":
+        elif category == "":
             self.file_inputs["File Size 3"].setText(hashes['size'])
             self.file_inputs["CRC32 3"].setText(hashes['crc32'].lower())
             self.file_inputs["MD5 3"].setText(hashes['md5'])
@@ -426,7 +426,7 @@ class XMLGeneratorApp(QMainWindow):
             sha1=self.file_inputs['SHA1 3'].text(),
             sha256=self.file_inputs['SHA256 3'].text(),
             extension="xci",
-            format="Full XCI"
+            format="FullXCI"
         )
 
         xml_str = minidom.parseString(ET.tostring(datafile)).toprettyxml(indent="    ")
