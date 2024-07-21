@@ -6,7 +6,7 @@ v1.3 - 2024-07-20
 # To-do
 - TESTING
 - Add multi-title cart support
-- Further polish, like a progress window for hash calculation
+- Further polish, like a progress window for hash calculation and Full XCI generation
 - Integrate NX Game Info directly (and possibly other submodules like hactoolnet) to eliminate manual copy and pasting
 - Compile into a user-friendly EXE with all dependencies bundled in
 - Add support for other systems? 👀
