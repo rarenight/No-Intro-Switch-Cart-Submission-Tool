@@ -23,7 +23,7 @@ You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) alo
 
 First, load your default XCI within NX Game Info GUI, then export a CSV (File -> Export -> CSV):
 
-![image](https://github.com/user-attachments/assets/f9ce1b70-890f-45c1-811d-ad514f20ef18)
+![image](https://github.com/user-attachments/assets/a3a6c27b-e37a-4e9e-91f9-8f62a7ac1baf)
 
 Then drag and drop the CSV file into the window. The values will auto-populate:
 
