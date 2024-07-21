@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QPlainTextEdit, QGroupBox, QRadioButton, QDialog, QTabWidget, QButtonGroup, QCheckBox, QDateEdit, QSizePolicy
 )
 from PyQt5.QtGui import QDragEnterEvent, QDropEvent, QRegExpValidator
-from PyQt5.QtCore import Qt, QDate, QRegExp, QObject, pyqtSignal, QThread
+from PyQt5.QtCore import Qt, QDate, QRegExp
 import hashlib
 import zlib
 import xml.etree.ElementTree as ET
@@ -14,7 +14,7 @@ import os
 class XMLGeneratorApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.3")
+        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.4")
         self.setGeometry(100, 100, 475, 475)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -206,7 +206,7 @@ class XMLGeneratorApp(QMainWindow):
     def create_file_info_section(self, layout):
         self.file_inputs = {}
         
-        group_titles = ["Default XCI", "Initial Area", "Full XCI"]
+        group_titles = ["Default XCI", "Initial Area", "FullXCI"]
         file_labels = [
             ["File Size", "CRC32", "MD5", "SHA1", "SHA256", "Version", "Update"],
             ["File Size", "CRC32", "MD5", "SHA1", "SHA256"],
@@ -238,7 +238,7 @@ class XMLGeneratorApp(QMainWindow):
                     all(input.text() for input in self.source_details_inputs.values() if isinstance(input, QLineEdit)) and \
                     all(input.text() for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial") and \
                     all(input.currentText() for label, input in self.serial_details_inputs.items() if isinstance(input, QComboBox) and label != "PCB Serial") and \
-                    all(self.file_inputs[key].text() for key in self.file_inputs if not key.startswith("Full XCI"))
+                    all(self.file_inputs[key].text() for key in self.file_inputs if not key.startswith("FullXCI"))
         self.generate_button.setEnabled(all_filled)
         self.update_generate_button_text()
 
@@ -247,7 +247,7 @@ class XMLGeneratorApp(QMainWindow):
                     sum(1 for input in self.source_details_inputs.values() if isinstance(input, QLineEdit) and not input.text()) + \
                     sum(1 for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial" and not input.text()) + \
                     sum(1 for label, input in self.serial_details_inputs.items() if isinstance(input, QComboBox) and label != "PCB Serial" and not input.currentText()) + \
-                    sum(1 for key in self.file_inputs if not key.startswith("Full XCI") and not self.file_inputs[key].text())
+                    sum(1 for key in self.file_inputs if not key.startswith("FullXCI") and not self.file_inputs[key].text())
         self.generate_button.setText(f"Generate Submission ({empty_fields} fields left)")
 
     def dragEnterEvent(self, event: QDragEnterEvent):
@@ -325,7 +325,7 @@ class XMLGeneratorApp(QMainWindow):
             self.file_inputs["MD5 2"].setText(hashes['md5'])
             self.file_inputs["SHA1 2"].setText(hashes['sha1'])
             self.file_inputs["SHA256 2"].setText(hashes['sha256'])
-        elif category == "":
+        elif category == "FullXCI":
             self.file_inputs["File Size 3"].setText(hashes['size'])
             self.file_inputs["CRC32 3"].setText(hashes['crc32'].lower())
             self.file_inputs["MD5 3"].setText(hashes['md5'])
@@ -557,45 +557,6 @@ class ImportNXGameInfoDialog(QDialog):
 
         return game_info
 
-class FileProcessingWorker(QObject):
-    finished = pyqtSignal(dict)
-    progress = pyqtSignal(str)
-
-    def __init__(self, file_path, category):
-        super().__init__()
-        self.file_path = file_path
-        self.category = category
-
-    def run(self):
-        self.progress.emit("Calculating...")
-
-        hashes = {
-            'size': self.calculate_size(),
-            'sha1': self.calculate_hash('sha1'),
-            'sha256': self.calculate_hash('sha256'),
-            'crc32': self.calculate_crc32(),
-            'md5': self.calculate_hash('md5')
-        }
-        
-        self.finished.emit({'hashes': hashes, 'category': self.category})
-
-    def calculate_size(self):
-        return str(os.path.getsize(self.file_path))
-
-    def calculate_hash(self, hash_type):
-        hasher = hashlib.new(hash_type)
-        with open(self.file_path, 'rb') as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                hasher.update(chunk)
-        return hasher.hexdigest()
-
-    def calculate_crc32(self):
-        crc32 = 0
-        with open(self.file_path, 'rb') as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                crc32 = zlib.crc32(chunk, crc32)
-        return format(crc32 & 0xFFFFFFFF, '08x').upper()
-
 class ImportHashesDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -608,7 +569,7 @@ class ImportHashesDialog(QDialog):
         
         self.default_xci_radio = QRadioButton("Default XCI")
         self.initial_area_radio = QRadioButton("Initial Area")
-        self.full_xci_radio = QRadioButton("Full XCI")
+        self.full_xci_radio = QRadioButton("FullXCI")
         
         self.radio_group.addButton(self.default_xci_radio)
         self.radio_group.addButton(self.initial_area_radio)
@@ -623,7 +584,6 @@ class ImportHashesDialog(QDialog):
         self.layout.addWidget(self.drag_drop_label)
         
         self.setAcceptDrops(True)
-        self.thread = None
 
     def dragEnterEvent(self, event: QDragEnterEvent):
         if event.mimeData().hasUrls():
@@ -636,37 +596,41 @@ class ImportHashesDialog(QDialog):
             selected_button = self.radio_group.checkedButton()
             if selected_button:
                 category = selected_button.text()
-                self.start_file_processing(file_path, category)
+                self.process_file(file_path, category)
 
-    def start_file_processing(self, file_path, category):
-        self.thread = QThread()
-        self.worker = FileProcessingWorker(file_path, category)
-        self.worker.moveToThread(self.thread)
+    def process_file(self, file_path, category):
+        hashes = {
+            'size': self.calculate_size(file_path),
+            'sha1': self.calculate_hash(file_path, 'sha1'),
+            'sha256': self.calculate_hash(file_path, 'sha256'),
+            'crc32': self.calculate_crc32(file_path),
+            'md5': self.calculate_hash(file_path, 'md5')
+        }
         
-        self.thread.started.connect(self.worker.run)
-        self.worker.finished.connect(self.handle_results)
-        self.worker.finished.connect(self.thread.quit)
-        self.worker.finished.connect(self.worker.deleteLater)
-        self.thread.finished.connect(self.thread.deleteLater)
-        self.thread.finished.connect(self.cleanup_thread)
-        self.worker.progress.connect(self.set_drag_drop_label_text)
-
-        self.thread.start()
-
-    def handle_results(self, result):
-        hashes = result['hashes']
-        category = result['category']
         self.parent().import_hashes(hashes, category)
         self.set_next_radio_button()
-        if category == "Full XCI":
+        if category == "FullXCI":
             self.accept()
         else:
             self.set_drag_drop_label_text("Drag and Drop File Here")
 
-    def cleanup_thread(self):
-        self.thread = None
+    def calculate_size(self, file_path):
+        return str(os.path.getsize(file_path))
 
-    
+    def calculate_hash(self, file_path, hash_type):
+        hasher = hashlib.new(hash_type)
+        with open(file_path, 'rb') as f:
+            for chunk in iter(lambda: f.read(4096), b""):
+                hasher.update(chunk)
+        return hasher.hexdigest()
+
+    def calculate_crc32(self, file_path):
+        crc32 = 0
+        with open(file_path, 'rb') as f:
+            for chunk in iter(lambda: f.read(4096), b""):
+                crc32 = zlib.crc32(chunk, crc32)
+        return format(crc32 & 0xFFFFFFFF, '08x').upper()
+
     def showEvent(self, event):
         super().showEvent(event)
         self.set_default_radio_button()
