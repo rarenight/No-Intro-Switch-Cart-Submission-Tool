@@ -483,7 +483,7 @@ class ImportNXGameInfoDialog(QDialog):
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
         
-        self.drag_drop_label = QLabel("Paste the NX Game Info output below:")
+        self.drag_drop_label = QLabel("Paste the NX Game Info CLI output below.\nOr, output a CSV file (File -> Export -> CSV) from the GUI and drag and drop it into the window\n\nDrag and drop CSV file here\n")
         self.drag_drop_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.drag_drop_label)
         
@@ -493,6 +493,23 @@ class ImportNXGameInfoDialog(QDialog):
         self.import_button = QPushButton("Import")
         self.import_button.clicked.connect(self.import_output)
         self.layout.addWidget(self.import_button)
+
+        self.setAcceptDrops(True)
+
+    def dragEnterEvent(self, event: QDragEnterEvent):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+
+    def dropEvent(self, event: QDropEvent):
+        for url in event.mimeData().urls():
+            file_path = url.toLocalFile()
+            self.process_file(file_path)
+
+    def process_file(self, file_path):
+        if file_path.endswith('.csv'):
+            with open(file_path, 'r') as file:
+                content = file.read()
+            self.output_text_edit.setPlainText(content)
 
     def import_output(self):
         output = self.output_text_edit.toPlainText()
