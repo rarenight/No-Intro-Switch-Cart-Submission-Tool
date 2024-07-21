@@ -1,7 +1,7 @@
 # Versions
 
 v1.3 - 2024-07-20
-- Migrated hash processing to a separate worker class so the GUI won't freeze while hashing, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, chooses the base Title ID as Game ID instead of the latest one, auto-changes colons into dashes, and excludes any parentheses present in the update column
+- Migrated hash processing to a separate thread so the GUI won't freeze while hashing, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, chooses the base Title ID as Game ID instead of the latest one, auto-changes colons into dashes, and excludes any parentheses present in the update column
 
 # To-do
 - TESTING
