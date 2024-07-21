@@ -21,7 +21,11 @@ Download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-
 
 You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) along with [NX Game Info CLI](https://github.com/garoxas/NX_Game_Info) (and the appropriate prod.keys) before you get started.
 
-First, export a CSV within NX Game Info GUI (File -> Export -> CSV) and drag and drop the CSV file into the window. The values will auto-populate:
+First, load a game then export a CSV within NX Game Info GUI (File -> Export -> CSV):
+
+![image](https://github.com/user-attachments/assets/21c6d690-9961-4bad-9b27-6b9b870dc455)
+
+Then drag and drop the CSV file into the window. The values will auto-populate:
 
 ![image](https://github.com/user-attachments/assets/1a84157a-37e6-4b36-8656-626dfef9e09c)
 
