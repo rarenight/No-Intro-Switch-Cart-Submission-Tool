@@ -39,7 +39,7 @@ Add the applicable cart region so all fields are filled out:
 
 ![image](https://github.com/user-attachments/assets/98b2f17d-44e4-4589-86b9-43401e9d5ca8)
 
-Then click the "Dump Info", fill out the Dumper and Tool fields, and click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
+Then click the "Dump Info" tab, fill out the Dumper and Tool fields, and click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
 ![image](https://github.com/user-attachments/assets/e447a6b8-2990-4201-b608-b9d72427db26)
 
