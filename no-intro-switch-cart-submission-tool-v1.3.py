@@ -38,9 +38,9 @@ class XMLGeneratorApp(QMainWindow):
         self.basic_info_form_layout.addRow(self.import_button)
         self.basic_info_labels = [
             ("Game Name", "All nouns, verbs, and adjectives are uppercase, move initial articles to the end of the name, intermediary link words are lowercase, colons are replaced with dashes, no \\ / : * ? \" < > | , e.g. 'Legend of Zelda, The - A Link to the Past'"), 
-            ("Region", "As listed on the cart, e.g., -USA = 'USA', -EUR = 'Europe', -JPN = 'Japan', -ASI = 'Asia', -CHT = 'Taiwan, Hong Kong'"), 
-            ("Languages", "Comma-separated in ISO 639-1 format, e.g., English, Japanese, Korean, Simplified Chinese, Traditional Chinese is 'en,ja,ko,Zh-Hans,Zh-Hant'"), 
-            ("GameID1", "All base application Title IDs (ending in 000) comma-separated, no patches, no add-ons, e.g., '0100182014022000, 010065A014024000'")
+            ("Region", "As listed on the cart, e.g. -USA = 'USA', -EUR = 'Europe', -JPN = 'Japan', -ASI = 'Asia', -CHT = 'Taiwan, Hong Kong'"), 
+            ("Languages", "Comma-separated in ISO 639-1 format, e.g. English, Japanese, Korean, Simplified Chinese, Traditional Chinese is 'en,ja,ko,Zh-Hans,Zh-Hant'"), 
+            ("GameID1", "All base application Title IDs (ending in 000) comma-separated, no patches, no add-ons, e.g. '0100182014022000, 010065A014024000'")
         ]
         self.basic_info_inputs = self.create_form_group(self.basic_info_labels, self.basic_info_form_layout)
         
@@ -51,7 +51,7 @@ class XMLGeneratorApp(QMainWindow):
         self.source_details_layout = QFormLayout()
         self.source_details_labels = [
             ("Dumper", "Individual who dumped the game"),
-            ("Tool", "Tool used to dump the cart, e.g., 'nxdt_rw_poc v2.0.0 (rewrite-3c519cd-dirty)'"),
+            ("Tool", "Tool used to dump the cart, e.g. 'nxdt_rw_poc v2.0.0 (rewrite-3c519cd-dirty)'"),
         ]
         self.source_details_inputs = self.create_form_group(self.source_details_labels, self.source_details_layout)
 
@@ -80,8 +80,8 @@ class XMLGeneratorApp(QMainWindow):
         self.serial_details_tab = QWidget()
         self.serial_details_layout = QFormLayout()
         self.serial_details_labels = [
-            ("Media Serial 1", "Cart front serial, e.g., 'LA-H-AQBEB-USA'"), 
-            ("Media Serial 2", "Cart back serial, e.g., 'AQBEB20A000'"), 
+            ("Media Serial 1", "Cart front serial, e.g. 'LA-H-AQBEB-USA'"), 
+            ("Media Serial 2", "Cart back serial, e.g. 'AQBEB20A000'"), 
             ("PCB Serial", "Visible numbers and symbols on the PCB, if any, e.g. '▼ 10'"), 
             ("Box Serial", "Serials listed in the bottom right corner of the box, e.g. 'HAC P AQBEB, 81928'"), 
             ("Box Barcode", "Barcode listed in the bottom right corner of the box, spaces preserved, e.g. '8 59716 00628 4'")
