@@ -1,7 +1,7 @@
 # Versions
 
-v1.2 - 2024-07-20
-- Fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, chooses the base Title ID as Game ID instead of the latest one, auto-changes colons into dashes, and excludes any parentheses present in the update column
+v1.3 - 2024-07-20
+- Migrated hash processing to a separate worker class so the GUI won't freeze while hashing, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, chooses the base Title ID as Game ID instead of the latest one, auto-changes colons into dashes, and excludes any parentheses present in the update column
 
 # To-do
 - TESTING
@@ -17,7 +17,7 @@ v1.2 - 2024-07-20
 
 So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files.
 
-Download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/no-intro-switch-cart-submission-tool-v1.2.py) (right click -> Save As).
+Download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/no-intro-switch-cart-submission-tool-v1.3.py) (right click -> Save As).
 
 You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) along with [NX Game Info](https://github.com/garoxas/NX_Game_Info) (and the appropriate prod.keys) before you get started.
 
@@ -53,7 +53,7 @@ Click the File Info tab and then "Import Hashes." If you don't already have a Fu
 
 Drag and drop the Default XCI, then the Initial Area BIN file, then the Full XCI file into the window and their hashes will auto-populate. Please note this takes a while for large files, please be patient.
 
-![image](https://github.com/user-attachments/assets/6ee348b2-9d1e-4c9c-91bb-2cd7a01b63dd)
+![image](https://github.com/user-attachments/assets/2a9d0ec4-6a16-427a-bfbf-7aa6a7e4d039)
 
 When all fields are populated as shown in the above image, click "Generate Submission" and an XML file will be generated in your chosen directory.
 
