@@ -9,7 +9,6 @@ v1.2 - 2024-07-20
 - Further polish, like a progress window for hash calculation
 - Integrate NX Game Info directly (and possibly other submodules like hactoolnet) to eliminate manual copy and pasting
 - Compile into a user-friendly EXE with all dependencies bundled in
-- Integrate Playwright to auto-generate No-Intro forum submissions
 - Add support for other systems? 👀
 
 **NOTE NOTE NOTE this is in EARLY ALPHA and has been MINIMALLY TESTED so it may BREAK at any time for any reason, use at your own risk and double check its output!**
