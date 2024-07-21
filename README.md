@@ -21,16 +21,15 @@ Download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-
 
 You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) along with [NX Game Info CLI](https://github.com/garoxas/NX_Game_Info) (and the appropriate prod.keys) before you get started.
 
-First, open the tool with Python and click "Import NX Game Info". In the window that pops up, paste the output that NX Game Info CLI provides you and press Import:
-
-![image](https://github.com/user-attachments/assets/c1493961-dd18-4d60-886a-47601ef1e932)
-
-You can also export the CSV values within NX Game Info GUI (File -> Export -> CSV) and paste them here:
+First, export a CSV within NX Game Info GUI (File -> Export -> CSV) and drag and drop the CSV file into the window. Te values will auto-populate:
 
 ![image](https://github.com/user-attachments/assets/1a84157a-37e6-4b36-8656-626dfef9e09c)
 
+Alternatively, you can paste the output that NX Game Info CLI provides you:
 
-You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. It should also populate the version and update in File Info. If for whatever reason the NX Game Info import messes up, you can always manually type the values. **NOTE: THIS IMPORT TOOL DOES NOT SUPPORT MULTI-TITLE CARTS YET.**
+![image](https://github.com/user-attachments/assets/c1493961-dd18-4d60-886a-47601ef1e932)
+
+Then press Import. You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. It should also populate the version and update in File Info. If for whatever reason the NX Game Info import messes up, you can always manually type the values. **NOTE: THIS IMPORT TOOL DOES NOT SUPPORT MULTI-TITLE CARTS YET.**
 
 Add the applicable cart region so all fields are filled out:
 
