@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QPlainTextEdit, QGroupBox, QRadioButton, QDialog, QTabWidget, QButtonGroup, QCheckBox, QDateEdit, QSizePolicy
 )
 from PyQt5.QtGui import QDragEnterEvent, QDropEvent, QRegExpValidator
-from PyQt5.QtCore import Qt, QDate, QRegExp
+from PyQt5.QtCore import Qt, QDate, QRegExp, QSettings
 import hashlib
 import zlib
 import xml.etree.ElementTree as ET
@@ -14,7 +14,7 @@ import os
 class XMLGeneratorApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.4")
+        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.5")
         self.setGeometry(100, 100, 475, 475)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -23,7 +23,15 @@ class XMLGeneratorApp(QMainWindow):
         self.central_widget.setLayout(self.layout)
 
         self.gameid2 = ""
+        self.default_xci_path = None
+        self.initial_area_path = None
+
+        self.tool_options = ["nxdt_rw_poc v2.0.0 (rewrite-dirty)", "DBI", "nxdumptool v1.1.15", "MigDumpTool (nxdumptool-rewrite)"]
         
+        self.settings = QSettings("MyCompany", "XMLGeneratorApp")
+        self.default_dumper = self.settings.value("defaultDumper", "")
+        self.default_tool = self.settings.value("defaultTool", "nxdt_rw_poc v2.0.0 (rewrite-dirty)")
+
         self.initUI()
     
     def initUI(self):
@@ -51,9 +59,13 @@ class XMLGeneratorApp(QMainWindow):
         self.source_details_layout = QFormLayout()
         self.source_details_labels = [
             ("Dumper", "Individual who dumped the game"),
-            ("Tool", "Tool used to dump the cart, e.g. 'nxdt_rw_poc v2.0.0 (rewrite-3c519cd-dirty)'"),
+            ("Tool", "Tool used to dump the cart, ideally you should embed the commit code like this: 'nxdt_rw_poc v2.0.0 (rewrite-3c519cd-dirty)'"),
         ]
         self.source_details_inputs = self.create_form_group(self.source_details_labels, self.source_details_layout)
+
+        self.set_preferred_button = QPushButton("Set Default Dumper and Tool")
+        self.set_preferred_button.clicked.connect(self.set_preferred)
+        self.source_details_layout.addRow(self.set_preferred_button)
 
         self.generate_card_id_button = QPushButton("Generate Card ID Values")
         self.generate_card_id_button.clicked.connect(self.open_generate_card_id_dialog)
@@ -96,11 +108,12 @@ class XMLGeneratorApp(QMainWindow):
         self.file_info_layout = QVBoxLayout()
 
         button_layout = QHBoxLayout()
-        self.import_hashes_button = QPushButton("Import Hashes")
-        self.import_hashes_button.clicked.connect(self.open_import_hashes_dialog)
-        button_layout.addWidget(self.import_hashes_button)
-        
-        self.generate_full_xci_button = QPushButton("Generate Full XCI")
+
+        self.calculate_hashes_button = QPushButton("Calculate Hashes")
+        self.calculate_hashes_button.clicked.connect(self.prompt_for_initial_area)
+        button_layout.addWidget(self.calculate_hashes_button)
+
+        self.generate_full_xci_button = QPushButton("Generate FullXCI File")
         self.generate_full_xci_button.clicked.connect(self.open_generate_full_xci_dialog)
         button_layout.addWidget(self.generate_full_xci_button)
 
@@ -132,6 +145,7 @@ class XMLGeneratorApp(QMainWindow):
         
         self.setAcceptDrops(True)
         self.update_generate_button_text()
+        self.load_preferences()
     
     def create_form_group(self, labels, layout):
         inputs = {}
@@ -156,6 +170,23 @@ class XMLGeneratorApp(QMainWindow):
                 combo_box = QComboBox()
                 combo_box.addItems(["", "▼", "▼ 10"])
                 combo_box.setEditable(True)
+                combo_box.setMaximumHeight(30)
+                combo_box.setMaximumWidth(400)
+                combo_box.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+                combo_box.currentTextChanged.connect(self.update_display)
+                label_widget = QLabel(label)
+                label_widget.setMaximumWidth(400)
+                layout.addRow(label_widget, combo_box)
+                explanation_label = QLabel(explanation)
+                explanation_label.setWordWrap(True)
+                explanation_label.setMaximumWidth(400)
+                layout.addRow(explanation_label)
+                inputs[label] = combo_box
+            elif label == "Tool":
+                combo_box = QComboBox()
+                combo_box.addItems(self.tool_options)
+                combo_box.setEditable(True)
+                combo_box.setCurrentText(self.default_tool)
                 combo_box.setMaximumHeight(30)
                 combo_box.setMaximumWidth(400)
                 combo_box.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
@@ -241,6 +272,7 @@ class XMLGeneratorApp(QMainWindow):
                     all(self.file_inputs[key].text() for key in self.file_inputs if not key.startswith("FullXCI"))
         self.generate_button.setEnabled(all_filled)
         self.update_generate_button_text()
+        self.calculate_hashes_button.setEnabled(True)
 
     def update_generate_button_text(self):
         empty_fields = sum(1 for input in self.basic_info_inputs.values() if isinstance(input, QLineEdit) and not input.text()) + \
@@ -255,7 +287,6 @@ class XMLGeneratorApp(QMainWindow):
             event.acceptProposedAction()
     
     def dropEvent(self, event: QDropEvent):
-        self.set_drag_drop_label_text("Calculating...")
         for url in event.mimeData().urls():
             file_path = url.toLocalFile()
             self.process_file(file_path)
@@ -269,13 +300,22 @@ class XMLGeneratorApp(QMainWindow):
         md5 = self.calculate_hash(file_path, 'md5')
         sha1 = self.calculate_hash(file_path, 'sha1')
         sha256 = self.calculate_hash(file_path, 'sha256')
-        
-        self.file_inputs['File Size 1'].setText(size)
-        self.file_inputs['CRC32 1'].setText(crc32)
-        self.file_inputs['MD5 1'].setText(md5)
-        self.file_inputs['SHA1 1'].setText(sha1)
-        self.file_inputs['SHA256 1'].setText(sha256)
-        self.set_drag_drop_label_text("Drag and Drop File Here")
+
+        if file_path.endswith('.xci'):
+            self.default_xci_path = file_path
+            self.file_inputs['File Size 1'].setText(size)
+            self.file_inputs['CRC32 1'].setText(crc32)
+            self.file_inputs['MD5 1'].setText(md5)
+            self.file_inputs['SHA1 1'].setText(sha1)
+            self.file_inputs['SHA256 1'].setText(sha256)
+        elif file_path.endswith('.bin') and os.path.getsize(file_path) == 512:
+            self.initial_area_path = file_path
+            self.file_inputs['File Size 2'].setText(size)
+            self.file_inputs['CRC32 2'].setText(crc32)
+            self.file_inputs['MD5 2'].setText(md5)
+            self.file_inputs['SHA1 2'].setText(sha1)
+            self.file_inputs['SHA256 2'].setText(sha256)
+
         self.update_display()
 
     def calculate_size(self, file_path):
@@ -308,34 +348,88 @@ class XMLGeneratorApp(QMainWindow):
         self.file_inputs['Update 1'].setText("v" + game_info['version'])
         self.update_display()
 
-    def open_import_hashes_dialog(self):
-        dialog = ImportHashesDialog(self)
-        dialog.exec_()
-    
-    def import_hashes(self, hashes, category):
-        if category == "Default XCI":
-            self.file_inputs["File Size 1"].setText(hashes['size'])
-            self.file_inputs["CRC32 1"].setText(hashes['crc32'].lower())
-            self.file_inputs["MD5 1"].setText(hashes['md5'])
-            self.file_inputs["SHA1 1"].setText(hashes['sha1'])
-            self.file_inputs["SHA256 1"].setText(hashes['sha256'])
-        elif category == "Initial Area":
-            self.file_inputs["File Size 2"].setText(hashes['size'])
-            self.file_inputs["CRC32 2"].setText(hashes['crc32'].lower())
-            self.file_inputs["MD5 2"].setText(hashes['md5'])
-            self.file_inputs["SHA1 2"].setText(hashes['sha1'])
-            self.file_inputs["SHA256 2"].setText(hashes['sha256'])
-        elif category == "FullXCI":
-            self.file_inputs["File Size 3"].setText(hashes['size'])
-            self.file_inputs["CRC32 3"].setText(hashes['crc32'].lower())
-            self.file_inputs["MD5 3"].setText(hashes['md5'])
-            self.file_inputs["SHA1 3"].setText(hashes['sha1'])
-            self.file_inputs["SHA256 3"].setText(hashes['sha256'])
-        self.update_display()
-    
     def open_generate_full_xci_dialog(self):
         dialog = GenerateFullXCIDialog(self)
         dialog.exec_()
+
+    def prompt_for_initial_area(self):
+        self.calculate_hashes_dialog = QDialog(self)
+        self.calculate_hashes_dialog.setWindowTitle("Calculate Hashes")
+        self.calculate_hashes_dialog.setGeometry(100, 100, 400, 200)
+        layout = QVBoxLayout()
+        self.calculate_hashes_dialog.setLayout(layout)
+        
+        label = QLabel("Drag and Drop Initial Area Here")
+        label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(label)
+        
+        self.calculate_hashes_dialog.show()
+        
+        self.calculate_hashes_dialog.setAcceptDrops(True)
+        self.calculate_hashes_dialog.dragEnterEvent = self.dragEnterEvent
+        self.calculate_hashes_dialog.dropEvent = self.drop_initial_area
+
+    def drop_initial_area(self, event: QDropEvent):
+        for url in event.mimeData().urls():
+            file_path = url.toLocalFile()
+            if file_path.endswith('.bin') and os.path.getsize(file_path) == 512:
+                self.initial_area_path = file_path
+                self.process_file(file_path)
+                self.calculate_hashes_dialog.close()
+                self.prompt_for_default_xci()
+                break
+
+    def prompt_for_default_xci(self):
+        self.calculate_hashes_dialog = QDialog(self)
+        self.calculate_hashes_dialog.setWindowTitle("Calculate Hashes")
+        self.calculate_hashes_dialog.setGeometry(100, 100, 400, 200)
+        layout = QVBoxLayout()
+        self.calculate_hashes_dialog.setLayout(layout)
+        
+        label = QLabel("Drag and Drop Default XCI Here\n\nIf the program appears to freeze, it's just calculating all the hashes which can take a while\n\nPlease be patient")
+        label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(label)
+        
+        self.calculate_hashes_dialog.show()
+        
+        self.calculate_hashes_dialog.setAcceptDrops(True)
+        self.calculate_hashes_dialog.dragEnterEvent = self.dragEnterEvent
+        self.calculate_hashes_dialog.dropEvent = self.drop_default_xci
+
+    def drop_default_xci(self, event: QDropEvent):
+        for url in event.mimeData().urls():
+            file_path = url.toLocalFile()
+            if file_path.endswith('.xci'):
+                self.default_xci_path = file_path
+                self.process_file(file_path)
+                self.calculate_hashes_dialog.close()
+                self.calculate_full_xci_hashes()
+                break
+
+    def calculate_full_xci_hashes(self):
+        with open(self.initial_area_path, 'rb') as initial_area_file:
+            initial_area_data = initial_area_file.read()
+
+        zeroes_data = b'\x00' * 3584
+
+        with open(self.default_xci_path, 'rb') as default_xci_file:
+            default_xci_data = default_xci_file.read()
+
+        full_xci_data = initial_area_data + zeroes_data + default_xci_data
+
+        size = str(len(full_xci_data))
+        crc32 = format(zlib.crc32(full_xci_data) & 0xFFFFFFFF, '08x')
+        md5 = hashlib.md5(full_xci_data).hexdigest()
+        sha1 = hashlib.sha1(full_xci_data).hexdigest()
+        sha256 = hashlib.sha256(full_xci_data).hexdigest()
+
+        self.file_inputs["File Size 3"].setText(size)
+        self.file_inputs["CRC32 3"].setText(crc32)
+        self.file_inputs["MD5 3"].setText(md5)
+        self.file_inputs["SHA1 3"].setText(sha1)
+        self.file_inputs["SHA256 3"].setText(sha256)
+
+        self.update_display()
 
     def update_mediastamp(self):
         media_serial2 = self.serial_details_inputs['Media Serial 2'].text()
@@ -378,7 +472,7 @@ class XMLGeneratorApp(QMainWindow):
             region=self.basic_info_inputs['Region'].text(),
             dumper=self.source_details_inputs['Dumper'].text(),
             project="No-Intro",
-            tool=self.source_details_inputs['Tool'].text(),
+            tool=self.source_details_inputs['Tool'].currentText(),
             comment1=comment1,
             originalformat="Default",
         )
@@ -458,7 +552,8 @@ class XMLGeneratorApp(QMainWindow):
 
         for input in self.source_details_inputs.values():
             if isinstance(input, QLineEdit):
-                input.clear()
+                if input.objectName() != "Dumper":
+                    input.clear()
             elif isinstance(input, QPlainTextEdit):
                 input.clear()
 
@@ -474,7 +569,25 @@ class XMLGeneratorApp(QMainWindow):
         for input in self.file_inputs.values():
             input.clear()
 
+        self.default_dumper = self.settings.value("defaultDumper", "")
+        self.default_tool = self.settings.value("defaultTool", "nxdt_rw_poc v2.0.0 (rewrite-dirty)")
+
+        self.source_details_inputs["Dumper"].setText(self.default_dumper)
+        self.source_details_inputs["Tool"].setCurrentText(self.default_tool)
+
         self.update_display()
+
+
+    def set_preferred(self):
+        dumper = self.source_details_inputs["Dumper"].text()
+        tool = self.source_details_inputs["Tool"].currentText()
+        self.settings.setValue("defaultDumper", dumper)
+        self.settings.setValue("defaultTool", tool)
+
+    def load_preferences(self):
+        self.source_details_inputs["Dumper"].setText(self.default_dumper)
+        self.source_details_inputs["Tool"].setCurrentText(self.default_tool)
+
 
 class ImportNXGameInfoDialog(QDialog):
     def __init__(self, parent=None):
@@ -557,120 +670,17 @@ class ImportNXGameInfoDialog(QDialog):
 
         return game_info
 
-class ImportHashesDialog(QDialog):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle("Import Hashes")
-        self.setGeometry(100, 100, 400, 200)
-        self.layout = QVBoxLayout()
-        self.setLayout(self.layout)
-        
-        self.radio_group = QButtonGroup(self)
-        
-        self.default_xci_radio = QRadioButton("Default XCI")
-        self.initial_area_radio = QRadioButton("Initial Area")
-        self.full_xci_radio = QRadioButton("FullXCI")
-        
-        self.radio_group.addButton(self.default_xci_radio)
-        self.radio_group.addButton(self.initial_area_radio)
-        self.radio_group.addButton(self.full_xci_radio)
-        
-        self.layout.addWidget(self.default_xci_radio)
-        self.layout.addWidget(self.initial_area_radio)
-        self.layout.addWidget(self.full_xci_radio)
-        
-        self.drag_drop_label = QLabel("Drag and Drop File Here")
-        self.drag_drop_label.setAlignment(Qt.AlignCenter)
-        self.layout.addWidget(self.drag_drop_label)
-        
-        self.setAcceptDrops(True)
-
-    def dragEnterEvent(self, event: QDragEnterEvent):
-        if event.mimeData().hasUrls():
-            event.acceptProposedAction()
-
-    def dropEvent(self, event: QDropEvent):
-        self.set_drag_drop_label_text("Calculating...")
-        for url in event.mimeData().urls():
-            file_path = url.toLocalFile()
-            selected_button = self.radio_group.checkedButton()
-            if selected_button:
-                category = selected_button.text()
-                self.process_file(file_path, category)
-
-    def process_file(self, file_path, category):
-        hashes = {
-            'size': self.calculate_size(file_path),
-            'sha1': self.calculate_hash(file_path, 'sha1'),
-            'sha256': self.calculate_hash(file_path, 'sha256'),
-            'crc32': self.calculate_crc32(file_path),
-            'md5': self.calculate_hash(file_path, 'md5')
-        }
-        
-        self.parent().import_hashes(hashes, category)
-        self.set_next_radio_button()
-        if category == "FullXCI":
-            self.accept()
-        else:
-            self.set_drag_drop_label_text("Drag and Drop File Here")
-
-    def calculate_size(self, file_path):
-        return str(os.path.getsize(file_path))
-
-    def calculate_hash(self, file_path, hash_type):
-        hasher = hashlib.new(hash_type)
-        with open(file_path, 'rb') as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                hasher.update(chunk)
-        return hasher.hexdigest()
-
-    def calculate_crc32(self, file_path):
-        crc32 = 0
-        with open(file_path, 'rb') as f:
-            for chunk in iter(lambda: f.read(4096), b""):
-                crc32 = zlib.crc32(chunk, crc32)
-        return format(crc32 & 0xFFFFFFFF, '08x').upper()
-
-    def showEvent(self, event):
-        super().showEvent(event)
-        self.set_default_radio_button()
-
-    def set_default_radio_button(self):
-        parent = self.parent()
-        if parent:
-            if not parent.file_inputs["SHA1 1"].text():
-                self.default_xci_radio.setChecked(True)
-            elif not parent.file_inputs["SHA1 2"].text():
-                self.initial_area_radio.setChecked(True)
-            elif not parent.file_inputs["SHA1 3"].text():
-                self.full_xci_radio.setChecked(True)
-            else:
-                self.default_xci_radio.setChecked(True)
-
-    def set_next_radio_button(self):
-        parent = self.parent()
-        if parent:
-            if not parent.file_inputs["SHA1 1"].text():
-                self.default_xci_radio.setChecked(True)
-            elif not parent.file_inputs["SHA1 2"].text():
-                self.initial_area_radio.setChecked(True)
-            elif not parent.file_inputs["SHA1 3"].text():
-                self.full_xci_radio.setChecked(True)
-
-    def set_drag_drop_label_text(self, text):
-        self.drag_drop_label.setText(text)
-
 class GenerateFullXCIDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Generate Full XCI")
+        self.setWindowTitle("Generate Full XCI File")
         self.setGeometry(100, 100, 400, 200)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
         
         self.state = 0
         
-        self.drag_drop_label = QLabel("Drag and Drop Initial Area (.bin) Here")
+        self.drag_drop_label = QLabel("Drag and Drop Initial Area Here")
         self.drag_drop_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.drag_drop_label)
         
@@ -690,7 +700,7 @@ class GenerateFullXCIDialog(QDialog):
                 if file_path.endswith('.bin') and os.path.getsize(file_path) == 512:
                     self.initial_area_path = file_path
                     self.state = 1
-                    self.drag_drop_label.setText("Drag and Drop Default XCI Here")
+                    self.drag_drop_label.setText("Drag and Drop Default XCI Here\n\nIf the program appears to freeze, it's just generating the Full XCI which can take a while\n\nPlease be patient")
                 else:
                     self.drag_drop_label.setText("Please drop an Initial Area .bin file that has a size of 512 bytes")
             elif self.state == 1:
