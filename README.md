@@ -1,7 +1,7 @@
 # Versions
 
 v1.5 - 2024-07-21
-- Added the ability to auto-generate Full XCI hashes, added a button that saves your preferred default dumper and tool values, Fixed regression from v1.3, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, now chooses the base Title ID as Game ID instead of the latest one, now removes any punctuation not compliant with No-Intro and changes colons into dashes, now excludes any parentheses present in the update column
+- Added the ability to auto-generate Full XCI hashes, added a button that saves your preferred default dumper and tool values, added a dropdown for the tool menu, fixed regression from v1.3, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, now chooses the base Title ID as Game ID instead of the latest one, now removes any punctuation not compliant with No-Intro and changes colons into dashes, now excludes any parentheses present in the update column
 
 # To-do
 - TESTING
