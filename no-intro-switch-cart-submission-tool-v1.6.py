@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QPlainTextEdit, QGroupBox, QRadioButton, QDialog, QTabWidget, QButtonGroup, QCheckBox, QDateEdit, QSizePolicy
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QPlainTextEdit, QGroupBox, QDialog, QTabWidget, QCheckBox, QDateEdit, QSizePolicy
 )
 from PyQt5.QtGui import QDragEnterEvent, QDropEvent, QRegExpValidator
 from PyQt5.QtCore import Qt, QDate, QRegExp, QSettings
@@ -10,11 +10,13 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 import csv
 import os
+import subprocess
+import platform
 
 class XMLGeneratorApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.5")
+        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.6")
         self.setGeometry(100, 100, 475, 475)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -215,25 +217,6 @@ class XMLGeneratorApp(QMainWindow):
                 inputs[label] = line_edit
         return inputs
     
-    def create_horizontal_form_group(self, labels, layout):
-        inputs = {}
-        for label, explanation in labels:
-            h_layout = QHBoxLayout()
-            label_widget = QLabel(label)
-            label_widget.setMaximumWidth(200)
-            input_widget = QLineEdit()
-            input_widget.setMaximumWidth(200)
-            input_widget.textChanged.connect(self.update_display)
-            h_layout.addWidget(label_widget)
-            h_layout.addWidget(input_widget)
-            layout.addLayout(h_layout)
-            explanation_label = QLabel(explanation)
-            explanation_label.setWordWrap(True)
-            explanation_label.setMaximumWidth(400)
-            layout.addWidget(explanation_label)
-            inputs[label] = input_widget
-        return inputs
-
     def create_file_info_section(self, layout):
         self.file_inputs = {}
         
@@ -534,7 +517,8 @@ class XMLGeneratorApp(QMainWindow):
             file_path = os.path.join(output_dir, file_name)
             with open(file_path, 'w', encoding='utf-8') as file:
                 file.write(self.transform_xml(xml_str))
-            os.startfile(output_dir)
+
+            self.open_output_directory(output_dir)
 
     def transform_xml(self, xml_str):
         return xml_str.replace("&amp;#10;", "&#10;")
@@ -587,6 +571,14 @@ class XMLGeneratorApp(QMainWindow):
     def load_preferences(self):
         self.source_details_inputs["Dumper"].setText(self.default_dumper)
         self.source_details_inputs["Tool"].setCurrentText(self.default_tool)
+
+    def open_output_directory(self, path):
+        if platform.system() == "Windows":
+            os.startfile(path)
+        elif platform.system() == "Darwin":
+            subprocess.Popen(["open", path])
+        else:
+            subprocess.Popen(["xdg-open", path])
 
 
 class ImportNXGameInfoDialog(QDialog):
