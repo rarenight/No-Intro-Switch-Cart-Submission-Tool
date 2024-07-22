@@ -652,7 +652,8 @@ class ImportNXGameInfoDialog(QDialog):
                     version = line.split(":")[1].strip()
                     if "(" in version:
                         version = version.split(" ")[0]
-                    game_info['version'] = version
+                    if 'version' not in game_info:
+                        game_info['version'] = version if version else "0"
                 elif "Languages:" in line:
                     languages = line.split(":")[1].strip().replace("\"", "").split(',')
                     transformed_langs = set(lang_map.get(lang.strip(), lang.strip()) for lang in languages)
