@@ -39,13 +39,13 @@ Add the applicable cart region so all fields are filled out:
 
 ![2 game info](https://github.com/user-attachments/assets/29369f45-bb6b-478d-a8a9-420cea7bde65)
 
-Then click the "Dump Info" tab, fill out the Dumper and Tool fields, and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
+Then click the Dump Info tab, fill out the Dumper and Tool fields, and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
 ![3 dump info](https://github.com/user-attachments/assets/da533739-6462-4848-bf7a-55812ac6dd8a)
 
 A custom dump date can be specified if your cart wasn't dumped the same day.
 
-Then click the "Media Info" tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
+Then click the Media Info tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
 
 ![4 media info](https://github.com/user-attachments/assets/b19b1462-2efd-4a72-87a6-cdb7ed60cbfa)
 
