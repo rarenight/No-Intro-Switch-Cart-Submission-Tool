@@ -37,23 +37,25 @@ Then press Import. You'll (hopefully) see the Game Name, Languages, and GameID1 
 
 Add the applicable cart region so all fields are filled out:
 
-![image](https://github.com/user-attachments/assets/98b2f17d-44e4-4589-86b9-43401e9d5ca8)
+![2 game info](https://github.com/user-attachments/assets/29369f45-bb6b-478d-a8a9-420cea7bde65)
 
 Then click the "Dump Info" tab, fill out the Dumper and Tool fields, and click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
-![image](https://github.com/user-attachments/assets/e447a6b8-2990-4201-b608-b9d72427db26)
+![3 dump info](https://github.com/user-attachments/assets/da533739-6462-4848-bf7a-55812ac6dd8a)
 
 A custom dump date can be specified if your cart wasn't dumped the same day.
 
 Then click the "Media Info" tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
 
-![image](https://github.com/user-attachments/assets/4626e057-effb-482c-ac26-f00bd4869e5a)
+![4 media info](https://github.com/user-attachments/assets/b19b1462-2efd-4a72-87a6-cdb7ed60cbfa)
 
-Click the File Info tab and then "Import Hashes." If you don't already have a Full XCI, click "Generate Full XCI" to build one.
+Click the File Info tab and then "Import Hashes."
 
-Drag and drop the Default XCI, then the Initial Area BIN file, then the Full XCI file into the window and their hashes will auto-populate. Please note this takes a while for large files, please be patient.
+Drag and drop the Initial Area BIN file, then the Default XCI file into the window and their hashes will auto-populate. My program automatically generates the Full XCI hashes without having to create the file separately. Please note this takes a while for large files and the program appears to freeze while it's hashing, please be patient.
 
-![image](https://github.com/user-attachments/assets/2a9d0ec4-6a16-427a-bfbf-7aa6a7e4d039)
+![5 file info](https://github.com/user-attachments/assets/0b9b3e58-ac6d-4e6b-a37d-48c66e9c7a00)
+
+My program also offers the option to generate a Full XCI file if you'd like a local copy for your collection.
 
 When all fields are populated as shown in the above image, click "Generate Submission" and an XML file will be generated in your chosen directory.
 
