@@ -597,7 +597,7 @@ class ImportNXGameInfoDialog(QDialog):
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
         
-        self.drag_drop_label = QLabel("Paste the NX Game Info CLI output below.\nOr, output a CSV file (File -> Export -> CSV) from the GUI and drag and drop it into the window\n\nDrag and drop CSV file here\n")
+        self.drag_drop_label = QLabel("Paste the NX Game Info CLI output below.\nOr, output a CSV file (File -> Export -> CSV) from the GUI and drag and drop it into the window\n\nDrag and drop CSV file >> HERE <<\n")
         self.drag_drop_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.drag_drop_label)
         
