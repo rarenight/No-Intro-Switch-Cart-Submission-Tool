@@ -6,7 +6,8 @@ v1.6 - 2024-07-22
 # To-do
 - TESTING
 - Add multi-title cart support
-- Add separate mode for Scene / P2P XCI support
+- Add separate mode for Scene / P2P XCI submissions
+- Add "loose cart" toggle where serial and barcode aren't required for submission
 - Further polish, like a progress window for hash calculation and Full XCI generation
 - Integrate NX Game Info directly (and possibly other submodules like hactoolnet) to eliminate manual copy and pasting
 - Compile into a user-friendly EXE with all dependencies bundled in
