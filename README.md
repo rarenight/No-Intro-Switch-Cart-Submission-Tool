@@ -6,6 +6,8 @@ v1.6 - 2024-07-22
 # To-do
 - TESTING
 - Add revision auto-fill
+- Add dropdown for region
+- Add redump auto-detection and auto-fill
 - Fix GameID2 four-digit bug
 - Add detection algorithms
 - Add multi-title cart support
