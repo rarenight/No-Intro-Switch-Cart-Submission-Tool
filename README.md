@@ -7,10 +7,9 @@ v1.6 - 2024-07-22
 - TESTING
 - Add revision auto-fill
 - Add dropdown for region
-- Add redump auto-detection and auto-fill
+- Add redump auto-detection and auto-fill from integrated DATs
 - Fix GameID2 four-digit bug
 - Fix bug where newly-applied merged versions / updates don't take precedence
-- Add detection algorithms
 - Add multi-title cart support
 - Add separate mode for Scene / P2P XCI submissions
 - Add "loose cart" toggle where serial and barcode aren't required for submission
