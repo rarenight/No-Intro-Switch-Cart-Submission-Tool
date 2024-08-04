@@ -2,7 +2,7 @@ import sys
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QPlainTextEdit, QGroupBox, QDialog, QTabWidget, QCheckBox, QDateEdit, QSizePolicy
 )
-from PyQt5.QtGui import QDragEnterEvent, QDropEvent, QRegExpValidator
+from PyQt5.QtGui import QDragEnterEvent, QDropEvent, QRegExpValidator, QPalette
 from PyQt5.QtCore import Qt, QDate, QRegExp, QSettings
 import hashlib
 import zlib
@@ -16,7 +16,7 @@ import platform
 class XMLGeneratorApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.6")
+        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.7")
         self.setGeometry(100, 100, 475, 475)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -29,6 +29,24 @@ class XMLGeneratorApp(QMainWindow):
         self.initial_area_path = None
 
         self.tool_options = ["nxdt_rw_poc v2.0.0 (rewrite-dirty)", "DBI", "nxdumptool v1.1.15", "MigDumpTool (nxdumptool-rewrite)"]
+        
+        self.region_options = [
+            "Nintendo published cart (World)", "-USA cart (USA)", "-EUR cart (Europe)", "-JPN cart (Japan)", "-ASI cart (Asia)", "-AUS cart (Australia)", "-CHN cart (China)", "-CHT cart (Taiwan, Hong Kong)", "-KOR cart (Korea)", "-MSE cart (Middle East)", "-RUS cart (Russia)", "-UKV cart (United Kingdom)"
+        ]
+        self.region_values = {
+            "Nintendo published cart (World)": "World",
+            "-ASI cart (Asia)": "Asia",
+            "-AUS cart (Australia)": "Australia",
+            "-CHN cart (China)": "China",
+            "-CHT cart (Taiwan, Hong Kong)": "Taiwan, Hong Kong",
+            "-EUR cart (Europe)": "Europe",
+            "-JPN cart (Japan)": "Japan",
+            "-KOR cart (Korea)": "Korea",
+            "-MSE cart (Middle East)": "Middle East",
+            "-RUS cart (Russia)": "Russia",
+            "-UKV cart (United Kingdom)": "United Kingdom",
+            "-USA cart (USA)": "USA"
+        }
         
         self.settings = QSettings("MyCompany", "XMLGeneratorApp")
         self.default_dumper = self.settings.value("defaultDumper", "")
@@ -48,11 +66,19 @@ class XMLGeneratorApp(QMainWindow):
         self.basic_info_form_layout.addRow(self.import_button)
         self.basic_info_labels = [
             ("Game Name", "All nouns, verbs, and adjectives are uppercase, move initial articles to the end of the name, intermediary link words are lowercase, colons are replaced with dashes, no \\ / : * ? \" < > | , e.g. 'Legend of Zelda, The - A Link to the Past'"), 
-            ("Region", "As listed on the cart, e.g. -USA = 'USA', -EUR = 'Europe', -JPN = 'Japan', -ASI = 'Asia', -CHT = 'Taiwan, Hong Kong'"), 
             ("Languages", "Comma-separated in ISO 639-1 format, e.g. English, Japanese, Korean, Simplified Chinese, Traditional Chinese is 'en,ja,ko,Zh-Hans,Zh-Hant'"), 
-            ("GameID1", "All base application Title IDs (ending in 000) comma-separated, no patches, no add-ons, e.g. '0100182014022000, 010065A014024000'")
-        ]
+            ("GameID1", "All base application Title IDs (ending in 000) comma-separated, no patches, no add-ons, e.g. '0100182014022000, 010065A014024000'")]
         self.basic_info_inputs = self.create_form_group(self.basic_info_labels, self.basic_info_form_layout)
+        
+        self.region_combo_box = QComboBox()
+        self.region_combo_box.addItems(self.region_options)
+        self.basic_info_form_layout.addRow(QLabel("Region"), self.region_combo_box)
+
+        self.custom_region_checkbox = QCheckBox("Custom Region")
+        self.custom_region_checkbox.stateChanged.connect(self.toggle_custom_region)
+        self.custom_region_input = QLineEdit()
+        self.custom_region_input.setEnabled(False)
+        self.basic_info_form_layout.addRow(self.custom_region_checkbox, self.custom_region_input)
         
         self.basic_info_layout.addLayout(self.basic_info_form_layout)
         self.basic_info_tab.setLayout(self.basic_info_layout)
@@ -102,6 +128,10 @@ class XMLGeneratorApp(QMainWindow):
         ]
         self.serial_details_inputs = self.create_form_group(self.serial_details_labels, self.serial_details_layout)
         self.serial_details_tab.setLayout(self.serial_details_layout)
+
+        self.loose_cart_checkbox = QCheckBox("Loose Cart")
+        self.loose_cart_checkbox.stateChanged.connect(self.toggle_loose_cart)
+        self.serial_details_layout.addRow(self.loose_cart_checkbox)
 
         self.serial_details_inputs['Media Serial 1'].textChanged.connect(self.update_game_id2)
         self.serial_details_inputs['Media Serial 2'].textChanged.connect(self.update_mediastamp)
@@ -247,10 +277,38 @@ class XMLGeneratorApp(QMainWindow):
         self.custom_dump_date_input.setEnabled(state == Qt.Checked)
         self.update_display()
     
+    def toggle_custom_region(self, state):
+        if state == Qt.Checked:
+            self.region_combo_box.setEnabled(False)
+            self.custom_region_input.setEnabled(True)
+        else:
+            self.region_combo_box.setEnabled(True)
+            self.custom_region_input.setEnabled(False)
+        self.update_display()
+    
+    def toggle_loose_cart(self, state):
+        is_enabled = state != Qt.Checked
+        box_serial_input = self.serial_details_inputs['Box Serial']
+        box_barcode_input = self.serial_details_inputs['Box Barcode']
+        
+        box_serial_input.setEnabled(is_enabled)
+        box_barcode_input.setEnabled(is_enabled)
+        
+        palette = box_serial_input.palette()
+        palette.setColor(QPalette.Base, Qt.lightGray if not is_enabled else Qt.white)
+        box_serial_input.setPalette(palette)
+        box_barcode_input.setPalette(palette)
+        
+        if not is_enabled:
+            box_serial_input.clear()
+            box_barcode_input.clear()
+        
+        self.update_display()
+    
     def update_display(self):
         all_filled = all(input.text() for input in self.basic_info_inputs.values() if isinstance(input, QLineEdit)) and \
                     all(input.text() for input in self.source_details_inputs.values() if isinstance(input, QLineEdit)) and \
-                    all(input.text() for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial") and \
+                    all(input.text() for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial" and (label not in ["Box Serial", "Box Barcode"] or input.isEnabled())) and \
                     all(input.currentText() for label, input in self.serial_details_inputs.items() if isinstance(input, QComboBox) and label != "PCB Serial") and \
                     all(self.file_inputs[key].text() for key in self.file_inputs if not key.startswith("FullXCI"))
         self.generate_button.setEnabled(all_filled)
@@ -260,7 +318,7 @@ class XMLGeneratorApp(QMainWindow):
     def update_generate_button_text(self):
         empty_fields = sum(1 for input in self.basic_info_inputs.values() if isinstance(input, QLineEdit) and not input.text()) + \
                     sum(1 for input in self.source_details_inputs.values() if isinstance(input, QLineEdit) and not input.text()) + \
-                    sum(1 for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial" and not input.text()) + \
+                    sum(1 for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial" and (label not in ["Box Serial", "Box Barcode"] or input.isEnabled()) and not input.text()) + \
                     sum(1 for label, input in self.serial_details_inputs.items() if isinstance(input, QComboBox) and label != "PCB Serial" and not input.currentText()) + \
                     sum(1 for key in self.file_inputs if not key.startswith("FullXCI") and not self.file_inputs[key].text())
         self.generate_button.setText(f"Generate Submission ({empty_fields} fields left)")
@@ -422,23 +480,34 @@ class XMLGeneratorApp(QMainWindow):
 
     def update_game_id2(self):
         media_serial1 = self.serial_details_inputs['Media Serial 1'].text()
-        self.gameid2 = media_serial1[:-4] if len(media_serial1) > 4 else media_serial1
+        if media_serial1.endswith('1'):
+            self.gameid2 = media_serial1[:-5] if len(media_serial1) > 5 else media_serial1
+        else:
+            self.gameid2 = media_serial1[:-4] if len(media_serial1) > 4 else media_serial1
         self.update_display()
 
     def generate_xml(self):
         datafile = ET.Element('datafile')
         game = ET.SubElement(datafile, 'game', name=self.basic_info_inputs['Game Name'].text())
 
-        archive = ET.SubElement(game, 'archive',
-            clone="P",
-            name=self.basic_info_inputs['Game Name'].text(),
-            region=self.basic_info_inputs['Region'].text(),
-            languages=self.basic_info_inputs['Languages'].text(),
-            langchecked="unk",
-            gameid1=self.basic_info_inputs['GameID1'].text(),
-            gameid2=self.gameid2,
-            categories="Games"
-        )
+        region = self.custom_region_input.text() if self.custom_region_checkbox.isChecked() else self.region_values.get(self.region_combo_box.currentText(), "")
+
+        archive_attrs = {
+            "clone": "P",
+            "name": self.basic_info_inputs['Game Name'].text(),
+            "region": region,
+            "languages": self.basic_info_inputs['Languages'].text(),
+            "langchecked": "unk",
+            "gameid1": self.basic_info_inputs['GameID1'].text(),
+            "gameid2": self.gameid2,
+            "categories": "Games"
+        }
+
+        media_serial2 = self.serial_details_inputs['Media Serial 2'].text()
+        if media_serial2[-1].isdigit() and media_serial2[-1] != "0":
+            archive_attrs["version1"] = f"Rev {media_serial2[-1]}"
+
+        archive = ET.SubElement(game, 'archive', **archive_attrs)
 
         source = ET.SubElement(game, 'source')
 
@@ -452,7 +521,7 @@ class XMLGeneratorApp(QMainWindow):
             d_date=dump_date,
             r_date="",
             r_date_info="0",
-            region=self.basic_info_inputs['Region'].text(),
+            region=region,
             dumper=self.source_details_inputs['Dumper'].text(),
             project="No-Intro",
             tool=self.source_details_inputs['Tool'].currentText(),
@@ -460,14 +529,20 @@ class XMLGeneratorApp(QMainWindow):
             originalformat="Default",
         )
 
-        serials = ET.SubElement(source, 'serials',
-            media_serial1=self.serial_details_inputs['Media Serial 1'].text(),
-            media_serial2=self.serial_details_inputs['Media Serial 2'].text(),
-            mediastamp=self.serial_details_inputs['Mediastamp'],
-            pcb_serial=self.serial_details_inputs['PCB Serial'].currentText(),
-            box_serial=self.serial_details_inputs['Box Serial'].text(),
-            box_barcode=self.serial_details_inputs['Box Barcode'].text()
-        )
+        serials_attrs = {
+            "media_serial1": self.serial_details_inputs['Media Serial 1'].text(),
+            "media_serial2": self.serial_details_inputs['Media Serial 2'].text(),
+            "mediastamp": self.serial_details_inputs['Mediastamp'],
+            "pcb_serial": self.serial_details_inputs['PCB Serial'].currentText()
+        }
+        
+        if self.serial_details_inputs['Box Serial'].isEnabled():
+            serials_attrs["box_serial"] = self.serial_details_inputs['Box Serial'].text()
+        
+        if self.serial_details_inputs['Box Barcode'].isEnabled():
+            serials_attrs["box_barcode"] = self.serial_details_inputs['Box Barcode'].text()
+
+        serials = ET.SubElement(source, 'serials', **serials_attrs)
 
         file1 = ET.SubElement(source, 'file',
             forcename="",
