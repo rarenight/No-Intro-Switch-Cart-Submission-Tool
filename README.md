@@ -1,18 +1,14 @@
 # Versions
 
-v1.6 - 2024-07-22
-- (v1.6) Fixed NX Info import glitch where CLI importing wouldn't detect v0, (v1.6) Added directory selection support for Mac + Linux, (v1.5) Added the ability to auto-generate Full XCI hashes, (v1.5) added a button that saves your preferred default dumper and tool values, (v1.4) added a dropdown for the tool menu, (v1.4) fixed regression from v1.3, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, now chooses the base Title ID as Game ID instead of the latest one, now removes any punctuation not compliant with No-Intro and changes colons into dashes, now excludes any parentheses present in the update column
+v1.7 - 2024-08-04
+- (v1.7) Added a dropdown for regions, (v1.7) Fixed GameID2 four-digit bug, (v1.7) Add Rev 1 auto-fill, (v1.7) Added loose cart toggle, (v1.6) Fixed NX Info import glitch where CLI importing wouldn't detect v0, (v1.6) Added directory selection support for Mac + Linux, (v1.5) Added the ability to auto-generate Full XCI hashes, (v1.5) added a button that saves your preferred default dumper and tool values, (v1.4) added a dropdown for the tool menu, (v1.4) fixed regression from v1.3, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, now chooses the base Title ID as Game ID instead of the latest one, now removes any punctuation not compliant with No-Intro and changes colons into dashes, now excludes any parentheses present in the update column
 
 # To-do
 - TESTING
-- Add revision auto-fill
-- Add dropdown for region
 - Add redump auto-detection and auto-fill from integrated DATs
-- Fix GameID2 four-digit bug
 - Fix bug where newly-applied merged versions / updates via 4 6 1 6 don't take precedence
 - Add multi-title cart support
 - Add separate mode for Scene / P2P XCI submissions
-- Add "loose cart" toggle where serial and barcode aren't required for submission
 - Further polish, like a progress window for hash calculation and Full XCI generation
 - Integrate NX Game Info directly (and possibly other submodules like hactoolnet) to eliminate manual copy and pasting
 - Compile into a user-friendly EXE with all dependencies bundled in
