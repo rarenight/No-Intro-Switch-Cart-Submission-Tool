@@ -37,11 +37,11 @@ You can dump the Certificate as well, but that is not needed for a No-Intro subm
 
 Drag and drop the files to your PC. You should have three files that look like this:
 
-![image](https://github.com/user-attachments/assets/84c5cde4-b11f-441d-898d-ea705c8b8204)
+![image](https://github.com/user-attachments/assets/9fabcc8c-4e40-49de-be18-7d88d1786075)
 
 Once you do, you're ready to begin using my tool.
 
-Download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/no-intro-switch-cart-submission-tool-v1.7.py) (right click -> Save As).
+You can download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/no-intro-switch-cart-submission-tool-v1.7.py) (right click -> Save As).
 
 You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) along with [NX Game Info](https://github.com/garoxas/NX_Game_Info) (and the appropriate prod.keys) before you get started.
 
