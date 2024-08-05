@@ -37,7 +37,7 @@ You can dump the Certificate as well, but that is not needed for a No-Intro subm
 
 Move your files to your PC. You should have three files that look something like this:
 
-![image](https://github.com/user-attachments/assets/7f244bd2-2f2f-4ddc-8383-4029428502a0)
+![image](https://github.com/user-attachments/assets/08d68caf-ff07-430b-ba80-4acb21cbd008)
 
 Once you do, you're ready to begin using my tool.
 
