@@ -37,7 +37,9 @@ You can dump the Certificate as well, but that is not needed for a No-Intro subm
 
 Move your files to your PC. You should have three files that look something like this:
 
-![image](https://github.com/user-attachments/assets/08d68caf-ff07-430b-ba80-4acb21cbd008)
+- Fast & Furious Spy Racers - Rise of SH1FT3R 1.0.2 [010034C013624000][v0] (Card ID Set) (6CD8FDA1).bin
+- Fast & Furious Spy Racers - Rise of SH1FT3R 1.0.2 [010034C013624000][v0] (Initial Data) (57A3A06C).bin
+- Fast & Furious Spy Racers - Rise of SH1FT3R 1.0.2 [010034C013624000][v0] [NKA][NC][NT].xci
 
 Once you do, you're ready to begin using my tool.
 
