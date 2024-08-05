@@ -67,9 +67,9 @@ Select the applicable cart region from the dropdown. You can find this on the la
 
 (Note: Nintendo-published carts are considered to be "World" and are an exception to this rule)
 
-Then click the Dump Info tab, fill out the Dumper and Tool fields (there's a dropdown as well with common dumping tool names), and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
+Then click the Dump Info tab, fill out the Dumper and Tool fields (there's a dropdown as well with common dump tool names), and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
-![image](https://github.com/user-attachments/assets/d94b187a-db73-4e6f-b865-920a3fbf60a1)
+![image](https://github.com/user-attachments/assets/202c6da3-913d-43bd-8afd-4d8779aaa3fb)
 
 A custom dump date can be specified if your cart wasn't dumped the same day.
 
