@@ -20,6 +20,27 @@ v1.7 - 2024-08-04
 
 So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files.
 
+First, dump your cart using the latest version of [nxdumptool-rewrite](https://github.com/DarkMatterCore/nxdumptool/releases) onto your SD card or to your PC via USB using the default settings.
+
+Note, the default settings are as follows:
+- prepend key area: no
+- keep certificate: no
+- trim dump: no
+- calculate checksum: yes
+
+You select the following options:
+- dump gamecard image (xci)
+- dump gamecard initial data
+- dump gamecard id set
+
+You can dump the Certificate as well, but that is not needed for a No-Intro submission because it contains all of the personalized metadata unique to your cart, and No-Intro only catalogues reproducible metadata. Dumping the UID / header / cardinfo / HFS partitions are also not necessary here, although feel free to do so if you want.
+
+Drag and drop the files to your PC. You should have three files that look like this:
+
+![image](https://github.com/user-attachments/assets/84c5cde4-b11f-441d-898d-ea705c8b8204)
+
+Once you do, you're ready to begin using my tool.
+
 Download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/no-intro-switch-cart-submission-tool-v1.7.py) (right click -> Save As).
 
 You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) along with [NX Game Info](https://github.com/garoxas/NX_Game_Info) (and the appropriate prod.keys) before you get started.
