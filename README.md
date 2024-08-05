@@ -20,9 +20,9 @@ v1.7 - 2024-08-04
 
 So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files.
 
-First, dump your cart using the latest version of [nxdumptool-rewrite](https://github.com/DarkMatterCore/nxdumptool/releases) onto your SD card or to your PC via USB using the default settings.
+First, dump your cart using the latest version of [nxdumptool-rewrite](https://github.com/DarkMatterCore/nxdumptool/releases) onto your SD card or to your PC via USB using the default dump settings.
 
-Note, the default settings are as follows:
+Note, the default dump settings are as follows:
 - prepend key area: no
 - keep certificate: no
 - trim dump: no
