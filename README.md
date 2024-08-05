@@ -35,9 +35,9 @@ Within nxdumptool select the following options which will dump each file to your
 
 You can dump the Certificate as well, but that is not needed for a No-Intro submission because it contains all of the personalized metadata unique to your cart, and No-Intro only catalogues reproducible metadata. Dumping the UID / header / cardinfo / HFS partitions are also not necessary here, although feel free to do so if you want.
 
-Drag and drop the files to your PC. You should have three files that look like this:
+Move your files to your PC. You should have three files that look something like this:
 
-![image](https://github.com/user-attachments/assets/9fabcc8c-4e40-49de-be18-7d88d1786075)
+![image](https://github.com/user-attachments/assets/7f244bd2-2f2f-4ddc-8383-4029428502a0)
 
 Once you do, you're ready to begin using my tool.
 
