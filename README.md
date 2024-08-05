@@ -28,7 +28,7 @@ Note, the default settings are as follows:
 - trim dump: no
 - calculate checksum: yes
 
-You select the following options:
+Within nxdumptool select the following options which will dump each file to your SD card / PC via USB:
 - dump gamecard image (xci)
 - dump gamecard initial data
 - dump gamecard id set
