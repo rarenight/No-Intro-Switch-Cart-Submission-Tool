@@ -77,7 +77,7 @@ Then click the Media Info tab and fill out all the values manually. A dropdown m
 
 Click the File Info tab and then "Import Hashes."
 
-Drag and drop the (Initial Data) BIN file, then the Default XCI file into the window and their hashes will auto-populate. My program automatically generates the Full XCI hashes without having to create the file separately. Please note this takes a while for large files and the program appears to freeze while it's hashing, please be patient.
+Drag and drop the Initial Area (aka Initial Data) BIN file, then the Default XCI file into the window and their hashes will auto-populate. My program automatically generates the Full XCI hashes without having to create the file separately. Please note this takes a while for large files and the program appears to freeze while it's hashing, please be patient.
 
 ![image](https://github.com/user-attachments/assets/06d1f20d-5180-41cd-a3f9-7a1ef9bddcd0)
 
