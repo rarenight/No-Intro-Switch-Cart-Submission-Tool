@@ -61,13 +61,13 @@ Alternatively, you can paste the output that NX Game Info CLI provides you:
 
 Then press Import. You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. It should also auto-populate the Version and Update in the File Info tab. If for whatever reason the NX Game Info import messes up, you can always manually type the values. **NOTE: THIS IMPORT TOOL DOES NOT SUPPORT MULTI-TITLE CARTS YET.**
 
-Add the applicable cart region as stated on the last three digits of the serial on the front of your cart so all fields are filled out:
+Select the applicable cart region from the dropdown. You can find this on the last three digits of the serial that's on the front of your cart:
 
 ![image](https://github.com/user-attachments/assets/bbaa4a87-ec5f-47bd-a94c-ea2f3c24649c)
 
 (Note: Nintendo-published carts are considered to be "World" and are an exception to this rule)
 
-Then click the Dump Info tab, fill out the Dumper and Tool fields, and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
+Then click the Dump Info tab, fill out the Dumper and Tool fields (there's a dropdown as well with common dumping tool names), and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
 ![image](https://github.com/user-attachments/assets/d94b187a-db73-4e6f-b865-920a3fbf60a1)
 
