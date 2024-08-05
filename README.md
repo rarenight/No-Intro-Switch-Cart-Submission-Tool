@@ -53,7 +53,7 @@ First, load your default XCI within NX Game Info GUI, then export a CSV (File ->
 
 Then open my script, click "Import NX Game Info", and drag and drop the CSV file into the window. The values will auto-populate:
 
-![image](https://github.com/user-attachments/assets/e445ad23-97a6-47c6-994e-092d267e8684)
+![image](https://github.com/user-attachments/assets/ad434219-3349-4a22-8966-47e89f11be36)
 
 Alternatively, you can paste the output that NX Game Info CLI provides you:
 
@@ -63,23 +63,23 @@ Then press Import. You'll (hopefully) see the Game Name, Languages, and GameID1 
 
 Add the applicable cart region so all fields are filled out:
 
-![2 game info](https://github.com/user-attachments/assets/29369f45-bb6b-478d-a8a9-420cea7bde65)
+![image](https://github.com/user-attachments/assets/bbaa4a87-ec5f-47bd-a94c-ea2f3c24649c)
 
-Then click the Dump Info tab, fill out the Dumper and Tool fields, and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
+(Note: Nintendo-published carts are considered to be "World") Then click the Dump Info tab, fill out the Dumper and Tool fields, and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
-![3 dump info](https://github.com/user-attachments/assets/da533739-6462-4848-bf7a-55812ac6dd8a)
+![image](https://github.com/user-attachments/assets/d94b187a-db73-4e6f-b865-920a3fbf60a1)
 
 A custom dump date can be specified if your cart wasn't dumped the same day.
 
 Then click the Media Info tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
 
-![4 media info](https://github.com/user-attachments/assets/b19b1462-2efd-4a72-87a6-cdb7ed60cbfa)
+![image](https://github.com/user-attachments/assets/c1d22de7-c48e-46b9-acdc-3e81568afc3f)
 
 Click the File Info tab and then "Import Hashes."
 
 Drag and drop the Initial Area BIN file, then the Default XCI file into the window and their hashes will auto-populate. My program automatically generates the Full XCI hashes without having to create the file separately. Please note this takes a while for large files and the program appears to freeze while it's hashing, please be patient.
 
-![5 file info](https://github.com/user-attachments/assets/0b9b3e58-ac6d-4e6b-a37d-48c66e9c7a00)
+![image](https://github.com/user-attachments/assets/06d1f20d-5180-41cd-a3f9-7a1ef9bddcd0)
 
 My program also offers the option to generate a Full XCI file if you'd like a local copy for your collection.
 
