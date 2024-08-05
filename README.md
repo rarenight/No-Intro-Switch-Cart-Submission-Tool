@@ -65,7 +65,7 @@ Add the applicable cart region so all fields are filled out:
 
 ![image](https://github.com/user-attachments/assets/bbaa4a87-ec5f-47bd-a94c-ea2f3c24649c)
 
-(Note: Nintendo-published carts are considered to be "World") Then click the Dump Info tab, fill out the Dumper and Tool fields, and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
+(Note: Nintendo-published carts are considered to be "World") Then click the Dump Info tab, fill out the Dumper and Tool fields, and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
 ![image](https://github.com/user-attachments/assets/d94b187a-db73-4e6f-b865-920a3fbf60a1)
 
@@ -77,7 +77,7 @@ Then click the Media Info tab and fill out all the values manually. A dropdown m
 
 Click the File Info tab and then "Import Hashes."
 
-Drag and drop the Initial Area BIN file, then the Default XCI file into the window and their hashes will auto-populate. My program automatically generates the Full XCI hashes without having to create the file separately. Please note this takes a while for large files and the program appears to freeze while it's hashing, please be patient.
+Drag and drop the (Initial Data) BIN file, then the Default XCI file into the window and their hashes will auto-populate. My program automatically generates the Full XCI hashes without having to create the file separately. Please note this takes a while for large files and the program appears to freeze while it's hashing, please be patient.
 
 ![image](https://github.com/user-attachments/assets/06d1f20d-5180-41cd-a3f9-7a1ef9bddcd0)
 
