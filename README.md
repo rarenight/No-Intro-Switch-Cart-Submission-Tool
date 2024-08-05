@@ -69,13 +69,15 @@ Select the applicable cart region from the dropdown. You can find this on the la
 
 Then click the Dump Info tab, fill out the Dumper and Tool fields (there's a dropdown as well with common dump tool names), and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
-![image](https://github.com/user-attachments/assets/202c6da3-913d-43bd-8afd-4d8779aaa3fb)
+![image](https://github.com/user-attachments/assets/87d25a1c-eeed-4de6-8fd6-ab91384fecaa)
 
 A custom dump date can be specified if your cart wasn't dumped the same day.
 
 Then click the Media Info tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
 
 ![image](https://github.com/user-attachments/assets/c1d22de7-c48e-46b9-acdc-3e81568afc3f)
+
+Select "Loose Cart" if you don't have an original box for your cart.
 
 Click the File Info tab and then "Import Hashes."
 
