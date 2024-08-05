@@ -77,7 +77,7 @@ Then click the Media Info tab and fill out all the values manually. A dropdown m
 
 ![image](https://github.com/user-attachments/assets/c1d22de7-c48e-46b9-acdc-3e81568afc3f)
 
-Select "Loose Cart" if you don't have an original box for your cart.
+You can select "Loose Cart" if you don't have an original box for your cart.
 
 Click the File Info tab and then "Import Hashes."
 
