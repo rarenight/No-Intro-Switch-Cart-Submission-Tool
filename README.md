@@ -45,7 +45,9 @@ Once you do, you're ready to begin using my tool.
 
 You can download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/no-intro-switch-cart-submission-tool-v1.7.py) (right click -> Save As).
 
-You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) along with the [NX Game Info](https://github.com/garoxas/NX_Game_Info) CLI executable and its libraries in the same directory as the script before you get started.
+You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) along with the [NX Game Info](https://github.com/garoxas/NX_Game_Info) CLI executable and its libraries in the same directory as the script before you get started. Your directory should look like this:
+
+![image](https://github.com/user-attachments/assets/f0d2c1bd-3f7f-4be0-8724-42b39fc0b0cf)
 
 First open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window. **NOTE: THIS IMPORT TOOL DOES NOT SUPPORT FULL XCIS OR MULTI-TITLE CARTS YET.** The values will auto-populate:
 
