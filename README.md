@@ -49,7 +49,7 @@ You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) alo
 
 ![image](https://github.com/user-attachments/assets/6d57ba9d-af0d-43a5-b69a-74b2a0ac4894)
 
-First open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window. **NOTE: THIS IMPORT TOOL DOES NOT SUPPORT FULL XCIS OR MULTI-TITLE CARTS YET.** The values will auto-populate:
+To get started, open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window. **NOTE: THIS IMPORT TOOL DOES NOT SUPPORT FULL XCIS OR MULTI-TITLE CARTS YET.** The values will auto-populate:
 
 ![image](https://github.com/user-attachments/assets/7450a41d-50f1-47f7-a34d-532047290251)
 
