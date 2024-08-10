@@ -714,7 +714,8 @@ class ImportNXGameInfoDialog(QDialog):
             QMessageBox.critical(self, "FullXCI Detected", "FullXCIs cannot be auto-imported, please drag and drop a Default XCI")
             return
 
-        cli_output = subprocess.check_output(["./nxgameinfo_cli.exe", file_path], universal_newlines=True)
+        command = self.get_command(file_path)
+        cli_output = subprocess.check_output(command, universal_newlines=True)
         game_info = self.parse_nx_game_info_output(cli_output)
         self.parent().import_nx_game_info(game_info)
         self.accept()
@@ -728,6 +729,13 @@ class ImportNXGameInfoDialog(QDialog):
 
         return is_full_xci
 
+    def get_command(self, file_path):
+        system = platform.system()
+        if system == "Linux" or system == "Darwin":
+            command = ["mono", "nxgameinfo_cli.exe", file_path]
+        else:
+            command = ["nxgameinfo_cli.exe", file_path]
+        return command
 
     def parse_nx_game_info_output(self, output):
         lines = output.splitlines()
