@@ -79,7 +79,7 @@ Drag and drop the Initial Area (aka Initial Data) BIN file, then the Default XCI
 
 ![image](https://github.com/user-attachments/assets/925c5cd9-bb47-493c-a36c-085cae68dcf5)
 
-My program also offers the option to generate a Full XCI file if you'd like a local copy for your collection, as well as the option to truncate a Full XCI back to its original Default XCI and Initial Area.
+My program also offers the option to generate a Full XCI file if you'd like a local copy for your collection, as well as the option to truncate a Full XCI back to its original Default XCI and Initial Area components.
 
 When all fields are populated as shown in the above image, click "Generate Submission" and an XML file will be generated in your chosen directory.
 
