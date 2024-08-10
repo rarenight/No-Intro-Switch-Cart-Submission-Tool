@@ -6,7 +6,7 @@ v1.8 - 2024-08-10
 # To-do
 - **TESTING**
 - Add redump auto-detection and auto-fill from integrated DATs
-- Integrate Control NACP parsing functionality directly without dependencies
+- Integrate Control NACP parsing functionality in Python without EXE dependencies
 - Fix bug where newly-applied merged versions / updates via 4 6 1 6 don't take precedence
 - Add multi-title and FullXCI support when auto-importing
 - Add separate mode for Scene / P2P XCI submissions
