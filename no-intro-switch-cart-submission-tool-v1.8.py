@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QPlainTextEdit, QGroupBox, QDialog, QTabWidget, QCheckBox, QDateEdit, QSizePolicy
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel, QLineEdit, QPushButton, QFileDialog, QComboBox, QPlainTextEdit, QGroupBox, QDialog, QTabWidget, QCheckBox, QDateEdit, QSizePolicy, QMessageBox
 )
 from PyQt5.QtGui import QDragEnterEvent, QDropEvent, QRegExpValidator, QPalette
 from PyQt5.QtCore import Qt, QDate, QRegExp, QSettings
@@ -16,7 +16,8 @@ import platform
 class XMLGeneratorApp(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.7")
+
+        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v1.8")
         self.setGeometry(100, 100, 475, 475)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -61,7 +62,7 @@ class XMLGeneratorApp(QMainWindow):
         self.basic_info_layout = QVBoxLayout()
         
         self.basic_info_form_layout = QFormLayout()
-        self.import_button = QPushButton("Import NX Game Info")
+        self.import_button = QPushButton("Automatically Import Metadata")
         self.import_button.clicked.connect(self.open_import_nx_game_info_dialog)
         self.basic_info_form_layout.addRow(self.import_button)
         self.basic_info_labels = [
@@ -148,6 +149,10 @@ class XMLGeneratorApp(QMainWindow):
         self.generate_full_xci_button = QPushButton("Generate FullXCI File")
         self.generate_full_xci_button.clicked.connect(self.open_generate_full_xci_dialog)
         button_layout.addWidget(self.generate_full_xci_button)
+
+        self.truncate_full_xci_button = QPushButton("Truncate FullXCI File")
+        self.truncate_full_xci_button.clicked.connect(self.open_truncate_full_xci_dialog)
+        button_layout.addWidget(self.truncate_full_xci_button)
 
         self.file_info_layout.addLayout(button_layout)
 
@@ -377,6 +382,13 @@ class XMLGeneratorApp(QMainWindow):
         return format(crc32 & 0xFFFFFFFF, '08x')
 
     def open_import_nx_game_info_dialog(self):
+        required_files = ["nxgameinfo_cli.exe", "LibHac.dll"]
+        missing_files = [file for file in required_files if not os.path.exists(file)]
+
+        if missing_files:
+            QMessageBox.critical(self, "Missing Files", f"The following required files are missing: {', '.join(missing_files)}\nPlease ensure they are in the same directory as this script")
+            return
+
         dialog = ImportNXGameInfoDialog(self)
         dialog.exec_()
     
@@ -391,6 +403,10 @@ class XMLGeneratorApp(QMainWindow):
 
     def open_generate_full_xci_dialog(self):
         dialog = GenerateFullXCIDialog(self)
+        dialog.exec_()
+
+    def open_truncate_full_xci_dialog(self):
+        dialog = TruncateFullXCIDialog(self)
         dialog.exec_()
 
     def prompt_for_initial_area(self):
@@ -427,7 +443,7 @@ class XMLGeneratorApp(QMainWindow):
         layout = QVBoxLayout()
         self.calculate_hashes_dialog.setLayout(layout)
         
-        label = QLabel("Drag and Drop Default XCI Here\n\nIf the program appears to freeze, it's just calculating all the hashes which can take a while\n\nPlease be patient")
+        label = QLabel("Drag and Drop Default XCI here to calculate the hashes\n\nThe program will appear to freeze, it's just calculating all the hashes which can take a while\n\nPlease be patient")
         label.setAlignment(Qt.AlignCenter)
         layout.addWidget(label)
         
@@ -441,12 +457,25 @@ class XMLGeneratorApp(QMainWindow):
         for url in event.mimeData().urls():
             file_path = url.toLocalFile()
             if file_path.endswith('.xci'):
-                self.default_xci_path = file_path
-                self.process_file(file_path)
-                self.calculate_hashes_dialog.close()
-                self.calculate_full_xci_hashes()
-                break
+                if self.is_full_xci(file_path):
+                    QMessageBox.critical(self, "Invalid XCI", "This is a FullXCI, please drag and drop a Default XCI")
+                    return
+                else:
+                    self.default_xci_path = file_path
+                    self.process_file(file_path)
+                    self.calculate_hashes_dialog.close()
+                    self.calculate_full_xci_hashes()
+                    break
 
+    def is_full_xci(self, file_path):
+        with open(file_path, 'rb') as file:
+            file.seek(0x1A0)
+            data_segment = file.read(96)
+
+        is_full_xci = all(b == 0 for b in data_segment)
+
+        return is_full_xci
+    
     def calculate_full_xci_hashes(self):
         with open(self.initial_area_path, 'rb') as initial_area_file:
             initial_area_data = initial_area_file.read()
@@ -659,21 +688,14 @@ class XMLGeneratorApp(QMainWindow):
 class ImportNXGameInfoDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Import NX Game Info")
-        self.setGeometry(100, 100, 600, 400)
+        self.setWindowTitle("Import Metadata")
+        self.setGeometry(100, 100, 400, 200)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
         
-        self.drag_drop_label = QLabel("Paste the NX Game Info CLI output below.\nOr, output a CSV file (File -> Export -> CSV) from the GUI and drag and drop it into the window\n\nDrag and drop CSV file >> HERE <<\n")
+        self.drag_drop_label = QLabel("Drag and drop Default XCI here to automatically import metadata from the Control NACP inside the XCI\n\nNote: FullXCIs and multi-title carts aren't supported\n\n nxgameinfo_cli.exe (with associated libraries) must be in the same directory as the script")
         self.drag_drop_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.drag_drop_label)
-        
-        self.output_text_edit = QPlainTextEdit()
-        self.layout.addWidget(self.output_text_edit)
-        
-        self.import_button = QPushButton("Import")
-        self.import_button.clicked.connect(self.import_output)
-        self.layout.addWidget(self.import_button)
 
         self.setAcceptDrops(True)
 
@@ -684,19 +706,28 @@ class ImportNXGameInfoDialog(QDialog):
     def dropEvent(self, event: QDropEvent):
         for url in event.mimeData().urls():
             file_path = url.toLocalFile()
-            self.process_file(file_path)
+            if file_path.endswith('.xci'):
+                self.process_file(file_path)
 
     def process_file(self, file_path):
-        if file_path.endswith('.csv'):
-            with open(file_path, 'r') as file:
-                content = file.read()
-            self.output_text_edit.setPlainText(content)
+        if self.is_full_xci(file_path):
+            QMessageBox.critical(self, "FullXCI Detected", "FullXCIs cannot be auto-imported, please drag and drop a Default XCI")
+            return
 
-    def import_output(self):
-        output = self.output_text_edit.toPlainText()
-        game_info = self.parse_nx_game_info_output(output)
+        cli_output = subprocess.check_output(["./nxgameinfo_cli.exe", file_path], universal_newlines=True)
+        game_info = self.parse_nx_game_info_output(cli_output)
         self.parent().import_nx_game_info(game_info)
         self.accept()
+
+    def is_full_xci(self, file_path):
+        with open(file_path, 'rb') as file:
+            file.seek(0x1A0)
+            data_segment = file.read(96)
+
+        is_full_xci = all(b == 0 for b in data_segment)
+
+        return is_full_xci
+
 
     def parse_nx_game_info_output(self, output):
         lines = output.splitlines()
@@ -725,23 +756,13 @@ class ImportNXGameInfoDialog(QDialog):
                     languages = line.split(":")[1].strip().replace("\"", "").split(',')
                     transformed_langs = set(lang_map.get(lang.strip(), lang.strip()) for lang in languages)
                     game_info['languages'] = ','.join(sorted(transformed_langs))
-        elif output.startswith("# publisher NX Game Info"):
-            reader = csv.reader(lines[3:])
-            for fields in reader:
-                game_info['title_id'] = fields[1].strip()
-                game_info['title_name'] = fields[2].strip()
-                game_info['display_version'] = fields[3].strip()
-                game_info['version'] = fields[4].strip()
-                languages = fields[12].strip().replace("\"", "").split(',')
-                transformed_langs = set(lang_map.get(lang.strip(), lang.strip()) for lang in languages)
-                game_info['languages'] = ','.join(sorted(transformed_langs))
 
         return game_info
 
 class GenerateFullXCIDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Generate Full XCI File")
+        self.setWindowTitle("Generate FullXCI File")
         self.setGeometry(100, 100, 400, 200)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
@@ -768,16 +789,30 @@ class GenerateFullXCIDialog(QDialog):
                 if file_path.endswith('.bin') and os.path.getsize(file_path) == 512:
                     self.initial_area_path = file_path
                     self.state = 1
-                    self.drag_drop_label.setText("Drag and Drop Default XCI Here\n\nIf the program appears to freeze, it's just generating the Full XCI which can take a while\n\nPlease be patient")
+                    self.drag_drop_label.setText("Drag and Drop Default XCI here to convert it to a FullXCI\n\nThe program will appear to freeze, it's just generating the FullXCI which can take a while\n\nPlease be patient")
                 else:
                     self.drag_drop_label.setText("Please drop an Initial Area .bin file that has a size of 512 bytes")
             elif self.state == 1:
                 if file_path.endswith('.xci'):
-                    self.default_xci_path = file_path
-                    self.generate_full_xci()
-                    self.accept()
+                    if self.is_full_xci(file_path):
+                        QMessageBox.critical(self, "Invalid XCI", "This is a FullXCI, please drag and drop a Default XCI")
+                        return
+                    else:
+                        self.default_xci_path = file_path
+                        new_full_xci_path = self.generate_full_xci()
+                        QMessageBox.information(self, "Success", f"A FullXCI file has been created:\n\n{new_full_xci_path}")
+                        self.accept()
                 else:
                     self.drag_drop_label.setText("Please drop a .xci file")
+    
+    def is_full_xci(self, file_path):
+        with open(file_path, 'rb') as file:
+            file.seek(0x1A0)
+            data_segment = file.read(96)
+
+        is_full_xci = all(b == 0 for b in data_segment)
+
+        return is_full_xci
     
     def generate_full_xci(self):
         default_xci_filename = os.path.basename(self.default_xci_path)
@@ -790,6 +825,71 @@ class GenerateFullXCIDialog(QDialog):
             with open(self.default_xci_path, 'rb') as default_xci:
                 full_xci.write(default_xci.read())
         os.startfile(os.path.dirname(full_xci_path))
+        return full_xci_path
+
+class TruncateFullXCIDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Truncate FullXCI File")
+        self.setGeometry(100, 100, 400, 200)
+        self.layout = QVBoxLayout()
+        self.setLayout(self.layout)
+
+        self.drag_drop_label = QLabel("Drag and drop FullXCI here to convert it back to a Default XCI and an Initial Area\n\nThe program will appear to freeze, it's just truncating the FullXCI which can take a while\n\nPlease be patient")
+        self.drag_drop_label.setAlignment(Qt.AlignCenter)
+        self.layout.addWidget(self.drag_drop_label)
+
+        self.setAcceptDrops(True)
+
+    def dragEnterEvent(self, event: QDragEnterEvent):
+        if event.mimeData().hasUrls():
+            event.acceptProposedAction()
+
+    def dropEvent(self, event: QDropEvent):
+        for url in event.mimeData().urls():
+            file_path = url.toLocalFile()
+            if file_path.endswith('.xci'):
+                if self.is_full_xci(file_path):
+                    self.process_file(file_path)
+                else:
+                    QMessageBox.critical(self, "Invalid XCI", "This is a Default XCI, please drag and drop a FullXCI")
+            else:
+                self.drag_drop_label.setText("Please drop a .xci file")
+
+    def is_full_xci(self, file_path):
+        with open(file_path, 'rb') as file:
+            file.seek(0x1A0)
+            data_segment = file.read(96)
+
+        is_full_xci = all(b == 0 for b in data_segment)
+
+        return is_full_xci
+    
+    def process_file(self, file_path):
+        with open(file_path, 'rb') as file:
+            initial_area = file.read(512)
+            zeroes = file.read(3584)
+            rest_of_file = file.read()
+
+        if len(initial_area) == 512 and len(zeroes) == 3584 and all(b == 0 for b in zeroes):
+            base_name = os.path.splitext(os.path.basename(file_path))[0]
+            
+            if base_name.endswith(" (Full XCI)"):
+                base_name = base_name[:-11]
+
+            initial_area_path = os.path.join(os.path.dirname(file_path), f"{base_name} (Initial Area).bin")
+            default_xci_path = os.path.join(os.path.dirname(file_path), f"{base_name} (Default XCI).xci")
+
+            with open(initial_area_path, 'wb') as initial_area_file:
+                initial_area_file.write(initial_area)
+
+            with open(default_xci_path, 'wb') as default_xci_file:
+                default_xci_file.write(rest_of_file)
+
+            QMessageBox.information(self, "Success", f"Default XCI and Initial Area files have been created:\n\n{initial_area_path}\n{default_xci_path}")
+            self.accept()
+        else:
+            QMessageBox.critical(self, "Error", "The file does not match the expected FullXCI format")
 
 class GenerateCardIDDialog(QDialog):
     def __init__(self, parent=None):
