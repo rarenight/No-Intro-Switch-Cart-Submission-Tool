@@ -18,7 +18,7 @@ v1.8 - 2024-08-10
 
 # Readme
 
-So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files.
+So, you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files. It can also create a Full XCI via drag and drop and convert a Full XCI back to its Default XCI + Initial Area components.
 
 First, dump your cart using the latest version of [nxdumptool-rewrite](https://github.com/DarkMatterCore/nxdumptool/releases) onto your SD card or to your PC via USB using the default dump settings.
 
@@ -79,7 +79,7 @@ Drag and drop the Initial Area (aka Initial Data) BIN file, then the Default XCI
 
 ![image](https://github.com/user-attachments/assets/925c5cd9-bb47-493c-a36c-085cae68dcf5)
 
-My program also offers the option to generate a Full XCI file if you'd like a local copy for your collection, as well as the option to truncate a Full XCI back to its original Default XCI and Initial Area components.
+Also on the File Info tab is the option to generate a Full XCI file if you'd like a local copy for your collection, as well as the option to truncate a Full XCI back to its original Default XCI and Initial Area components.
 
 When all fields are populated as shown in the above image, click "Generate Submission" and an XML file will be generated in your chosen directory.
 
