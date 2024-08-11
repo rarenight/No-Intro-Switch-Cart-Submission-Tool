@@ -132,3 +132,6 @@ You can then continue onto the File Info tab and drag and drop the newly-extract
 
 ![image](https://github.com/user-attachments/assets/02e37699-b4dc-4c6d-9b39-f292d909687b)
 
+![image](https://github.com/user-attachments/assets/8e2c518d-9798-452b-9ca2-2d5ddf39d00d)
+
+
