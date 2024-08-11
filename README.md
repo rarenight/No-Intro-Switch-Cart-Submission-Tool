@@ -128,4 +128,7 @@ Once extracted, the directory will look like this:
 
 ![image](https://github.com/user-attachments/assets/807c281c-5cc4-41e2-9a42-c2a4ce0a8bc9)
 
-You can then continue onto the File Info tab and drag and drop the newly-extracted default XCI onto the Calculate Hashes window.
+You can then continue onto the File Info tab and drag and drop the newly-extracted default XCI onto the Calculate Hashes window. The XML file it generates will be tailor-made for an easy scene release import:
+
+![image](https://github.com/user-attachments/assets/02e37699-b4dc-4c6d-9b39-f292d909687b)
+
