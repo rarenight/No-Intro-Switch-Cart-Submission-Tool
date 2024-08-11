@@ -102,9 +102,7 @@ When creating a Switch cart submission to No-Intro, please upload the following:
 
 This is for advanced users who want to easily convert new Scene releases into easily-imported scene releases.
 
-Fill out Game Info and Media Info to the best of your abilities (leave Media Info values blank if the scene release doesn't provide them. A new Scene Cart tab becomes enabled. In order for the script to parse a scene release correctly, you need to select an unmodified Scene Directory with .rar files, a .nfo file, and a .sfv file all present in the original scene directory like this:
-
-Here is an example:
+Fill out Game Info and Media Info to the best of your abilities. Leave Media Info values blank if the scene release doesn't provide them. A new Scene Cart tab becomes enabled. In order for the script to parse a scene release correctly, you need to select an unmodified Scene Directory with .rar files, a .nfo file, and a .sfv file all present in the original scene directory like this:
 
 ![image](https://github.com/user-attachments/assets/37391fa5-3391-4ca7-acea-eda274fa1653)
 
