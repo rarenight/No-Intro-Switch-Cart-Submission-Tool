@@ -509,11 +509,36 @@ class XMLGeneratorApp(QMainWindow):
         self.update_hashes(file_path)
 
     def update_hashes(self, file_path):
-        size = self.calculate_size(file_path)
-        crc32 = self.calculate_crc32(file_path)
-        md5 = self.calculate_hash(file_path, 'md5')
-        sha1 = self.calculate_hash(file_path, 'sha1')
-        sha256 = self.calculate_hash(file_path, 'sha256')
+        print(f"Starting hash calculation for: {file_path}")
+        total_size = os.path.getsize(file_path)
+        processed_size = 0
+
+        size = str(total_size)
+        print("Calculated file size.")
+        
+        crc32 = 0
+        hasher_md5 = hashlib.md5()
+        hasher_sha1 = hashlib.sha1()
+        hasher_sha256 = hashlib.sha256()
+
+        with open(file_path, 'rb') as f:
+            while chunk := f.read(4096):
+                processed_size += len(chunk)
+                crc32 = zlib.crc32(chunk, crc32)
+                hasher_md5.update(chunk)
+                hasher_sha1.update(chunk)
+                hasher_sha256.update(chunk)
+
+                progress = (processed_size / total_size) * 100
+                sys.stdout.write(f"\rCalculating hashes... {progress:.0f}% completed")
+                sys.stdout.flush()
+
+        print("\nCompleted hash calculation for:", file_path)
+
+        crc32 = format(crc32 & 0xFFFFFFFF, '08x')
+        md5 = hasher_md5.hexdigest()
+        sha1 = hasher_sha1.hexdigest()
+        sha256 = hasher_sha256.hexdigest()
 
         if file_path.endswith('.xci'):
             self.default_xci_path = file_path
@@ -615,7 +640,7 @@ class XMLGeneratorApp(QMainWindow):
         layout = QVBoxLayout()
         self.calculate_hashes_dialog.setLayout(layout)
         
-        label = QLabel("Drag and Drop Default XCI here to calculate the hashes\n\nThe program will appear to freeze, it's just calculating all the hashes which can take a while\n\nPlease be patient")
+        label = QLabel("Drag and Drop Default XCI here to calculate the hashes\n\nThe program will appear to freeze, it's just calculating all the hashes which can take a while\n\nCheck the terminal for the current status\n\nPlease be patient")
         label.setAlignment(Qt.AlignCenter)
         layout.addWidget(label)
         
@@ -1175,7 +1200,7 @@ class GenerateFullXCIDialog(QDialog):
                 if file_path.endswith('.bin') and os.path.getsize(file_path) == 512:
                     self.initial_area_path = file_path
                     self.state = 1
-                    self.drag_drop_label.setText("Drag and Drop Default XCI here to convert it to a FullXCI\n\nThe program will appear to freeze, it's just generating the FullXCI which can take a while\n\nPlease be patient")
+                    self.drag_drop_label.setText("Drag and Drop Default XCI here to convert it to a FullXCI\n\nThe program will appear to freeze, it's just generating the FullXCI which can take a while\n\nCheck the terminal for the current status\n\nPlease be patient")
                 else:
                     self.drag_drop_label.setText("Please drop an Initial Area .bin file that has a size of 512 bytes")
             elif self.state == 1:
@@ -1204,12 +1229,35 @@ class GenerateFullXCIDialog(QDialog):
         default_xci_filename = os.path.basename(self.default_xci_path)
         full_xci_filename = os.path.splitext(default_xci_filename)[0] + " (Full XCI)" + os.path.splitext(default_xci_filename)[1]
         full_xci_path = os.path.join(os.path.dirname(self.default_xci_path), full_xci_filename)
+
+        print("Generating FullXCI file...")
+        total_size = os.path.getsize(self.initial_area_path) + 3584 + os.path.getsize(self.default_xci_path)
+        processed_size = 0
+
         with open(full_xci_path, 'wb') as full_xci:
             with open(self.initial_area_path, 'rb') as initial_area:
-                full_xci.write(initial_area.read())
+                while chunk := initial_area.read(4096):
+                    full_xci.write(chunk)
+                    processed_size += len(chunk)
+                    progress = (processed_size / total_size) * 100
+                    sys.stdout.write(f"\rWriting Initial Area... {progress:.0f}% completed")
+                    sys.stdout.flush()
+
             full_xci.write(b'\x00' * 3584)
+            processed_size += 3584
+            progress = (processed_size / total_size) * 100
+            sys.stdout.write(f"\rWriting zeroes... {progress:.0f}% completed")
+            sys.stdout.flush()
+
             with open(self.default_xci_path, 'rb') as default_xci:
-                full_xci.write(default_xci.read())
+                while chunk := default_xci.read(4096):
+                    full_xci.write(chunk)
+                    processed_size += len(chunk)
+                    progress = (processed_size / total_size) * 100
+                    sys.stdout.write(f"\rWriting Default XCI... {progress:.0f}% completed")
+                    sys.stdout.flush()
+
+        print(f"\nFullXCI file generated: {full_xci_path}")
         os.startfile(os.path.dirname(full_xci_path))
         return full_xci_path
 
@@ -1221,7 +1269,7 @@ class TruncateFullXCIDialog(QDialog):
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
 
-        self.drag_drop_label = QLabel("Drag and drop FullXCI here to convert it back to a Default XCI and an Initial Area\n\nThe program will appear to freeze, it's just truncating the FullXCI which can take a while\n\nPlease be patient")
+        self.drag_drop_label = QLabel("Drag and drop FullXCI here to convert it back to a Default XCI and an Initial Area\n\nThe program will appear to freeze, it's just truncating the FullXCI which can take a while\n\nCheck the terminal for the current status\n\nPlease be patient")
         self.drag_drop_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.drag_drop_label)
 
@@ -1252,10 +1300,28 @@ class TruncateFullXCIDialog(QDialog):
         return is_full_xci
     
     def process_file(self, file_path):
+        print(f"Starting FullXCI truncation for: {file_path}")
+        total_size = os.path.getsize(file_path)
+        processed_size = 0
+
         with open(file_path, 'rb') as file:
             initial_area = file.read(512)
+            processed_size += 512
+            progress = (processed_size / total_size) * 100
+            sys.stdout.write(f"\rRead Initial Area... {progress:.0f}% completed")
+            sys.stdout.flush()
+
             zeroes = file.read(3584)
+            processed_size += 3584
+            progress = (processed_size / total_size) * 100
+            sys.stdout.write(f"\rRead zero padding... {progress:.0f}% completed")
+            sys.stdout.flush()
+
             rest_of_file = file.read()
+            processed_size += len(rest_of_file)
+            progress = (processed_size / total_size) * 100
+            sys.stdout.write(f"\rRead Default XCI data... {progress:.0f}% completed")
+            sys.stdout.flush()
 
         if len(initial_area) == 512 and len(zeroes) == 3584 and all(b == 0 for b in zeroes):
             base_name = os.path.splitext(os.path.basename(file_path))[0]
@@ -1268,13 +1334,26 @@ class TruncateFullXCIDialog(QDialog):
 
             with open(initial_area_path, 'wb') as initial_area_file:
                 initial_area_file.write(initial_area)
+                print(f"\nInitial Area written to: {initial_area_path}")
 
             with open(default_xci_path, 'wb') as default_xci_file:
-                default_xci_file.write(rest_of_file)
+                total_write_size = len(rest_of_file)
+                written_size = 0
+                for i in range(0, total_write_size, 4096):
+                    chunk = rest_of_file[i:i + 4096]
+                    default_xci_file.write(chunk)
+                    written_size += len(chunk)
+                    progress = (written_size / total_write_size) * 100
+                    sys.stdout.write(f"\rWriting Default XCI... {progress:.0f}% completed")
+                    sys.stdout.flush()
 
+                print(f"\nDefault XCI written to: {default_xci_path}")
+
+            print(f"Truncation completed for: {file_path}")
             QMessageBox.information(self, "Success", f"Default XCI and Initial Area files have been created:\n\n{initial_area_path}\n{default_xci_path}")
             self.accept()
         else:
+            print("The file does not match the expected FullXCI format")
             QMessageBox.critical(self, "Error", "The file does not match the expected FullXCI format")
 
 class GenerateCardIDDialog(QDialog):
