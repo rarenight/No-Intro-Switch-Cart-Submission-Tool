@@ -1311,50 +1311,37 @@ class TruncateFullXCIDialog(QDialog):
             sys.stdout.write(f"\rRead Initial Area... {progress:.0f}% completed")
             sys.stdout.flush()
 
-            zeroes = file.read(3584)
+            file.seek(3584, os.SEEK_CUR)
             processed_size += 3584
             progress = (processed_size / total_size) * 100
-            sys.stdout.write(f"\rRead zero padding... {progress:.0f}% completed")
+            sys.stdout.write(f"\rSkipped zero padding... {progress:.0f}% completed")
             sys.stdout.flush()
 
-            rest_of_file = file.read()
-            processed_size += len(rest_of_file)
-            progress = (processed_size / total_size) * 100
-            sys.stdout.write(f"\rRead Default XCI data... {progress:.0f}% completed")
-            sys.stdout.flush()
-
-        if len(initial_area) == 512 and len(zeroes) == 3584 and all(b == 0 for b in zeroes):
             base_name = os.path.splitext(os.path.basename(file_path))[0]
-            
             if base_name.endswith(" (Full XCI)"):
                 base_name = base_name[:-11]
 
             initial_area_path = os.path.join(os.path.dirname(file_path), f"{base_name} (Initial Area).bin")
-            default_xci_path = os.path.join(os.path.dirname(file_path), f"{base_name} (Default XCI).xci")
-
             with open(initial_area_path, 'wb') as initial_area_file:
                 initial_area_file.write(initial_area)
                 print(f"\nInitial Area written to: {initial_area_path}")
 
+            default_xci_path = os.path.join(os.path.dirname(file_path), f"{base_name} (Default XCI).xci")
+
             with open(default_xci_path, 'wb') as default_xci_file:
-                total_write_size = len(rest_of_file)
-                written_size = 0
-                for i in range(0, total_write_size, 4096):
-                    chunk = rest_of_file[i:i + 4096]
+                while True:
+                    chunk = file.read(4096)
+                    if not chunk:
+                        break
                     default_xci_file.write(chunk)
-                    written_size += len(chunk)
-                    progress = (written_size / total_write_size) * 100
+                    processed_size += len(chunk)
+                    progress = (processed_size / total_size) * 100
                     sys.stdout.write(f"\rWriting Default XCI... {progress:.0f}% completed")
                     sys.stdout.flush()
 
-                print(f"\nDefault XCI written to: {default_xci_path}")
-
-            print(f"Truncation completed for: {file_path}")
-            QMessageBox.information(self, "Success", f"Default XCI and Initial Area files have been created:\n\n{initial_area_path}\n{default_xci_path}")
+            print(f"\nDefault XCI written to: {default_xci_path}")
+            QMessageBox.information(self, "Success", f"Default XCI file has been created:\n\n{default_xci_path}")
             self.accept()
-        else:
-            print("The file does not match the expected FullXCI format")
-            QMessageBox.critical(self, "Error", "The file does not match the expected FullXCI format")
 
 class GenerateCardIDDialog(QDialog):
     def __init__(self, parent=None):
