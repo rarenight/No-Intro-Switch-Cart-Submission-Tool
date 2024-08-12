@@ -1404,7 +1404,7 @@ class GenerateCardIDDialog(QDialog):
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
         
-        self.drag_drop_label = QLabel("Drag and Drop Card ID .bin File Here:")
+        self.drag_drop_label = QLabel("Drag and Drop (Card ID Set) .bin File Here:")
         self.drag_drop_label.setAlignment(Qt.AlignCenter)
         self.layout.addWidget(self.drag_drop_label)
         
