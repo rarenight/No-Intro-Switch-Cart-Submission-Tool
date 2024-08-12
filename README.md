@@ -52,7 +52,7 @@ To get started, open my script, click "Automatically Import Metadata", and drag 
 
 When dragged and dropped, the values will auto-populate:
 
-![image](https://github.com/user-attachments/assets/a4a0178f-89a9-4cd3-b0d2-22101621dbb3)
+![image](https://github.com/user-attachments/assets/93c1502e-fe25-4281-9f52-c797658beb97)
 
 You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. . It should also auto-populate the Version and Update in the File Info tab. If for whatever reason the metadata import messes up, you can always manually type or adjust the values. You can ignore the "Scene Release" checkbox if you're submitting a personal dump. If you're adding scene release, check it and skip to the Scene Release section at the bottom.
 
