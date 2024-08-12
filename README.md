@@ -46,7 +46,11 @@ You'll need Python with the PyQt5 dependency installed (`pip install pyqt5`) alo
 
 ![image](https://github.com/user-attachments/assets/6d57ba9d-af0d-43a5-b69a-74b2a0ac4894)
 
-To get started, open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window. **NOTE: THIS IMPORT TOOL DOES NOT SUPPORT FULL XCIS OR MULTI-TITLE CARTS YET.** The values will auto-populate:
+To get started, open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window.
+
+**NOTE: THIS TOOL DOES NOT SUPPORT IMPORTING FULL XCIS OR MULTI-TITLE CARTS YET. It can only truncate FullXCIs into Default XCIs + Initial Areas for now.** 
+
+When dragged and dropped, the values will auto-populate:
 
 ![image](https://github.com/user-attachments/assets/a4a0178f-89a9-4cd3-b0d2-22101621dbb3)
 
