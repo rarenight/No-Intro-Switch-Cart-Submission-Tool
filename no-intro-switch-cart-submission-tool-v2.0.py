@@ -677,38 +677,90 @@ class XMLGeneratorApp(QMainWindow):
         if self.scene_release_checkbox.isChecked():
             if self.default_xci_path:
                 with open(self.default_xci_path, 'rb') as default_xci_file:
-                    default_xci_data = default_xci_file.read()
+                    total_size = os.path.getsize(self.default_xci_path)
+                    processed_size = 0
 
-                size = str(len(default_xci_data))
-                crc32 = format(zlib.crc32(default_xci_data) & 0xFFFFFFFF, '08x')
-                md5 = hashlib.md5(default_xci_data).hexdigest()
-                sha1 = hashlib.sha1(default_xci_data).hexdigest()
-                sha256 = hashlib.sha256(default_xci_data).hexdigest()
+                    crc32 = 0
+                    hasher_md5 = hashlib.md5()
+                    hasher_sha1 = hashlib.sha1()
+                    hasher_sha256 = hashlib.sha256()
 
-                self.file_inputs["File Size 1"].setText(size)
-                self.file_inputs["CRC32 1"].setText(crc32)
-                self.file_inputs["MD5 1"].setText(md5)
-                self.file_inputs["SHA1 1"].setText(sha1)
-                self.file_inputs["SHA256 1"].setText(sha256)
+                    while chunk := default_xci_file.read(4194304):
+                        processed_size += len(chunk)
+                        crc32 = zlib.crc32(chunk, crc32)
+                        hasher_md5.update(chunk)
+                        hasher_sha1.update(chunk)
+                        hasher_sha256.update(chunk)
+
+                        progress = (processed_size / total_size) * 100
+                        sys.stdout.write(f"\rCalculating hashes for Full XCI... {progress:.0f}% completed")
+                        sys.stdout.flush()
+
+                    print("\nCompleted hash calculation for Full XCI")
+
+                    crc32 = format(crc32 & 0xFFFFFFFF, '08x')
+                    md5 = hasher_md5.hexdigest()
+                    sha1 = hasher_sha1.hexdigest()
+                    sha256 = hasher_sha256.hexdigest()
+
+                    self.file_inputs["File Size 1"].setText(str(total_size))
+                    self.file_inputs["CRC32 1"].setText(crc32)
+                    self.file_inputs["MD5 1"].setText(md5)
+                    self.file_inputs["SHA1 1"].setText(sha1)
+                    self.file_inputs["SHA256 1"].setText(sha256)
 
             return
 
         if self.initial_area_path and self.default_xci_path:
+            total_size = os.path.getsize(self.initial_area_path) + 3584 + os.path.getsize(self.default_xci_path)
+            processed_size = 0
+
+            crc32 = 0
+            hasher_md5 = hashlib.md5()
+            hasher_sha1 = hashlib.sha1()
+            hasher_sha256 = hashlib.sha256()
+
             with open(self.initial_area_path, 'rb') as initial_area_file:
-                initial_area_data = initial_area_file.read()
+                while chunk := initial_area_file.read(4194304):
+                    processed_size += len(chunk)
+                    crc32 = zlib.crc32(chunk, crc32)
+                    hasher_md5.update(chunk)
+                    hasher_sha1.update(chunk)
+                    hasher_sha256.update(chunk)
+
+                    progress = (processed_size / total_size) * 100
+                    sys.stdout.write(f"\rProcessing Initial Area... {progress:.0f}% completed")
+                    sys.stdout.flush()
 
             zeroes_data = b'\x00' * 3584
+            crc32 = zlib.crc32(zeroes_data, crc32)
+            hasher_md5.update(zeroes_data)
+            hasher_sha1.update(zeroes_data)
+            hasher_sha256.update(zeroes_data)
+            processed_size += 3584
+            progress = (processed_size / total_size) * 100
+            sys.stdout.write(f"\rProcessing Zero Padding... {progress:.0f}% completed")
+            sys.stdout.flush()
 
             with open(self.default_xci_path, 'rb') as default_xci_file:
-                default_xci_data = default_xci_file.read()
+                while chunk := default_xci_file.read(4194304):
+                    processed_size += len(chunk)
+                    crc32 = zlib.crc32(chunk, crc32)
+                    hasher_md5.update(chunk)
+                    hasher_sha1.update(chunk)
+                    hasher_sha256.update(chunk)
 
-            full_xci_data = initial_area_data + zeroes_data + default_xci_data
+                    progress = (processed_size / total_size) * 100
+                    sys.stdout.write(f"\rProcessing Default XCI... {progress:.0f}% completed")
+                    sys.stdout.flush()
 
-            size = str(len(full_xci_data))
-            crc32 = format(zlib.crc32(full_xci_data) & 0xFFFFFFFF, '08x')
-            md5 = hashlib.md5(full_xci_data).hexdigest()
-            sha1 = hashlib.sha1(full_xci_data).hexdigest()
-            sha256 = hashlib.sha256(full_xci_data).hexdigest()
+            print("\nCompleted hash calculation for Full XCI")
+
+            size = str(total_size)
+            crc32 = format(crc32 & 0xFFFFFFFF, '08x')
+            md5 = hasher_md5.hexdigest()
+            sha1 = hasher_sha1.hexdigest()
+            sha256 = hasher_sha256.hexdigest()
 
             self.file_inputs["File Size 3"].setText(size)
             self.file_inputs["CRC32 3"].setText(crc32)
@@ -717,6 +769,7 @@ class XMLGeneratorApp(QMainWindow):
             self.file_inputs["SHA256 3"].setText(sha256)
 
         self.update_display()
+
 
     def update_mediastamp(self):
         media_serial2 = self.serial_details_inputs['Media Serial 2'].text()
