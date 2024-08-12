@@ -19,7 +19,7 @@ So, you want to submit a Switch cart to No-Intro? I developed a quick and easy P
 
 First, dump your cart using the latest version of [nxdumptool-rewrite](https://github.com/DarkMatterCore/nxdumptool/releases) onto your SD card or to your PC via USB using the default dump settings.
 
-Note, the default dump settings are as follows:
+The default dump settings are as follows:
 - prepend key area: no
 - keep certificate: no
 - trim dump: no
