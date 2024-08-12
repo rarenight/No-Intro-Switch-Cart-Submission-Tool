@@ -120,7 +120,7 @@ Verify Scene RARs uses a built-in verification module along with the SFV file to
 
 ![image](https://github.com/user-attachments/assets/5780936b-45ae-418a-8952-84553831099e)
 
-And Extract Scene RARs extracts the .xci, and deletes the RAR files afterwards unless the "Delete RARs after extraction" is unchecked
+And Extract Scene RARs extracts the .xci, and deletes the RAR files afterwards unless the "Delete RARs after extraction" is unchecked.
 
 Once extracted, the directory will look like this:
 
