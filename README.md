@@ -41,7 +41,7 @@ Once you do, you're ready to begin using my tool.
 
 You can download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/no-intro-switch-cart-submission-tool-v2.2.py) (right click -> Save As).
 
-If you want to use the automatic import: You'll need Python with the PyQt5 dependency installed (`pip install pyqt5` and `pip install rarfile` or just install the `requirements.txt`) along with up-to-date `prod.keys` and [NX Game Info](https://github.com/garoxas/NX_Game_Info) CLI executable and its libraries in the same directory as the script before you get started. Your directory should look like this:
+If you want to use the automatic import: You'll need Python with the PyQt5 dependency installed (`pip install pyqt5` or just install the `requirements.txt`) along with up-to-date `prod.keys` and [NX Game Info](https://github.com/garoxas/NX_Game_Info) CLI executable and its libraries in the same directory as the script before you get started. Your directory should look like this:
 
 ![image](https://github.com/user-attachments/assets/6d57ba9d-af0d-43a5-b69a-74b2a0ac4894)
 
