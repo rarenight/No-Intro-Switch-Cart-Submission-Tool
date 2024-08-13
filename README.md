@@ -124,7 +124,7 @@ Verify Scene RARs uses a built-in verification module along with the SFV file to
 
 ![image](https://github.com/user-attachments/assets/97211dd8-7a6e-427a-8e92-68677dba8246)
 
-Once you extract the XCI, you can then continue onto the File Info tab and drag and drop the newly-extracted default XCI onto the Calculate Hashes window. The XML file it generates will be tailor-made for an easy scene release import:
+Once you extract the XCI, you can then continue onto the other tabs. The XML file it generates will be tailor-made for an easy scene release import:
 
 ![image](https://github.com/user-attachments/assets/02e37699-b4dc-4c6d-9b39-f292d909687b)
 
