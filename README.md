@@ -7,7 +7,7 @@ v2.2 - 2024-08-12
 - **TESTING**
 - Add redump auto-detection and auto-fill from integrated DATs
 - Integrate Control NACP parsing functionality in Python without EXE dependencies
-- Fix bug where newly-applied merged versions and updates via 4 6 1 6 don't take precedence
+- Fix bug where newly-applied merged versions & updates via 4 6 1 6 don't take precedence
 - Add multi-title and FullXCI support when auto-importing
 - Compile into a user-friendly EXE with all dependencies bundled in
 - Add support for other systems? 👀
