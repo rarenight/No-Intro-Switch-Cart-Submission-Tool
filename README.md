@@ -49,6 +49,8 @@ If for whatever reason the automatic import function doesn't work, you can also 
 
 To get started, open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window.
 
+![image](https://github.com/user-attachments/assets/bba9126e-ad8b-4481-a918-212ff6345c64)
+
 When dragged and dropped, the values will auto-populate.
 
 If you can't get the automatic import function working, simply open the game in NX Game Info GUI and click File -> Export as a CSV file:
