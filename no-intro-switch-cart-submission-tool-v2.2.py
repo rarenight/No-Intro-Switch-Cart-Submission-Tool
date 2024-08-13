@@ -624,11 +624,25 @@ class XMLGeneratorApp(QMainWindow):
         return format(crc32 & 0xFFFFFFFF, '08x')
 
     def open_import_nx_game_info_dialog(self):
-        required_files = ["nxgameinfo_cli.exe", "prod.keys", "nxgameinfo_cli.exe.config", "Newtonsoft.Json.dll", "System.Buffers.dll", "System.Memory.dll", "System.Numerics.Vectors.dll", "System.Runtime.CompilerServices.Unsafe.dll"]
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        
+        required_files = [
+            os.path.join(script_dir, "nxgameinfo_cli.exe"),
+            os.path.join(script_dir, "prod.keys"),
+            os.path.join(script_dir, "LibHac.dll"),
+            os.path.join(script_dir, "nxgameinfo_cli.exe.config"),
+            os.path.join(script_dir, "Newtonsoft.Json.dll"),
+            os.path.join(script_dir, "System.Buffers.dll"),
+            os.path.join(script_dir, "System.Memory.dll"),
+            os.path.join(script_dir, "System.Numerics.Vectors.dll"),
+            os.path.join(script_dir, "System.Runtime.CompilerServices.Unsafe.dll")
+        ]
+        
         missing_files = [file for file in required_files if not os.path.exists(file)]
 
         if missing_files:
-            QMessageBox.critical(self, "Missing Files", f"The following required files are missing: {', '.join(missing_files)}\n\nPlease ensure they are in the same directory as this script:\n{os.path.dirname(os.path.abspath(__file__))}")
+            missing_files_display = [os.path.basename(file) for file in missing_files]
+            QMessageBox.critical(self, "Missing Files", f"The following required files are missing: {', '.join(missing_files_display)}\n\nPlease ensure they are in the same directory as this script:\n{script_dir}")
             return
 
         dialog = ImportNXGameInfoDialog(self)
