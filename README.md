@@ -54,8 +54,6 @@ When dragged and dropped, the values will auto-populate:
 
 ![image](https://github.com/user-attachments/assets/93c1502e-fe25-4281-9f52-c797658beb97)
 
-You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. It should also auto-populate the Version and Update in the File Info tab.
-
 If you can't get the automatic function working, simply open the game in NX Game Info GUI and click File -> Export as a CSV file:
 
 ![image](https://github.com/user-attachments/assets/7444327f-edc8-4952-bfae-7e03216bb8c2)
@@ -72,7 +70,7 @@ And copy and paste the values into the window:
 
 ![image](https://github.com/user-attachments/assets/f3c13945-ac3e-4d61-abb2-4ec72784faa5)
 
-Either way when you import the metadata either automatically or manually, the Game Name, Languages, GameID1, along with Version and Update in the File Info tab should all be auto-populated. **NOTE: THIS TOOL DOES NOT SUPPORT IMPORTING FULL XCIS OR MULTI-TITLE CARTS YET. It can only truncate FullXCIs into Default XCIs + Initial Areas for now.** 
+Either way, when you import the metadata either automatically or manually, the Game Name, Languages, GameID1, along with Version and Update in the File Info tab should all be auto-populated. **NOTE: THIS TOOL DOES NOT SUPPORT IMPORTING FULL XCIS OR MULTI-TITLE CARTS YET. It can only truncate FullXCIs into Default XCIs + Initial Areas for now.** 
 
 If for whatever reason the metadata import messes up, you can always manually type or adjust the values. You can ignore the "Scene Release" checkbox if you're submitting a personal dump. If you're adding scene release, check it and skip to the Scene Release section at the bottom.
 
