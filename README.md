@@ -122,9 +122,9 @@ When creating a Switch cart submission to No-Intro, please upload the following:
 
 # Scene Release Submission Tutorial
 
-This is for advanced users who want to easily import new scene releases
+This is for advanced users who want to easily import new scene releases into No-Intro.
 
-Fill out Game Info and Media Info to the best of your abilities. Leave Media Info values blank if the scene release doesn't provide them. A new Scene Cart tab becomes enabled. In order for the script to parse a scene release correctly, you need to select an unmodified Scene Directory with a .nfo file and a .sfv file all present in the original scene directory like this:
+When you click the "Scene Release" checkbox, a new Scene Cart tab becomes enabled. In order for the script to parse a scene release correctly, you need to select an unmodified Scene Directory with a .nfo file and a .sfv file all present in the original scene directory like this:
 
 ![image](https://github.com/user-attachments/assets/37391fa5-3391-4ca7-acea-eda274fa1653)
 
@@ -142,7 +142,7 @@ Verify Scene RARs uses a built-in verification module along with the SFV file to
 
 ![image](https://github.com/user-attachments/assets/97211dd8-7a6e-427a-8e92-68677dba8246)
 
-Once you extract the XCI, you can then continue onto the other tabs. The XML file it generates will be tailor-made for an easy scene release import:
+Once you extract the XCI, you can then continue onto the other tabs. Fill out Game Info and Media Info to the best of your abilities, and import the hashes for the Default XCI. The Dump Info and Initial Area and Full XCI fields have been disabled for your convenience. The XML file it generates will be tailor-made for an easy scene release import:
 
 ![image](https://github.com/user-attachments/assets/02e37699-b4dc-4c6d-9b39-f292d909687b)
 
