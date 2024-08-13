@@ -42,19 +42,39 @@ Once you do, you're ready to begin using my tool.
 
 You can download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/no-intro-switch-cart-submission-tool-v2.1.py) (right click -> Save As).
 
-You'll need Python with the PyQt5 and rarfile dependencies installed (`pip install pyqt5` and `pip install rarfile` or just install the `requirements.txt`) along with up-to-date `prod.keys` and [NX Game Info](https://github.com/garoxas/NX_Game_Info) CLI executable and its libraries in the same directory as the script before you get started. Your directory should look like this:
+If you want to use the automatic import: You'll need Python with the PyQt5 dependency installed (`pip install pyqt5` and `pip install rarfile` or just install the `requirements.txt`) along with up-to-date `prod.keys` and [NX Game Info](https://github.com/garoxas/NX_Game_Info) CLI executable and its libraries in the same directory as the script before you get started. Your directory should look like this:
 
 ![image](https://github.com/user-attachments/assets/6d57ba9d-af0d-43a5-b69a-74b2a0ac4894)
 
-To get started, open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window.
+If for whatever reason the automatic import function doesn't work, you can also manually import metadata from NX Game Info.
 
-**NOTE: THIS TOOL DOES NOT SUPPORT IMPORTING FULL XCIS OR MULTI-TITLE CARTS YET. It can only truncate FullXCIs into Default XCIs + Initial Areas for now.** 
+To get started, open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window.
 
 When dragged and dropped, the values will auto-populate:
 
 ![image](https://github.com/user-attachments/assets/93c1502e-fe25-4281-9f52-c797658beb97)
 
-You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. . It should also auto-populate the Version and Update in the File Info tab. If for whatever reason the metadata import messes up, you can always manually type or adjust the values. You can ignore the "Scene Release" checkbox if you're submitting a personal dump. If you're adding scene release, check it and skip to the Scene Release section at the bottom.
+You'll (hopefully) see the Game Name, Languages, and GameID1 auto-populated. It should also auto-populate the Version and Update in the File Info tab.
+
+If you can't get the automatic function working, simply open the game in NX Game Info GUI and click File -> Export as a CSV file:
+
+![image](https://github.com/user-attachments/assets/7444327f-edc8-4952-bfae-7e03216bb8c2)
+
+Then click "Import Metadata Manually" and drag and drop the CSV file to the top of the window. The values will auto-populate:
+
+![image](https://github.com/user-attachments/assets/928fa7a8-06f1-4d9f-9992-f4b0de8704a5)
+
+Or run nxgameinfo_cli.exe on the file:
+
+![image](https://github.com/user-attachments/assets/4362ed44-15ef-48ca-9c96-d661edf93560)
+
+And copy and paste the values into the window:
+
+![image](https://github.com/user-attachments/assets/f3c13945-ac3e-4d61-abb2-4ec72784faa5)
+
+Either way when you import the metadata either automatically or manually, the Game Name, Languages, GameID1, along with Version and Update in the File Info tab should all be auto-populated. **NOTE: THIS TOOL DOES NOT SUPPORT IMPORTING FULL XCIS OR MULTI-TITLE CARTS YET. It can only truncate FullXCIs into Default XCIs + Initial Areas for now.** 
+
+If for whatever reason the metadata import messes up, you can always manually type or adjust the values. You can ignore the "Scene Release" checkbox if you're submitting a personal dump. If you're adding scene release, check it and skip to the Scene Release section at the bottom.
 
 Select the applicable cart region from the dropdown. You can find the region info on the last three digits of the serial that's on the front of your cart, which would be -USA in this case:
 
