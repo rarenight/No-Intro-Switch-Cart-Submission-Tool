@@ -106,34 +106,26 @@ When creating a Switch cart submission to No-Intro, please upload the following:
 
 This is for advanced users who want to easily import new scene releases
 
-Fill out Game Info and Media Info to the best of your abilities. Leave Media Info values blank if the scene release doesn't provide them. A new Scene Cart tab becomes enabled. In order for the script to parse a scene release correctly, you need to select an unmodified Scene Directory with .rar files, a .nfo file, and a .sfv file all present in the original scene directory like this:
+Fill out Game Info and Media Info to the best of your abilities. Leave Media Info values blank if the scene release doesn't provide them. A new Scene Cart tab becomes enabled. In order for the script to parse a scene release correctly, you need to select an unmodified Scene Directory with a .nfo file and a .sfv file all present in the original scene directory like this:
 
 ![image](https://github.com/user-attachments/assets/37391fa5-3391-4ca7-acea-eda274fa1653)
 
 Once selected, these options will be enabled:
 
-![image](https://github.com/user-attachments/assets/c2a1d62f-dd22-47df-aef8-4f0f537d7a7c)
+![image](https://github.com/user-attachments/assets/8b9efde5-425f-4402-81ac-4f6329ab9728)
 
 Make sure to set the applicable scene group or type in a custom one as needed. Note: P2P groups like KTHNX are not supported.
 
 Open NFO opens the NFO file in a separate text window so you can easy view and copy data as needed:
 
-![image](https://github.com/user-attachments/assets/92ac006a-010b-4151-b291-e499d187ccac)
+![image](https://github.com/user-attachments/assets/0fd4e557-e464-4392-aec3-7def0ecce5b3)
 
 Verify Scene RARs uses a built-in verification module along with the SFV file to verify that all scene RARs are valid:
 
-![image](https://github.com/user-attachments/assets/5780936b-45ae-418a-8952-84553831099e)
+![image](https://github.com/user-attachments/assets/97211dd8-7a6e-427a-8e92-68677dba8246)
 
-And Extract Scene RARs extracts the .xci, and deletes the RAR files afterwards unless the "Delete RARs after extraction" is unchecked.
-
-Once extracted, the directory will look like this:
-
-![image](https://github.com/user-attachments/assets/807c281c-5cc4-41e2-9a42-c2a4ce0a8bc9)
-
-You can then continue onto the File Info tab and drag and drop the newly-extracted default XCI onto the Calculate Hashes window. The XML file it generates will be tailor-made for an easy scene release import:
+Once you extract the XCI, you can then continue onto the File Info tab and drag and drop the newly-extracted default XCI onto the Calculate Hashes window. The XML file it generates will be tailor-made for an easy scene release import:
 
 ![image](https://github.com/user-attachments/assets/02e37699-b4dc-4c6d-9b39-f292d909687b)
 
 ![image](https://github.com/user-attachments/assets/8e2c518d-9798-452b-9ca2-2d5ddf39d00d)
-
-
