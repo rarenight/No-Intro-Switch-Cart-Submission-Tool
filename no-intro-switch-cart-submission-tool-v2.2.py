@@ -628,7 +628,7 @@ class XMLGeneratorApp(QMainWindow):
         missing_files = [file for file in required_files if not os.path.exists(file)]
 
         if missing_files:
-            QMessageBox.critical(self, "Missing Files", f"The following required files are missing: {', '.join(missing_files)}\n\nPlease ensure they are in the same directory as this script:\n{{os.path.dirname(os.path.abspath(__file__))}}")
+            QMessageBox.critical(self, "Missing Files", f"The following required files are missing: {', '.join(missing_files)}\n\nPlease ensure they are in the same directory as this script:\n{os.path.dirname(os.path.abspath(__file__))}")
             return
 
         dialog = ImportNXGameInfoDialog(self)
