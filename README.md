@@ -57,7 +57,7 @@ If you can't get the automatic import function working, simply open the game in 
 
 ![image](https://github.com/user-attachments/assets/7444327f-edc8-4952-bfae-7e03216bb8c2)
 
-Then click "Import Metadata Manually" and drag and drop the CSV file to the top of the window. The values will auto-populate:
+Then click "Manually Import Metadata" and drag and drop the CSV file to the top of the window. The values will auto-populate:
 
 ![image](https://github.com/user-attachments/assets/928fa7a8-06f1-4d9f-9992-f4b0de8704a5)
 
