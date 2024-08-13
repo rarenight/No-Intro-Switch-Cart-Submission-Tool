@@ -43,17 +43,15 @@ You can download the script [here](https://raw.githubusercontent.com/rarenight/N
 
 If you want to use the automatic import function: you'll need Python with the PyQt5 dependency installed (`pip install pyqt5` or just install the `requirements.txt`) along with up-to-date `prod.keys` and [NX Game Info](https://github.com/garoxas/NX_Game_Info) CLI executable and its libraries in the same directory as the script before you get started. Your directory should look like this:
 
-![image](https://github.com/user-attachments/assets/53fdeab1-e0b7-411c-b427-611fc228de6c)
+![image](https://github.com/user-attachments/assets/d16f7642-b017-42ff-a5bd-aff61b1a8d29)
 
 If for whatever reason the automatic import function doesn't work, you can also manually import metadata from NX Game Info.
 
 To get started, open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window.
 
-When dragged and dropped, the values will auto-populate:
+When dragged and dropped, the values will auto-populate.
 
-![image](https://github.com/user-attachments/assets/93c1502e-fe25-4281-9f52-c797658beb97)
-
-If you can't get the automatic function working, simply open the game in NX Game Info GUI and click File -> Export as a CSV file:
+If you can't get the automatic import function working, simply open the game in NX Game Info GUI and click File -> Export as a CSV file:
 
 ![image](https://github.com/user-attachments/assets/7444327f-edc8-4952-bfae-7e03216bb8c2)
 
@@ -78,6 +76,10 @@ Select the applicable cart region from the dropdown. You can find the region inf
 ![image](https://github.com/user-attachments/assets/d1b70802-24ae-4c4a-bb8c-bd28291db7f7)
 
 (Note: Nintendo-published carts are considered to be "World" and are an exception to the region rule)
+
+When imported the window should look like this:
+
+![image](https://github.com/user-attachments/assets/93c1502e-fe25-4281-9f52-c797658beb97)
 
 Then click the Dump Info tab, fill out the Dumper and Tool fields (there's a dropdown as well with common dump tool names), and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
