@@ -65,7 +65,7 @@ Select the applicable cart region from the dropdown. You can find the region inf
 
 When imported the window should look like this:
 
-![image](https://github.com/user-attachments/assets/2ee00e95-26c8-4e7e-8e84-331a2bf46a18)
+![image](https://github.com/user-attachments/assets/135cce43-3e51-47e6-9f6e-6a9525e2ce1e)
 
 Then click the Dump Info tab, fill out the Dumper and Tool fields (there's a dropdown as well with common dump tool names), and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
