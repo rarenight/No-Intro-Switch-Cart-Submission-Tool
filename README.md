@@ -36,15 +36,13 @@ You'll also need Python with the PyQt5 dependency installed (`pip install pyqt6`
 
 ![image](https://github.com/user-attachments/assets/6f53a0d6-928d-4406-a0e2-3a001b34c11d)
 
-If for whatever reason the automatic import function doesn't work, you can also manually import metadata from NX Game Info.
-
 To get started, open my script, click "Automatically Import Metadata", and drag and drop the XCI file into the window. Both Default XCIs and Full XCIs are now supported for automatic import.
 
 ![image](https://github.com/user-attachments/assets/e95daf33-26d1-440b-ba2b-d26f97c984f1)
 
 When dragged and dropped, the values will auto-populate into the textboxes.
 
-If you can't get the automatic import function working, simply open the game (Default XCIs only for manual importing) in NX Game Info GUI and click File -> Export as a CSV file:
+If you can't get the automatic import function working, simply open the game (Default XCIs only for manual importing) in NX Game Info GUI instead and click File -> Export as a CSV file:
 
 ![image](https://github.com/user-attachments/assets/7444327f-edc8-4952-bfae-7e03216bb8c2)
 
