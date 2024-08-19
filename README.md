@@ -42,7 +42,7 @@ To get started, open my script, click "Automatically Import Metadata", and drag 
 
 ![image](https://github.com/user-attachments/assets/e95daf33-26d1-440b-ba2b-d26f97c984f1)
 
-When dragged and dropped, the values will auto-populate.
+When dragged and dropped, the values will auto-populate into the textboxes.
 
 If you can't get the automatic import function working, simply open the game (Default XCIs only for manual importing) in NX Game Info GUI and click File -> Export as a CSV file:
 
