@@ -1,16 +1,7 @@
 # Versions
 
-v2.2 - 2024-08-12
-- (v2.2) Further performance optimizations to minimize out-of-memory crashes, (v2.2) Reintroduced manual import option for users who can't get the EXE dependency to work, (v2.1) Fixed Exclude Initial Area bug, (v2.1) Fixed a few regressions from v2.0, (v2.0) Added scene cart mode, (v2.0) Now processes files in 4 MB chunks to minimize crashing on low-end machines, (v2.0) Added processing percentage in terminal, (v1.8) Embedded nxgameinfo_cli as a dependency, (v1.8) Added a "Truncate FullXCI File" button that reverts a Full XCI back to a Default XCI and an Initial Area, (v1.8) Added additional failsafes to prevent Default XCIs / Full XCIs from being mistakenly processed, (v1.7) Added a dropdown for regions, (v1.7) Fixed GameID2 four-digit bug, (v1.7) Add revision auto-fill, (v1.7) Added loose cart toggle, (v1.6) Fixed NX Info import glitch where CLI importing wouldn't detect v0, (v1.6) Added directory selection support for Mac + Linux, (v1.5) Added the ability to auto-generate Full XCI hashes, (v1.5) added a button that saves your preferred default dumper and tool values, (v1.4) added a dropdown for the tool menu, (v1.4) fixed regression from v1.3, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, now chooses the base Title ID as Game ID instead of the latest one, now removes any punctuation not compliant with No-Intro and changes colons into dashes, now excludes any parentheses present in the update column
-
-# To-do
-- **TESTING**
-- Add redump auto-detection and auto-fill from integrated DATs
-- Integrate Control NACP parsing functionality in Python without EXE dependencies
-- Fix bug where newly-applied merged versions and updates via 4 6 1 6 don't take precedence
-- Add multi-title and FullXCI support when auto-importing
-- Compile into a user-friendly EXE with all dependencies bundled in
-- Add support for other systems? 👀
+v2.5 - 2024-08-18
+- (v2.5) Replaced NX Game Info with a native hactoolnet implementation for deriving embedded metadata, (v2.5) Added auto-import support for multi-title XCIs and full XCIs, (v2.5) Upgraded to PyQt6 with dark mode support, (v2.5) Fixed UTF-8 Japanese character bug, (v2.2) Further performance optimizations to minimize out-of-memory crashes, (v2.2) Reintroduced manual import option for users who can't get the EXE dependency to work, (v2.1) Fixed Exclude Initial Area bug, (v2.1) Fixed a few regressions from v2.0, (v2.0) Added scene cart mode, (v2.0) Now processes files in 4 MB chunks to minimize crashing on low-end machines, (v2.0) Added processing percentage in terminal, (v1.8) Embedded nxgameinfo_cli as a dependency, (v1.8) Added a "Truncate FullXCI File" button that reverts a Full XCI back to a Default XCI and an Initial Area, (v1.8) Added additional failsafes to prevent Default XCIs / Full XCIs from being mistakenly processed, (v1.7) Added a dropdown for regions, (v1.7) Fixed GameID2 four-digit bug, (v1.7) Add revision auto-fill, (v1.7) Added loose cart toggle, (v1.6) Fixed NX Info import glitch where CLI importing wouldn't detect v0, (v1.6) Added directory selection support for Mac + Linux, (v1.5) Added the ability to auto-generate Full XCI hashes, (v1.5) added a button that saves your preferred default dumper and tool values, (v1.4) added a dropdown for the tool menu, (v1.4) fixed regression from v1.3, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, now chooses the base Title ID as Game ID instead of the latest one, now removes any punctuation not compliant with No-Intro and changes colons into dashes, now excludes any parentheses present in the update column
 
 # User Submission Tutorial
 
@@ -39,37 +30,37 @@ Move your files to your PC and concatenate the XCIs if necessary. You should hav
 
 Once you do, you're ready to begin using my tool.
 
-You can download the script [here](https://raw.githubusercontent.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/main/no-intro-switch-cart-submission-tool-v2.2.py) (right click -> Save As).
+You can download the script in the releases tab. It includes a pre-built version of the [hactoolnet](https://github.com/shloop/LibHac/tree/master) fork and all dependencies you'll need to run the Python script, including Linux versions. Unrar is provided for Windows but if using Linux, choose the corresponding version from their [website](https://www.rarlab.com/rar_add.htm) that fits your distro. Note you will have to supply up-to-date `prod.keys` in the same directory to run the automatic import functions.
 
-If you want to use the automatic import function: you'll need Python with the PyQt5 dependency installed (`pip install pyqt5` or just install the `requirements.txt`) along with up-to-date `prod.keys` and [NX Game Info](https://github.com/garoxas/NX_Game_Info) CLI executable and its libraries in the same directory as the script before you get started. Your directory should look like this:
+You'll also need Python with the PyQt5 dependency installed (`pip install pyqt6` and `pip install rarfile` or just install the `requirements.txt`). Your directory should look like this before running the script:
 
-![image](https://github.com/user-attachments/assets/d16f7642-b017-42ff-a5bd-aff61b1a8d29)
+![image](https://github.com/user-attachments/assets/6f53a0d6-928d-4406-a0e2-3a001b34c11d)
 
 If for whatever reason the automatic import function doesn't work, you can also manually import metadata from NX Game Info.
 
-To get started, open my script, click "Automatically Import Metadata", and drag and drop the Default XCI file into the window.
+To get started, open my script, click "Automatically Import Metadata", and drag and drop the XCI file into the window. Both Default XCIs and Full XCIs are now supported for automatic import.
 
-![image](https://github.com/user-attachments/assets/bba9126e-ad8b-4481-a918-212ff6345c64)
+![image](https://github.com/user-attachments/assets/e95daf33-26d1-440b-ba2b-d26f97c984f1)
 
 When dragged and dropped, the values will auto-populate.
 
-If you can't get the automatic import function working, simply open the game in NX Game Info GUI and click File -> Export as a CSV file:
+If you can't get the automatic import function working, simply open the game (Default XCIs only for manual importing) in NX Game Info GUI and click File -> Export as a CSV file:
 
 ![image](https://github.com/user-attachments/assets/7444327f-edc8-4952-bfae-7e03216bb8c2)
 
 Then click "Manually Import Metadata" and drag and drop the CSV file to the top of the window. The values will auto-populate:
 
-![image](https://github.com/user-attachments/assets/928fa7a8-06f1-4d9f-9992-f4b0de8704a5)
+![image](https://github.com/user-attachments/assets/5ad1c85c-3ddd-40a8-9a32-57188326df4a)
 
 Or run nxgameinfo_cli.exe on the file:
 
-![image](https://github.com/user-attachments/assets/4362ed44-15ef-48ca-9c96-d661edf93560)
+![image](https://github.com/user-attachments/assets/37499f1a-e9b7-4a41-802b-e254497d822f)
 
 And copy and paste the values into the window:
 
-![image](https://github.com/user-attachments/assets/f3c13945-ac3e-4d61-abb2-4ec72784faa5)
+![image](https://github.com/user-attachments/assets/b2a03a8e-431a-4249-a687-f2334a07ed8d)
 
-Either way, when you import the metadata either automatically or manually, the Game Name, Languages, GameID1, along with Version and Update in the File Info tab should all be auto-populated. **NOTE: THIS TOOL DOES NOT SUPPORT IMPORTING FULL XCIS OR MULTI-TITLE CARTS YET. It can only truncate FullXCIs into Default XCIs + Initial Areas for now.** 
+Either way, when you import the metadata either automatically or manually, the Game Name, Languages, GameID1, along with Version and Update in the File Info tab should all be auto-populated.
 
 If for whatever reason the metadata import messes up, you can always manually type or adjust the values. You can ignore the "Scene Release" checkbox if you're submitting a personal dump. If you're adding scene release, check it and skip to the Scene Release section at the bottom.
 
@@ -81,25 +72,25 @@ Select the applicable cart region from the dropdown. You can find the region inf
 
 When imported the window should look like this:
 
-![image](https://github.com/user-attachments/assets/93c1502e-fe25-4281-9f52-c797658beb97)
+![image](https://github.com/user-attachments/assets/2ee00e95-26c8-4e7e-8e84-331a2bf46a18)
 
 Then click the Dump Info tab, fill out the Dumper and Tool fields (there's a dropdown as well with common dump tool names), and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
-![image](https://github.com/user-attachments/assets/1daa3ead-cbbf-49cf-b124-792777e4466f)
+![image](https://github.com/user-attachments/assets/84519754-1706-4079-990c-5a761b6afb0b)
 
 A custom dump date can be specified if your cart wasn't dumped the same day.
 
 Then click the Media Info tab and fill out all the values manually. A dropdown menu allows you to select a downwards triangle for your convenience.
 
-![image](https://github.com/user-attachments/assets/7280a502-c006-4821-bf9f-d78963c4351e)
+![image](https://github.com/user-attachments/assets/f60b46aa-69df-4642-b7f4-cbb3b3b50243)
 
 You can select "Loose Cart" if you don't have an original box for your cart.
 
 Click the File Info tab and then "Import Hashes."
 
-Drag and drop the Initial Area (aka Initial Data) BIN file, then the Default XCI file into the window and their hashes will auto-populate. My program automatically generates the Full XCI hashes without having to create the file separately. Please note this takes a while for large files and the program appears to freeze while it's hashing, please be patient.
+Drag and drop the Initial Area (aka Initial Data) BIN file, then the Default XCI file into the window and their hashes will auto-populate. My program automatically generates the Full XCI hashes without having to create the file separately. Please note this takes a while for large files and the program appears to freeze while it's hashing, please be patient. When done all textboxes will be filled out like this and the Generate Submission button will become enabled:
 
-![image](https://github.com/user-attachments/assets/20ce8a14-4512-43a3-8df6-db46e845d9ec)
+![image](https://github.com/user-attachments/assets/cbcdaac9-cd87-4b78-b6d8-fdad55212158)
 
 If you only have a default XCI, you can uncheck the "Include Initial Area" checkbox and it'll disable the Initial Area and Full XCI requirements. Also on the File Info tab is the option to generate a Full XCI file if you'd like a local copy for your collection, as well as the option to truncate a Full XCI back to its original Default XCI and Initial Area components.
 
@@ -133,17 +124,23 @@ When you click the "Scene Release" checkbox, a new Scene Cart tab becomes enable
 
 Once selected, these options will be enabled:
 
-![image](https://github.com/user-attachments/assets/8b9efde5-425f-4402-81ac-4f6329ab9728)
+![image](https://github.com/user-attachments/assets/8113f105-342d-4a64-8038-c24fe8abd597)
 
 Make sure to set the applicable scene group or type in a custom one as needed. Note: P2P groups like KTHNX are not supported.
 
 Open NFO opens the NFO file in a separate text window so you can easy view and copy data as needed:
 
-![image](https://github.com/user-attachments/assets/0fd4e557-e464-4392-aec3-7def0ecce5b3)
+![image](https://github.com/user-attachments/assets/2cf60a04-d107-43f7-b0ba-867b8a237fe1)
 
 Verify Scene RARs uses a built-in verification module along with the SFV file to verify that all scene RARs are valid:
 
-![image](https://github.com/user-attachments/assets/97211dd8-7a6e-427a-8e92-68677dba8246)
+![image](https://github.com/user-attachments/assets/36619913-c3ae-4d87-bd86-8f971f823689)
+
+Extract RARs uses unrar (must be in the same directory as the script) to automatically extract all scene RARs. The directory will look like this when extracted with the XCI in the same directory:
+
+![image](https://github.com/user-attachments/assets/018dbcfb-129c-4895-a785-4e2dda1b7e75)
+
+Check "Keep Scene RARs" if you wish to preserve the original scene RARs for whatever reason.
 
 Once you extract the XCI, you can then continue onto the other tabs. Fill out Game Info and Media Info to the best of your abilities, and import the hashes for the Default XCI. The Dump Info and Initial Area and Full XCI fields have been disabled for your convenience. The XML file it generates will be tailor-made for an easy scene release import:
 
