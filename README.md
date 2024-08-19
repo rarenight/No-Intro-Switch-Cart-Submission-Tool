@@ -1,8 +1,3 @@
-# Versions
-
-v2.5 - 2024-08-18
-- (v2.5) Replaced NX Game Info with a native hactoolnet implementation for deriving embedded metadata, (v2.5) Added auto-import support for multi-title XCIs and full XCIs, (v2.5) Upgraded to PyQt6 with dark mode support, (v2.5) Fixed UTF-8 Japanese character bug, (v2.5) Added scene RAR auto-extraction (v2.2) Further performance optimizations to minimize out-of-memory crashes, (v2.2) Reintroduced manual import option for users who can't get the EXE dependency to work, (v2.1) Fixed Exclude Initial Area bug, (v2.1) Fixed a few regressions from v2.0, (v2.0) Added scene cart mode, (v2.0) Now processes files in 4 MB chunks to minimize crashing on low-end machines, (v2.0) Added processing percentage in terminal, (v1.8) Embedded nxgameinfo_cli as a dependency, (v1.8) Added a "Truncate FullXCI File" button that reverts a Full XCI back to a Default XCI and an Initial Area, (v1.8) Added additional failsafes to prevent Default XCIs / Full XCIs from being mistakenly processed, (v1.7) Added a dropdown for regions, (v1.7) Fixed GameID2 four-digit bug, (v1.7) Add revision auto-fill, (v1.7) Added loose cart toggle, (v1.6) Fixed NX Info import glitch where CLI importing wouldn't detect v0, (v1.6) Added directory selection support for Mac + Linux, (v1.5) Added the ability to auto-generate Full XCI hashes, (v1.5) added a button that saves your preferred default dumper and tool values, (v1.4) added a dropdown for the tool menu, (v1.4) fixed regression from v1.3, fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, now chooses the base Title ID as Game ID instead of the latest one, now removes any punctuation not compliant with No-Intro and changes colons into dashes, now excludes any parentheses present in the update column
-
 # User Submission Tutorial
 
 So you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files. It can also create a Full XCI via drag and drop and convert a Full XCI back to its Default XCI + Initial Area components.
@@ -145,3 +140,17 @@ Once you extract the XCI, you can then continue onto the other tabs. Fill out Ga
 ![image](https://github.com/user-attachments/assets/02e37699-b4dc-4c6d-9b39-f292d909687b)
 
 ![image](https://github.com/user-attachments/assets/8e2c518d-9798-452b-9ca2-2d5ddf39d00d)
+
+# Versions
+
+v2.5 - 2024-08-18
+- (v2.5) Replaced NX Game Info with a native hactoolnet implementation for deriving embedded metadata, (v2.5) Added auto-import support for multi-title XCIs and full XCIs, (v2.5) Upgraded to PyQt6 with dark mode support, (v2.5) Fixed UTF-8 Japanese character bug, (v2.5) Added scene RAR auto-extraction
+- (v2.2) Further performance optimizations to minimize out-of-memory crashes, (v2.2) Reintroduced manual import option for users who can't get the EXE dependency to work
+- (v2.1) Fixed Exclude Initial Area bug, (v2.1) Fixed a few regressions from v2.0
+- (v2.0) Added scene cart mode, (v2.0) Now processes files in 4 MB chunks to minimize crashing on low-end machines, (v2.0) Added processing percentage in terminal
+- (v1.8) Embedded nxgameinfo_cli as a dependency, (v1.8) Added a "Truncate FullXCI File" button that reverts a Full XCI back to a Default XCI and an Initial Area, (v1.8) Added additional failsafes to prevent Default XCIs / Full XCIs from being mistakenly processed
+- (v1.7) Added a dropdown for regions, (v1.7) Fixed GameID2 four-digit bug, (v1.7) Add revision auto-fill, (v1.7) Added loose cart toggle
+- (v1.6) Fixed NX Info import glitch where CLI importing wouldn't detect v0, (v1.6) Added directory selection support for Mac + Linux
+- (v1.5) Added the ability to auto-generate Full XCI hashes, (v1.5) added a button that saves your preferred default dumper and tool values
+- (v1.4) added a dropdown for the tool menu, (v1.4) fixed regression from v1.3
+- (v1.3) fixed NX Game Info title and version importing, now supports CSV imports from NX Game Info (File -> Export -> CSV), now imports the entire title line, now chooses the base Title ID as Game ID instead of the latest one, now removes any punctuation not compliant with No-Intro and changes colons into dashes, now excludes any parentheses present in the update column
