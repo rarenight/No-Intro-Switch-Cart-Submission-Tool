@@ -79,7 +79,7 @@ Then click the Media Info tab and fill out all the values manually. A dropdown m
 
 You can select "Loose Cart" if you don't have an original box for your cart.
 
-Click the File Info tab and then "Import Hashes."
+Click the File Info tab and then "Calculate Hashes".
 
 Drag and drop the Initial Area (aka Initial Data) BIN file, then the Default XCI file into the window and their hashes will auto-populate. My program automatically generates the Full XCI hashes without having to create the file separately. Please note this takes a while for large files and the program appears to freeze while it's hashing, please be patient. When done all textboxes will be filled out like this and the Generate Submission button will become enabled:
 
