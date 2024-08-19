@@ -103,7 +103,7 @@ You can apply for a No-Intro forum account and then submit dumps [here](https://
 
 When creating a Switch cart submission to No-Intro, please upload the following:
 - The XML submission file that my tool outputs
-- The Initial Data metadata file, uploaded either as a file or encoded into Base64 using Cryptii
+- The Initial Data file, uploaded either as a file or encoded into Base64 using [Cryptii](https://cryptii.com/pipes/base64-to-hex)
 - Ideally hactoolnet's output when you provide the command "hactoolnet -t xci --listtitles Input.xci"
 - Any images you wish to submit as well
 
