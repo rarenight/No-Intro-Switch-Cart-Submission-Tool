@@ -61,7 +61,7 @@ Select the applicable cart region from the dropdown. You can find the region inf
 
 ![image](https://github.com/user-attachments/assets/d1b70802-24ae-4c4a-bb8c-bd28291db7f7)
 
-(Note: Nintendo-published carts are considered to be "World" and are an exception to the region rule)
+(Note: All Nintendo-published carts are considered to be "World" and are the sole exception to the region rule)
 
 When imported the window should look like this:
 
