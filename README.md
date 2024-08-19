@@ -25,7 +25,7 @@ Move your dumped game files to your PC and concatenate the XCIs if necessary. Yo
 
 Once you do, you're ready to begin using my tool.
 
-You can download the script in the [releases](https://github.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/releases/tag/v2.5) section. It includes a pre-built version of the [hactoolnet](https://github.com/shloop/LibHac/tree/master) fork and all dependencies you'll need to run the Python script, including Linux versions. Unrar is provided for Windows but if using Linux, choose the corresponding version from their [website](https://www.rarlab.com/rar_add.htm) that fits your distro. Note you will have to supply up-to-date `prod.keys` in the same directory to run the automatic import functions.
+You can download the script in the [releases](https://github.com/rarenight/No-Intro-Switch-Cart-Submission-Tool/releases/tag/v2.5) section. It includes a pre-built version of the [hactoolnet](https://github.com/shloop/LibHac/tree/master) fork and all dependencies you'll need to run the Python script, including Linux versions. Unrar is provided for Windows but if using Linux, choose the corresponding version from their [website](https://www.rarlab.com/rar_add.htm) that fits your distro. Note to run the automatic import function, you'll need .NET installed and you need to place up-to-date `prod.keys` in the same directory as the script.
 
 You'll also need Python with the PyQt5 dependency installed (`pip install pyqt6` and `pip install rarfile` or just install the `requirements.txt`). Your directory should look like this before running the script for the first time:
 
