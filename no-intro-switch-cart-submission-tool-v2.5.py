@@ -1471,13 +1471,20 @@ class ImportNXGameInfoDialog(QDialog):
         link_words = {"and", "or", "but", "nor", "so", "yet", "for", "at", "by", "in", "on", "to", "of", "up", "with", "as", "per"}
 
         formatted_words = [
-            word.lower() if word.lower() in articles or word.lower() in link_words else word.capitalize()
+            word.lower() if (word.lower() in articles or word.lower() in link_words) else
+            word if (word.isupper() or word.isalpha()) else word.capitalize()
             for word in words
         ]
 
         if formatted_words[0].lower() in articles:
-            article = formatted_words.pop(0)
-            formatted_words.append(f"{article.capitalize()},")
+            article = formatted_words.pop(0).capitalize()
+            try:
+                sep_index = formatted_words.index('-')
+                formatted_words[sep_index - 1] += ','
+                formatted_words.insert(sep_index, article)
+            except ValueError:
+                formatted_words[-1] += ','
+                formatted_words.append(article)
 
         return ' '.join(formatted_words)
 
