@@ -963,7 +963,7 @@ class XMLGeneratorApp(QMainWindow):
         }
 
         mediastamp = self.serial_details_inputs.get('Mediastamp', '') or ""
-        if mediastamp:
+        if mediastamp and re.match(r'^[a-f0-9]{3}$', mediastamp, re.IGNORECASE):
             archive_attrs["version1"] = f"Rev {int(mediastamp, 16)}"
 
         archive = ET.SubElement(game, 'archive', **archive_attrs)
