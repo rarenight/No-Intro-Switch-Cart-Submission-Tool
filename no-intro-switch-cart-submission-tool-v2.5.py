@@ -962,10 +962,9 @@ class XMLGeneratorApp(QMainWindow):
             "categories": "Games"
         }
 
-        media_serial2 = self.serial_details_inputs['Media Serial 2'].text().strip()
-
-        if media_serial2 and media_serial2[-1].isdigit() and media_serial2[-1] != "0":
-            archive_attrs["version1"] = f"Rev {media_serial2[-1]}"
+        mediastamp = self.serial_details_inputs.get('Mediastamp', '') or ""
+        if mediastamp:
+            archive_attrs["version1"] = f"Rev {int(mediastamp, 16)}"
 
         archive = ET.SubElement(game, 'archive', **archive_attrs)
 
@@ -991,8 +990,8 @@ class XMLGeneratorApp(QMainWindow):
 
             serials_attrs = {
                 "media_serial1": self.serial_details_inputs['Media Serial 1'].text() or "",
-                "media_serial2": media_serial2 or "",
-                "mediastamp": self.serial_details_inputs.get('Mediastamp', '') or "",
+                "media_serial2": self.serial_details_inputs['Media Serial 2'].text().strip() or "",
+                "mediastamp": mediastamp,
                 "pcb_serial": self.serial_details_inputs['PCB Serial'].currentText() or ""
             }
 
@@ -1040,8 +1039,8 @@ class XMLGeneratorApp(QMainWindow):
 
             serials_attrs = {
                 "media_serial1": self.serial_details_inputs['Media Serial 1'].text() or "",
-                "media_serial2": media_serial2 or "",
-                "mediastamp": self.serial_details_inputs.get('Mediastamp', '') or "",
+                "media_serial2": self.serial_details_inputs['Media Serial 2'].text().strip() or "",
+                "mediastamp": mediastamp,
                 "pcb_serial": self.serial_details_inputs['PCB Serial'].currentText() or ""
             }
 
