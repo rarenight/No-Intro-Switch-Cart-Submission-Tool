@@ -24,7 +24,7 @@ class XMLGeneratorApp(QMainWindow):
         self.setGeometry(100, 100, 470, 400)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
-        
+
         self.layout = QVBoxLayout()
         self.central_widget.setLayout(self.layout)
 
@@ -35,7 +35,7 @@ class XMLGeneratorApp(QMainWindow):
         self.fields_count = 0
 
         self.tool_options = ["nxdt_rw_poc v2.0.0 (rewrite-dirty)", "DBI", "nxdumptool v1.1.15", "MigDumpTool (nxdumptool-rewrite)"]
-        
+
         self.region_options = [
             "Nintendo published cart (World)", "-USA cart (USA)", "-EUR cart (Europe)", "-JPN cart (Japan)", "-ASI cart (Asia)", "-AUS cart (Australia)", "-CHN cart (China)", "-CHT cart (Taiwan, Hong Kong)", "-KOR cart (Korea)", "-MSE cart (Middle East)", "-RUS cart (Russia)", "-UKV cart (United Kingdom)"
         ]
@@ -53,19 +53,19 @@ class XMLGeneratorApp(QMainWindow):
             "-UKV cart (United Kingdom)": "United Kingdom",
             "-USA cart (USA)": "USA"
         }
-        
+
         self.settings = QSettings("MyCompany", "XMLGeneratorApp")
         self.default_dumper = self.settings.value("defaultDumper", "")
         self.default_tool = self.settings.value("defaultTool", "nxdt_rw_poc v2.0.0 (rewrite-dirty)")
 
         self.initUI()
-    
+
     def initUI(self):
         self.tabs = QTabWidget()
-        
+
         self.basic_info_tab = QWidget()
         self.basic_info_layout = QVBoxLayout()
-        
+
         self.basic_info_form_layout = QFormLayout()
         self.import_button = QPushButton("Automatically Import Metadata")
         self.import_button.clicked.connect(self.open_import_nx_game_info_dialog)
@@ -74,11 +74,11 @@ class XMLGeneratorApp(QMainWindow):
         self.manual_import_button.clicked.connect(self.open_manual_import_nx_game_info_dialog)
         self.basic_info_form_layout.addRow(self.manual_import_button)
         self.basic_info_labels = [
-            ("Game Name", "All nouns, verbs, & adjectives are uppercase, move initial articles to the end of the name, intermediary link words are lowercase, replace : and ~ with -, no \\ / * ? \" < > | , e.g. 'Legend of Zelda, The - A Link to the Past'"), 
-            ("Languages", "Comma-separated in ISO 639-1 format, e.g. English, Japanese, Korean, Simplified Chinese, Traditional Chinese is 'en,ja,ko,Zh-Hans,Zh-Hant'"), 
+            ("Game Name", "All nouns, verbs, & adjectives are uppercase, move initial articles to the end of the name, intermediary link words are lowercase, replace : and ~ with -, no \\ / * ? \" < > | , e.g. 'Legend of Zelda, The - A Link to the Past'"),
+            ("Languages", "Comma-separated in ISO 639-1 format, e.g. English, Japanese, Korean, Simplified Chinese, Traditional Chinese is 'en,ja,ko,Zh-Hans,Zh-Hant'"),
             ("GameID1", "All base application Title IDs (ending in 000) comma-separated, no patches, no add-ons, e.g. '0100182014022000, 010065A014024000'")]
         self.basic_info_inputs = self.create_form_group(self.basic_info_labels, self.basic_info_form_layout)
-        
+
         self.region_combo_box = QComboBox()
         self.region_combo_box.addItems(self.region_options)
         self.basic_info_form_layout.addRow(QLabel("Region"), self.region_combo_box)
@@ -88,7 +88,7 @@ class XMLGeneratorApp(QMainWindow):
         self.custom_region_input = QLineEdit()
         self.custom_region_input.setEnabled(False)
         self.basic_info_form_layout.addRow(self.custom_region_checkbox, self.custom_region_input)
-    
+
 
         self.scene_release_checkbox = QCheckBox("Scene Release")
         self.scene_release_checkbox.stateChanged.connect(self.toggle_scene_release)
@@ -96,7 +96,7 @@ class XMLGeneratorApp(QMainWindow):
 
         self.basic_info_layout.addLayout(self.basic_info_form_layout)
         self.basic_info_tab.setLayout(self.basic_info_layout)
-        
+
         self.source_details_tab = QWidget()
         self.source_details_layout = QFormLayout()
         self.source_details_labels = [
@@ -130,14 +130,14 @@ class XMLGeneratorApp(QMainWindow):
         self.source_details_layout.addRow(self.custom_dump_date_input)
 
         self.source_details_tab.setLayout(self.source_details_layout)
-        
+
         self.serial_details_tab = QWidget()
         self.serial_details_layout = QFormLayout()
         self.serial_details_labels = [
-            ("Media Serial 1", "Cart front serial, e.g. 'LA-H-AQBEB-USA'"), 
-            ("Media Serial 2", "Cart back serial, e.g. 'AQBEB20A000'"), 
-            ("PCB Serial", "Visible numbers and symbols on the PCB, if any, e.g. '▼ 10'"), 
-            ("Box Serial", "Serials listed in the bottom right box corner, e.g. 'HAC P AQBEB, 81928'"), 
+            ("Media Serial 1", "Cart front serial, e.g. 'LA-H-AQBEB-USA'"),
+            ("Media Serial 2", "Cart back serial, e.g. 'AQBEB20A000'"),
+            ("PCB Serial", "Visible numbers and symbols on the PCB, if any, e.g. '▼ 10'"),
+            ("Box Serial", "Serials listed in the bottom right box corner, e.g. 'HAC P AQBEB, 81928'"),
             ("Box Barcode", "Barcode listed in the bottom right box corner, spaces preserved, e.g. '8 59716 00628 4'")
         ]
         self.serial_details_inputs = self.create_form_group(self.serial_details_labels, self.serial_details_layout)
@@ -149,7 +149,7 @@ class XMLGeneratorApp(QMainWindow):
 
         self.serial_details_inputs['Media Serial 1'].textChanged.connect(self.update_game_id2)
         self.serial_details_inputs['Media Serial 2'].textChanged.connect(self.update_mediastamp)
-        
+
         self.file_info_tab = QWidget()
         self.file_info_layout = QVBoxLayout()
 
@@ -232,9 +232,9 @@ class XMLGeneratorApp(QMainWindow):
         self.tabs.addTab(self.file_info_tab, "File Info")
 
         self.layout.addWidget(self.tabs)
-        
+
         button_layout = QHBoxLayout()
-        
+
         self.generate_button = QPushButton("Generate Submission (X fields left)")
         self.generate_button.setEnabled(False)
         self.generate_button.clicked.connect(self.generate_xml)
@@ -245,13 +245,13 @@ class XMLGeneratorApp(QMainWindow):
         button_layout.addWidget(self.reset_button)
 
         self.layout.addLayout(button_layout)
-        
+
         self.setAcceptDrops(True)
         self.update_generate_button_text()
         self.load_preferences()
 
         self.tabs.setTabEnabled(self.tabs.indexOf(self.scene_cart_tab), False)
-    
+
     def create_form_group(self, labels, layout):
         inputs = {}
         for label, explanation in labels:
@@ -319,7 +319,7 @@ class XMLGeneratorApp(QMainWindow):
                 layout.addRow(explanation_label)
                 inputs[label] = line_edit
         return inputs
-    
+
     def create_file_info_section(self, layout):
         self.file_inputs = {}
 
@@ -334,7 +334,7 @@ class XMLGeneratorApp(QMainWindow):
             ["File Size", "CRC32", "MD5", "SHA1", "SHA256"],
             ["File Size", "CRC32", "MD5", "SHA1", "SHA256"]
         ]
-                        
+
         for i, group_title in enumerate(group_titles):
             group_box = QGroupBox(group_title)
             form_layout = QFormLayout()
@@ -362,7 +362,7 @@ class XMLGeneratorApp(QMainWindow):
 
         if not hasattr(self, 'generate_button'):
             return
-        
+
         initial_area_keys = ["File Size 2", "CRC32 2", "MD5 2", "SHA1 2", "SHA256 2"]
         full_xci_keys = ["File Size 3", "CRC32 3", "MD5 3", "SHA1 3", "SHA256 3"]
 
@@ -380,7 +380,7 @@ class XMLGeneratorApp(QMainWindow):
 
         self.custom_dump_date_input.setEnabled(is_checked)
         self.update_display()
-    
+
     def toggle_custom_region(self, state):
         is_checked = state == Qt.CheckState.Checked.value
 
@@ -397,10 +397,10 @@ class XMLGeneratorApp(QMainWindow):
 
         self.tabs.setTabEnabled(dump_info_tab_index, not is_scene_release)
         self.tabs.setTabEnabled(scene_cart_tab_index, is_scene_release)
-        
+
         initial_area_keys = ["File Size 2", "CRC32 2", "MD5 2", "SHA1 2", "SHA256 2"]
         full_xci_keys = ["File Size 3", "CRC32 3", "MD5 3", "SHA1 3", "SHA256 3"]
-        
+
         for key in initial_area_keys + full_xci_keys:
             if key in self.file_inputs:
                 self.file_inputs[key].setEnabled(not is_scene_release)
@@ -422,14 +422,14 @@ class XMLGeneratorApp(QMainWindow):
 
         box_serial_input = self.serial_details_inputs['Box Serial']
         box_barcode_input = self.serial_details_inputs['Box Barcode']
-        
+
         box_serial_input.setDisabled(is_checked)
         box_barcode_input.setDisabled(is_checked)
-        
+
         if not is_checked:
             box_serial_input.clear()
             box_barcode_input.clear()
-        
+
         self.update_display()
 
     def toggle_custom_scene_group(self, text):
@@ -441,7 +441,7 @@ class XMLGeneratorApp(QMainWindow):
     def update_display(self):
         if not hasattr(self, 'generate_button'):
             return
-        
+
         include_initial_area = self.include_initial_area_checkbox.isChecked()
         is_scene_release = self.scene_release_checkbox.isChecked()
 
@@ -472,7 +472,7 @@ class XMLGeneratorApp(QMainWindow):
             ) and all(
                 input.text().strip() for input in self.source_details_inputs.values() if isinstance(input, QLineEdit)
             ) and all(
-                input.text().strip() for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial" and 
+                input.text().strip() for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial" and
                 (label not in ["Box Serial", "Box Barcode"] or input.isEnabled())
             ) and all(
                 input.currentText().strip() for label, input in self.serial_details_inputs.items() if isinstance(input, QComboBox) and label != "PCB Serial"
@@ -492,14 +492,14 @@ class XMLGeneratorApp(QMainWindow):
                 )
 
             self.generate_button.setEnabled(all_filled)
-        
+
         self.update_generate_button_text()
 
         self.calculate_hashes_button.setEnabled(True)
 
     def update_generate_button_text(self):
         include_initial_area = self.include_initial_area_checkbox.isChecked()
-        
+
         if self.scene_release_checkbox.isChecked():
             empty_fields = sum(
                 1 for input in [
@@ -523,12 +523,12 @@ class XMLGeneratorApp(QMainWindow):
             ) + sum(
                 1 for input in self.source_details_inputs.values() if isinstance(input, QLineEdit) and not input.text()
             ) + sum(
-                1 for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial" and 
+                1 for label, input in self.serial_details_inputs.items() if isinstance(input, QLineEdit) and label != "PCB Serial" and
                 (label not in ["Box Serial", "Box Barcode"] or input.isEnabled()) and not input.text()
             ) + sum(
                 1 for label, input in self.serial_details_inputs.items() if isinstance(input, QComboBox) and label != "PCB Serial" and not input.currentText()
             ) + sum(
-                1 for key in self.file_inputs if not key.startswith("FullXCI") and 
+                1 for key in self.file_inputs if not key.startswith("FullXCI") and
                 (include_initial_area or not key.startswith("File Size 2")) and not self.file_inputs[key].text()
             )
 
@@ -542,12 +542,12 @@ class XMLGeneratorApp(QMainWindow):
     def dragEnterEvent(self, event: QDragEnterEvent):
         if event.mimeData().hasUrls():
             event.acceptProposedAction()
-    
+
     def dropEvent(self, event: QDropEvent):
         for url in event.mimeData().urls():
             file_path = url.toLocalFile()
             self.process_file(file_path)
-    
+
     def process_file(self, file_path):
         self.update_hashes(file_path)
 
@@ -558,7 +558,7 @@ class XMLGeneratorApp(QMainWindow):
 
         size = str(total_size)
         print("Calculated file size.")
-        
+
         crc32 = 0
         hasher_md5 = hashlib.md5()
         hasher_sha1 = hashlib.sha1()
@@ -602,7 +602,7 @@ class XMLGeneratorApp(QMainWindow):
 
     def calculate_size(self, file_path):
         return str(os.path.getsize(file_path))
-    
+
     def calculate_hash(self, file_path, hash_type):
         hasher = hashlib.new(hash_type)
         with open(file_path, 'rb') as f:
@@ -619,7 +619,7 @@ class XMLGeneratorApp(QMainWindow):
 
     def open_import_nx_game_info_dialog(self):
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        
+
         if platform.system() == "Windows":
             self.hactoolnet_path = os.path.join(script_dir, "hactoolnet.exe")
             required_files = [
@@ -633,7 +633,7 @@ class XMLGeneratorApp(QMainWindow):
                 os.path.join(script_dir, "hactoolnet"),
                 os.path.join(script_dir, "prod.keys")
             ]
-        
+
         missing_files = [file for file in required_files if not os.path.exists(file)]
 
         if missing_files:
@@ -649,14 +649,14 @@ class XMLGeneratorApp(QMainWindow):
         dialog.exec()
 
     def import_nx_game_info(self, game_info):
-        
+
         cleaned_title_name = game_info['title_name'].replace(":", " -").encode('utf-8').decode('utf-8')
         self.basic_info_inputs['Game Name'].setText(cleaned_title_name)
         self.basic_info_inputs['GameID1'].setText(game_info['title_id'])
         self.basic_info_inputs['Languages'].setText(game_info['languages'])
         self.file_inputs['Version 1'].setText("v" + game_info['display_version'])
         self.file_inputs['Update 1'].setText("v" + game_info['version'])
-        
+
         self.update_display()
 
     def import_manual_nx_game_info(self, csv_data):
@@ -760,7 +760,7 @@ class XMLGeneratorApp(QMainWindow):
         if self.scene_release_checkbox.isChecked():
             self.prompt_for_default_xci()
             return
-        
+
         if not self.include_initial_area_checkbox.isChecked():
             self.prompt_for_default_xci()
             return
@@ -770,13 +770,13 @@ class XMLGeneratorApp(QMainWindow):
         self.calculate_hashes_dialog.setGeometry(100, 100, 400, 200)
         layout = QVBoxLayout()
         self.calculate_hashes_dialog.setLayout(layout)
-        
+
         label = QLabel("Drag and Drop Initial Area Here")
         label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(label)
-        
+
         self.calculate_hashes_dialog.show()
-        
+
         self.calculate_hashes_dialog.setAcceptDrops(True)
         self.calculate_hashes_dialog.dragEnterEvent = self.dragEnterEvent
         self.calculate_hashes_dialog.dropEvent = self.drop_initial_area
@@ -787,7 +787,8 @@ class XMLGeneratorApp(QMainWindow):
             if file_path.endswith('.bin') and os.path.getsize(file_path) == 512:
                 self.initial_area_path = file_path
                 self.process_file(file_path)
-                self.calculate_hashes_dialog.close()
+                if platform.system() == "Windows":
+                    self.calculate_hashes_dialog.close()
                 self.prompt_for_default_xci()
                 break
 
@@ -797,13 +798,13 @@ class XMLGeneratorApp(QMainWindow):
         self.calculate_hashes_dialog.setGeometry(100, 100, 400, 200)
         layout = QVBoxLayout()
         self.calculate_hashes_dialog.setLayout(layout)
-        
+
         label = QLabel("Drag and Drop Default XCI here to calculate the hashes\n\nThe program will appear to freeze, it's just calculating all the hashes which can take a while\n\nCheck the terminal for the current status\n\nPlease be patient")
         label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(label)
-        
+
         self.calculate_hashes_dialog.show()
-        
+
         self.calculate_hashes_dialog.setAcceptDrops(True)
         self.calculate_hashes_dialog.dragEnterEvent = self.dragEnterEvent
         self.calculate_hashes_dialog.dropEvent = self.drop_default_xci
@@ -818,7 +819,8 @@ class XMLGeneratorApp(QMainWindow):
                 else:
                     self.default_xci_path = file_path
                     self.process_file(file_path)
-                    self.calculate_hashes_dialog.close()
+                    if platform.system() == "Windows":
+                        self.calculate_hashes_dialog.close()
                     self.calculate_full_xci_hashes()
                     break
 
@@ -830,7 +832,7 @@ class XMLGeneratorApp(QMainWindow):
         is_full_xci = all(b == 0 for b in data_segment)
 
         return is_full_xci
-    
+
     def calculate_full_xci_hashes(self):
         if self.scene_release_checkbox.isChecked():
             if self.default_xci_path:
@@ -960,10 +962,9 @@ class XMLGeneratorApp(QMainWindow):
             "categories": "Games"
         }
 
-        media_serial2 = self.serial_details_inputs['Media Serial 2'].text().strip()
-
-        if media_serial2 and media_serial2[-1].isdigit() and media_serial2[-1] != "0":
-            archive_attrs["version1"] = f"Rev {media_serial2[-1]}"
+        mediastamp = self.serial_details_inputs.get('Mediastamp', '') or ""
+        if mediastamp and re.match(r'^[a-f0-9]{3}$', mediastamp, re.IGNORECASE):
+            archive_attrs["version1"] = f"Rev {int(mediastamp, 16)}"
 
         archive = ET.SubElement(game, 'archive', **archive_attrs)
 
@@ -989,8 +990,8 @@ class XMLGeneratorApp(QMainWindow):
 
             serials_attrs = {
                 "media_serial1": self.serial_details_inputs['Media Serial 1'].text() or "",
-                "media_serial2": media_serial2 or "",
-                "mediastamp": self.serial_details_inputs.get('Mediastamp', '') or "",
+                "media_serial2": self.serial_details_inputs['Media Serial 2'].text().strip() or "",
+                "mediastamp": mediastamp,
                 "pcb_serial": self.serial_details_inputs['PCB Serial'].currentText() or ""
             }
 
@@ -1038,14 +1039,14 @@ class XMLGeneratorApp(QMainWindow):
 
             serials_attrs = {
                 "media_serial1": self.serial_details_inputs['Media Serial 1'].text() or "",
-                "media_serial2": media_serial2 or "",
-                "mediastamp": self.serial_details_inputs.get('Mediastamp', '') or "",
+                "media_serial2": self.serial_details_inputs['Media Serial 2'].text().strip() or "",
+                "mediastamp": mediastamp,
                 "pcb_serial": self.serial_details_inputs['PCB Serial'].currentText() or ""
             }
-            
+
             if self.serial_details_inputs['Box Serial'].isEnabled():
                 serials_attrs["box_serial"] = self.serial_details_inputs['Box Serial'].text() or ""
-            
+
             if self.serial_details_inputs['Box Barcode'].isEnabled():
                 serials_attrs["box_barcode"] = self.serial_details_inputs['Box Barcode'].text() or ""
 
@@ -1173,7 +1174,7 @@ class XMLGeneratorApp(QMainWindow):
             self.scene_directory_label.setText(directory)
 
             self.extract_scene_info(directory)
-        
+
             self.nfo_viewer_button.setEnabled(True)
             self.verify_rars_button.setEnabled(True)
             self.scene_group_dropdown.setEnabled(True)
@@ -1184,7 +1185,7 @@ class XMLGeneratorApp(QMainWindow):
         else:
             if self.scene_release_checkbox.isChecked():
                 self.generate_button.setEnabled(False)
-    
+
     def extract_scene_info(self, directory):
         self.scene_dirname = directory
         self.scene_archivename = None
@@ -1229,11 +1230,11 @@ class XMLGeneratorApp(QMainWindow):
         if not os.path.exists(sfv_path):
             QMessageBox.warning(self, "Missing SFV File", "No SFV file detected in the directory")
             return
-        
+
         log = []
         mismatches = []
         all_matched = True
-        
+
         try:
             with open(sfv_path, 'r') as sfv_file:
                 sfv_lines = sfv_file.readlines()
@@ -1258,7 +1259,7 @@ class XMLGeneratorApp(QMainWindow):
                             all_matched = False
                         else:
                             log.append(f"{file_name}: CRC matches")
-            
+
             if all_matched:
                 log.append("\nAll CRCs matched successfully")
             else:
@@ -1278,14 +1279,14 @@ class XMLGeneratorApp(QMainWindow):
             layout.addWidget(text_edit)
             dialog.setLayout(layout)
             dialog.exec()
-      
+
         except Exception as e:
             QMessageBox.critical(self, "Verification Failed", f"Verification failed with error: {str(e)}")
 
     def extract_rar(self):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         unrar_path = os.path.join(script_dir, "unrar.exe" if platform.system() == "Windows" else "unrar")
-        
+
         if not os.path.exists(unrar_path):
             QMessageBox.critical(self, "Unrar Missing", "The unrar utility is not found in the same directory as the script\n\nPlease ensure unrar is present before continuing")
             return
@@ -1329,9 +1330,9 @@ class XMLGeneratorApp(QMainWindow):
                 os.remove(rar_file)
 
                 QMessageBox.information(self, "Cleanup Complete", "All scene RAR files have been deleted")
-            
+
             self.open_output_directory(self.scene_dir)
-                
+
         except rarfile.RarCannotExec as e:
             QMessageBox.critical(self, "Extraction Failed", f"Extraction failed: {str(e)}")
         except rarfile.RarWrongPassword:
@@ -1405,7 +1406,6 @@ class ImportNXGameInfoDialog(QDialog):
         return is_full_xci
 
     def parse_hactoolnet_output(self, output):
-        base_title_ids, update_title_ids, updates, versions, titles = [], [], [], [], []
         language_set = set()
         language_dict = {
             "en-US": "En", "en-GB": "En", "ja": "Ja", "fr": "Fr", "de": "De",
@@ -1413,62 +1413,57 @@ class ImportNXGameInfoDialog(QDialog):
             "pt": "Pt", "ru": "Ru", "ko": "Ko", "zh-TW": "Zh-Hant", "zh-CN": "Zh-Hans"
         }
 
-        lines = output.splitlines()
-        start_parsing = False
-        current_title = ""
-        current_update = ""
-        current_version = ""
+        base_titles, update_titles = {}, {}
 
-        for line in lines:
-            if "Title ID" in line:
-                start_parsing = True
-                continue
+        base_title_ids, update_title_ids, updates, versions, titles = [], [], [], [], []
 
-            if not start_parsing:
-                continue
+        hactool_title_regex = re.compile(r'^(?P<title_id>[a-f0-9]{16})\s+(?P<version>v\d+)\s+(?:\d+\.){3}\d+\s+(?P<type>Application|Patch)\s+\d+(?:\.\d+)?\s+[a-z]{2}\s+(?P<display_version>[^\s]+)\s+(?P<name>.+?)\s+(?P<languages>[\w-]+(?:,[\w-]+)*)$', flags=(re.MULTILINE | re.IGNORECASE))
 
-            if "Application" in line or "Patch" in line:
-                parts = re.split(r'\s+', line.strip())
-                title_id = parts[0]
-                update_version = parts[1]
-                display_version = f"v{parts[6]}"
+        for match in re.finditer(hactool_title_regex, output):
+            title_id = match.group('title_id')
+            title_version = match.group('version')
+            title_type = match.group('type')
+            display_version = match.group('display_version')
+            title_name = match.group('name')
+            title_languages = match.group('languages').split(',')
 
-                title_name_parts = []
-                for part in parts[7:]:
-                    if re.search(rf"\b({'|'.join(language_dict.keys())})\b", part):
-                        break
-                    title_name_parts.append(part)
+            detected_languages = [lang for lang in language_dict if lang in title_languages]
+            for lang in detected_languages:
+                language_set.add(language_dict[lang])
 
-                title_name = ' '.join(title_name_parts)
-                current_title = title_name
-                current_update = update_version
-                current_version = display_version
+            entry = {
+                'version': title_version,
+                'display_version': display_version,
+                'name': title_name,
+            }
 
-                if title_id.endswith("000"):
-                    base_title_ids.append(title_id)
-                elif title_id.endswith("800"):
-                    update_title_ids.append(title_id)
-                    updates.append(update_version)
-                    versions.append(display_version)
-                    titles.append(title_name)
+            if title_type == 'Application':
+                base_titles.update({ title_id.upper(): entry })
+            else:
+                update_titles.update({ title_id.upper(): entry })
 
-        if base_title_ids and not titles:
-            titles.append(current_title)
-            updates.append(current_update)
-            versions.append(current_version)
+        for title_id, base_entry in base_titles.items():
+            base_title_ids.append(title_id)
 
-        for line in lines:
-            if "Application" in line or "Patch" in line:
-                detected_languages = [lang for lang in language_dict if re.search(rf"\b{lang}\b", line)]
-                if detected_languages:
-                    for lang in detected_languages:
-                        language_set.add(language_dict[lang])
+            update_tid_int = int(title_id, 16) | 0x800
+            update_tid = f'{update_tid_int:016X}'
+
+            update_entry = update_titles.get(update_tid, {})
+            if update_entry:
+                update_title_ids.append(update_tid)
+                updates.append(update_entry['version'])
+                versions.append(update_entry['display_version'])
+                titles.append(update_entry['name'])
+            else:
+                updates.append(base_entry['version'])
+                versions.append(base_entry['display_version'])
+                titles.append(base_entry['name'])
 
         return base_title_ids, update_title_ids, updates, versions, titles, sorted(language_set)
 
     def format_title(self, title):
         title = title.replace(":", " - ").replace("~", "-")
-        title = re.sub(r'[\\/:*?"<>|`]', '', title) 
+        title = re.sub(r'[\\/:*?"<>|`]', '', title)
         title = re.sub(r'\s+', ' ', title).strip()
 
         words = title.split()
@@ -1476,13 +1471,20 @@ class ImportNXGameInfoDialog(QDialog):
         link_words = {"and", "or", "but", "nor", "so", "yet", "for", "at", "by", "in", "on", "to", "of", "up", "with", "as", "per"}
 
         formatted_words = [
-            word.lower() if word.lower() in articles or word.lower() in link_words else word.capitalize()
+            word.lower() if (word.lower() in articles or word.lower() in link_words) else
+            word if (word.isupper() or word.isalpha()) else word.capitalize()
             for word in words
         ]
 
         if formatted_words[0].lower() in articles:
-            article = formatted_words.pop(0)
-            formatted_words.append(f"{article.capitalize()},")
+            article = formatted_words.pop(0).capitalize()
+            try:
+                sep_index = formatted_words.index('-')
+                formatted_words[sep_index - 1] += ','
+                formatted_words.insert(sep_index, article)
+            except ValueError:
+                formatted_words[-1] += ','
+                formatted_words.append(article)
 
         return ' '.join(formatted_words)
 
@@ -1501,7 +1503,8 @@ class ImportNXGameInfoDialog(QDialog):
 
         self.parent().update_display()
 
-        self.accept()
+        if platform.system() == "Windows":
+            self.accept()
 
 class ManualImportNXGameInfoDialog(QDialog):
     def __init__(self, parent=None):
@@ -1554,7 +1557,8 @@ class ManualImportNXGameInfoDialog(QDialog):
         else:
             self.parent().import_manual_text(data)
 
-        self.accept()
+        if platform.system() == "Windows":
+            self.accept()
 
 class GenerateFullXCIDialog(QDialog):
     def __init__(self, parent=None):
@@ -1563,16 +1567,16 @@ class GenerateFullXCIDialog(QDialog):
         self.setGeometry(100, 100, 400, 200)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
-        
+
         self.state = 0
-        
+
         self.drag_drop_label = QLabel("Drag and Drop Initial Area Here")
         self.drag_drop_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.drag_drop_label)
-        
+
         self.initial_area_path = None
         self.default_xci_path = None
-        
+
         self.setAcceptDrops(True)
 
     def dragEnterEvent(self, event: QDragEnterEvent):
@@ -1598,10 +1602,11 @@ class GenerateFullXCIDialog(QDialog):
                         self.default_xci_path = file_path
                         new_full_xci_path = self.generate_full_xci()
                         QMessageBox.information(self, "Success", f"A FullXCI file has been created:\n\n{new_full_xci_path}")
-                        self.accept()
+                        if platform.system() == "Windows":
+                            self.accept()
                 else:
                     self.drag_drop_label.setText("Please drop a .xci file")
-    
+
     def is_full_xci(self, file_path):
         with open(file_path, 'rb') as file:
             file.seek(0x1A0)
@@ -1610,7 +1615,7 @@ class GenerateFullXCIDialog(QDialog):
         is_full_xci = all(b == 0 for b in data_segment)
 
         return is_full_xci
-    
+
     def generate_full_xci(self):
         default_xci_filename = os.path.basename(self.default_xci_path)
         full_xci_filename = os.path.splitext(default_xci_filename)[0] + " (Full XCI)" + os.path.splitext(default_xci_filename)[1]
@@ -1684,7 +1689,7 @@ class TruncateFullXCIDialog(QDialog):
         is_full_xci = all(b == 0 for b in data_segment)
 
         return is_full_xci
-    
+
     def process_file(self, file_path):
         print(f"Starting FullXCI truncation for: {file_path}")
         total_size = os.path.getsize(file_path)
@@ -1727,7 +1732,8 @@ class TruncateFullXCIDialog(QDialog):
 
             print(f"\nDefault XCI written to: {default_xci_path}")
             QMessageBox.information(self, "Success", f"Default XCI file and Initial Area have been created:\n\n{default_xci_path}")
-            self.accept()
+            if platform.system() == "Windows":
+                self.accept()
 
 class GenerateCardIDDialog(QDialog):
     def __init__(self, parent=None):
@@ -1736,11 +1742,11 @@ class GenerateCardIDDialog(QDialog):
         self.setGeometry(100, 100, 400, 200)
         self.layout = QVBoxLayout()
         self.setLayout(self.layout)
-        
+
         self.drag_drop_label = QLabel("Drag and Drop Card ID Set .bin File Here:")
         self.drag_drop_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.layout.addWidget(self.drag_drop_label)
-        
+
         self.setAcceptDrops(True)
 
     def dragEnterEvent(self, event: QDragEnterEvent):
@@ -1761,7 +1767,8 @@ class GenerateCardIDDialog(QDialog):
         crc32 = self.calculate_crc32(file_path).upper()
         comment1 = f"Card ID 1: {card_id1}\nCard ID 2: {card_id2}\nCard ID 3: {card_id3}\nCRC32: {crc32}"
         self.parent().source_details_inputs['Comment1'].setPlainText(comment1)
-        self.accept()
+        if platform.system() == "Windows":
+            self.accept()
 
     def calculate_crc32(self, file_path):
         crc32 = 0
