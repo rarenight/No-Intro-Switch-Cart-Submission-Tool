@@ -145,12 +145,7 @@ Once you extract the XCI, you can then continue onto the other tabs. Fill out Ga
 # Versions
 
 v2.6 - 2024-08-23
-- (v2.6) Provided a single script once more by conditionally running offending PyQt calls under Windows (until someone else comes up with a proper fix).
-- (v2.6) Improved hactoolnet stdout parsing by using a single regex to find all matches on the unsplit stdout string, as well as adding extra logic to check if an update is available for each parsed base title (instead of relying on variables that may get overwritten by subsequent loop iterations).
-- (v2.6) Used the media stamp value as the gamecard revision by parsing it as a hex integer whenever possible.
-- (v2.6) Improved title name formatting by preserving word capitalization if a word is fully capitalized and/or if it's actually an alphanumeric string (e.g. Legend of Zelda - Skyward Sword Hd The -> Legend of Zelda - Skyward Sword HD The).
-- (v2.6) Implemented better handling of articles at the start of a title name (e.g. Legend of Zelda - Skyward Sword HD The, -> Legend of Zelda, The - Skyward Sword HD).
-- (v2.6) Switched from CRLF to LF line endings and remove trailing whitespaces.
+- (v2.6) Provided a single script once more by conditionally running offending PyQt calls under Windows (until someone else comes up with a proper fix), Improved hactoolnet stdout parsing by using a single regex to find all matches on the unsplit stdout string, as well as adding extra logic to check if an update is available for each parsed base title (instead of relying on variables that may get overwritten by subsequent loop iterations), Used the media stamp value as the gamecard revision by parsing it as a hex integer whenever possible, Improved title name formatting by preserving word capitalization if a word is fully capitalized and/or if it's actually an alphanumeric string (e.g. Legend of Zelda - Skyward Sword Hd The -> Legend of Zelda - Skyward Sword HD The), Implemented better handling of articles at the start of a title name (e.g. Legend of Zelda - Skyward Sword HD The, -> Legend of Zelda, The - Skyward Sword HD), Switched from CRLF to LF line endings and remove trailing whitespaces.
 - (v2.5) Replaced NX Game Info with a native hactoolnet implementation for deriving embedded metadata, Added auto-import support for multi-title XCIs and full XCIs, Upgraded to PyQt6 with dark mode support, Fixed UTF-8 Japanese character bug, Added scene RAR auto-extraction
 - (v2.2) Further performance optimizations to minimize out-of-memory crashes, Reintroduced manual import option for users who can't get the EXE dependency to work
 - (v2.1) Fixed Exclude Initial Area bug, Fixed a few regressions from v2.0
