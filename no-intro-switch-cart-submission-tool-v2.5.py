@@ -1407,7 +1407,6 @@ class ImportNXGameInfoDialog(QDialog):
         return is_full_xci
 
     def parse_hactoolnet_output(self, output):
-        base_title_ids, update_title_ids, updates, versions, titles = [], [], [], [], []
         language_set = set()
         language_dict = {
             "en-US": "En", "en-GB": "En", "ja": "Ja", "fr": "Fr", "de": "De",
@@ -1415,56 +1414,51 @@ class ImportNXGameInfoDialog(QDialog):
             "pt": "Pt", "ru": "Ru", "ko": "Ko", "zh-TW": "Zh-Hant", "zh-CN": "Zh-Hans"
         }
 
-        lines = output.splitlines()
-        start_parsing = False
-        current_title = ""
-        current_update = ""
-        current_version = ""
+        base_titles, update_titles = {}, {}
 
-        for line in lines:
-            if "Title ID" in line:
-                start_parsing = True
-                continue
+        base_title_ids, update_title_ids, updates, versions, titles = [], [], [], [], []
 
-            if not start_parsing:
-                continue
+        hactool_title_regex = re.compile(r'^(?P<title_id>[a-f0-9]{16})\s+(?P<version>v\d+)\s+(?:\d+\.){3}\d+\s+(?P<type>Application|Patch)\s+\d+(?:\.\d+)?\s+[a-z]{2}\s+(?P<display_version>[^\s]+)\s+(?P<name>.+?)\s+(?P<languages>[\w-]+(?:,[\w-]+)*)$', flags=(re.MULTILINE | re.IGNORECASE))
 
-            if "Application" in line or "Patch" in line:
-                parts = re.split(r'\s+', line.strip())
-                title_id = parts[0]
-                update_version = parts[1]
-                display_version = f"v{parts[6]}"
+        for match in re.finditer(hactool_title_regex, output):
+            title_id = match.group('title_id')
+            title_version = match.group('version')
+            title_type = match.group('type')
+            display_version = match.group('display_version')
+            title_name = match.group('name')
+            title_languages = match.group('languages').split(',')
 
-                title_name_parts = []
-                for part in parts[7:]:
-                    if re.search(rf"\b({'|'.join(language_dict.keys())})\b", part):
-                        break
-                    title_name_parts.append(part)
+            detected_languages = [lang for lang in language_dict if lang in title_languages]
+            for lang in detected_languages:
+                language_set.add(language_dict[lang])
 
-                title_name = ' '.join(title_name_parts)
-                current_title = title_name
-                current_update = update_version
-                current_version = display_version
+            entry = {
+                'version': title_version,
+                'display_version': display_version,
+                'name': title_name,
+            }
 
-                if title_id.endswith("000"):
-                    base_title_ids.append(title_id)
-                elif title_id.endswith("800"):
-                    update_title_ids.append(title_id)
-                    updates.append(update_version)
-                    versions.append(display_version)
-                    titles.append(title_name)
+            if title_type == 'Application':
+                base_titles.update({ title_id.upper(): entry })
+            else:
+                update_titles.update({ title_id.upper(): entry })
 
-        if base_title_ids and not titles:
-            titles.append(current_title)
-            updates.append(current_update)
-            versions.append(current_version)
+        for title_id, base_entry in base_titles.items():
+            base_title_ids.append(title_id)
 
-        for line in lines:
-            if "Application" in line or "Patch" in line:
-                detected_languages = [lang for lang in language_dict if re.search(rf"\b{lang}\b", line)]
-                if detected_languages:
-                    for lang in detected_languages:
-                        language_set.add(language_dict[lang])
+            update_tid_int = int(title_id, 16) | 0x800
+            update_tid = f'{update_tid_int:016X}'
+
+            update_entry = update_titles.get(update_tid, {})
+            if update_entry:
+                update_title_ids.append(update_tid)
+                updates.append(update_entry['version'])
+                versions.append(update_entry['display_version'])
+                titles.append(update_entry['name'])
+            else:
+                updates.append(base_entry['version'])
+                versions.append(base_entry['display_version'])
+                titles.append(base_entry['name'])
 
         return base_title_ids, update_title_ids, updates, versions, titles, sorted(language_set)
 
