@@ -20,7 +20,7 @@ class XMLGeneratorApp(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v2.6")
+        self.setWindowTitle("No-Intro Switch Cart Submission Tool by rarenight v2.7")
         self.setGeometry(100, 100, 470, 400)
         self.central_widget = QWidget()
         self.setCentralWidget(self.central_widget)
@@ -964,7 +964,9 @@ class XMLGeneratorApp(QMainWindow):
 
         mediastamp = self.serial_details_inputs.get('Mediastamp', '') or ""
         if mediastamp and re.match(r'^[a-f0-9]{3}$', mediastamp, re.IGNORECASE):
-            archive_attrs["version1"] = f"Rev {int(mediastamp, 16)}"
+            rev_value = int(mediastamp, 16)
+            if rev_value != 0:
+                archive_attrs["version1"] = f"Rev {rev_value}"
 
         archive = ET.SubElement(game, 'archive', **archive_attrs)
 
@@ -1452,11 +1454,11 @@ class ImportNXGameInfoDialog(QDialog):
             if update_entry:
                 update_title_ids.append(update_tid)
                 updates.append(update_entry['version'])
-                versions.append(update_entry['display_version'])
+                versions.append("v" + update_entry['display_version'])
                 titles.append(update_entry['name'])
             else:
                 updates.append(base_entry['version'])
-                versions.append(base_entry['display_version'])
+                versions.append("v" + base_entry['display_version'])
                 titles.append(base_entry['name'])
 
         return base_title_ids, update_title_ids, updates, versions, titles, sorted(language_set)
