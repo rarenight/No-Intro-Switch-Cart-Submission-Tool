@@ -116,7 +116,7 @@ When you click the "Scene Release" checkbox, a new Scene Cart tab becomes enable
 
 ![image](https://github.com/user-attachments/assets/37391fa5-3391-4ca7-acea-eda274fa1653)
 
-Once selected, these options will be enabled:
+Once you select a scene directory, these options will be enabled:
 
 ![image](https://github.com/user-attachments/assets/8113f105-342d-4a64-8038-c24fe8abd597)
 
