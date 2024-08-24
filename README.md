@@ -54,7 +54,9 @@ And copy and paste the values into the window:
 
 ![image](https://github.com/user-attachments/assets/b2a03a8e-431a-4249-a687-f2334a07ed8d)
 
-Either way, when you import the metadata either automatically or manually, the Game Name, Languages, GameID1, along with Version and Update in the File Info tab should all be auto-populated.
+Either way, when you import the metadata either automatically or manually, the Game Name, Languages, GameID1, along with Version and Update in the File Info tab should all be auto-populated. When imported the window should look like this:
+
+![image](https://github.com/user-attachments/assets/ef0aca64-a2e1-4cfe-a65f-d343f7566d25)
 
 If for whatever reason the metadata import messes up, you can always manually type or adjust the values. You can ignore the "Scene Release" checkbox if you're submitting a personal dump. If you're adding scene release, check it and skip to the Scene Release section at the bottom.
 
@@ -63,10 +65,6 @@ Select the applicable cart region from the dropdown. You can find the region inf
 ![image](https://github.com/user-attachments/assets/d1b70802-24ae-4c4a-bb8c-bd28291db7f7)
 
 (Note: All Nintendo-published carts are considered to be "World" and are the sole exception to the region rule)
-
-When imported the window should look like this:
-
-![image](https://github.com/user-attachments/assets/ef0aca64-a2e1-4cfe-a65f-d343f7566d25)
 
 Then click the Dump Info tab, fill out the Dumper and Tool fields (there's a dropdown as well with common dump tool names), and click "Set Default Dumper and Tool" if you want those values to remain constant. Then click "Generate Card ID Values". Drag and drop the (Card ID Set) binary file that nxdumptool outputs into the window and the Card ID values should (hopefully) populate like this:
 
