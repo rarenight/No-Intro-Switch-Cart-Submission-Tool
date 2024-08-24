@@ -2,7 +2,7 @@
 
 So you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files. It can also create a Full XCI via drag and drop and convert a Full XCI back to its Default XCI + Initial Area components.
 
-First, dump your cart using the latest version of [nxdumptool-rewrite](https://github.com/DarkMatterCore/nxdumptool/releases) onto your SD card or to your PC via USB using the default dump settings.
+First, dump your cart using the latest version of [nxdumptool-rewrite](https://github.com/DarkMatterCore/nxdumptool/releases) onto your SD card or to your PC via USB using the default dump settings. You can dump a Switch cart via USB by joining the nxdumptool Discord server and following [this](https://discord.com/channels/770369219266084945/770376156867723295/1198742171851956234) tutorial by Whovian9639. Invite [here](https://discord.gg/SCbbcQx).
 
 The default dump settings are as follows:
 - prepend key area: no
@@ -16,6 +16,7 @@ Within nxdumptool select the following options which will dump each file to your
 - dump gamecard id set
 
 You can dump the Certificate as well, but that is not needed for a No-Intro submission because it contains all of the personalized metadata unique to your cart, and No-Intro only catalogues reproducible metadata. Dumping the UID / header / cardinfo / HFS partitions are also not necessary here, although feel free to do so if you want.
+
 
 Move your dumped game files to your PC and concatenate the XCIs if necessary. You should have three files that look something like this:
 
