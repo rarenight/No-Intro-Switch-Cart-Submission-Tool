@@ -1,4 +1,4 @@
-# User Submission Tutorial
+# New User Submission Tutorial
 
 So you want to submit a Switch cart to No-Intro? I developed a quick and easy Python script which standardizes forum submissions into easily-imported XML files. It can also create a Full XCI via drag and drop and convert a Full XCI back to its Default XCI + Initial Area components.
 
