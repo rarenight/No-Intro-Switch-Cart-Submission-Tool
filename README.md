@@ -58,7 +58,7 @@ Either way, when you import the metadata either automatically or manually, the G
 
 ![image](https://github.com/user-attachments/assets/ef0aca64-a2e1-4cfe-a65f-d343f7566d25)
 
-If for whatever reason the metadata import messes up, you can always manually type or adjust the values. You can ignore the "Scene Release" checkbox if you're submitting a personal dump. If you're adding scene release, check it and skip to the Scene Release section at the bottom.
+If for whatever reason the metadata import messes up, you can always manually type or adjust the values. You can ignore the "Scene Release" checkbox if you're submitting a personal dump. If you're adding a formal scene release, check it and skip to the Scene Release section at the bottom.
 
 Select the applicable cart region from the dropdown. You can find the region info on the last three digits of the serial that's on the front of your cart, which would be -USA in this case:
 
