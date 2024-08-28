@@ -30,9 +30,9 @@ You can download the script in the [releases](https://github.com/rarenight/No-In
 
 You'll also need Python with the PyQt6 dependency installed (`pip install pyqt6` and `pip install rarfile` or just install the `requirements.txt`). Your directory should look like this before running the script for the first time:
 
-![image](https://github.com/user-attachments/assets/6f53a0d6-928d-4406-a0e2-3a001b34c11d)
+![image](https://github.com/user-attachments/assets/599ae5d0-3d65-4523-8494-d543fb4084cc)
 
-To get started, open my script, click "Automatically Import Metadata", and drag and drop the XCI file into the window. Both Default XCIs and Full XCIs are now supported for automatic import.
+To get started, open my script with Python, click "Automatically Import Metadata", and drag and drop the XCI file into the window. Both Default XCIs and Full XCIs are now supported for automatic import.
 
 ![image](https://github.com/user-attachments/assets/e95daf33-26d1-440b-ba2b-d26f97c984f1)
 
