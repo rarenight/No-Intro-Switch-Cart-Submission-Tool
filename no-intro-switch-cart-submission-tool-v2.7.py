@@ -1352,7 +1352,8 @@ class ImportNXGameInfoDialog(QDialog):
         self.drag_drop_label = QLabel(
             "Drag and drop an XCI here to automatically import metadata from the embedded Control NACP\n\n"
             "Note: hactoolnet (with associated libraries) must be in the same directory as the script\n\n"
-            "Up-to-date prod.keys must also be in the same directory"
+            "Up-to-date prod.keys must also be in the same directory\n\n"
+            ".NET must be installed on your system for the hactoolnet executable to parse metadata"
         )
         self.drag_drop_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self.drag_drop_label)
