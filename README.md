@@ -144,7 +144,7 @@ Once you extract the XCI, you can then continue onto the other tabs. Fill out Ga
 # Versions
 
 v2.7 - 2024-08-24
-- (v2.7) (1) Fixed a few regressions introduced in v2.6
+- (v2.7) Fixed a few regressions introduced in v2.6
 - (v2.6) (1) Provided a single script once more by conditionally running offending PyQt calls under Windows (until someone else comes up with a proper fix), (2) Improved hactoolnet stdout parsing by using a single regex to find all matches on the unsplit stdout string, as well as adding extra logic to check if an update is available for each parsed base title (instead of relying on variables that may get overwritten by subsequent loop iterations), (3) Used the media stamp value as the gamecard revision by parsing it as a hex integer whenever possible, (4) Improved title name formatting by preserving word capitalization if a word is fully capitalized and/or if it's actually an alphanumeric string (e.g. Legend of Zelda - Skyward Sword Hd The -> Legend of Zelda - Skyward Sword HD The), (5) Implemented better handling of articles at the start of a title name (e.g. Legend of Zelda - Skyward Sword HD The, -> Legend of Zelda, The - Skyward Sword HD), (6) Switched from CRLF to LF line endings and removed trailing whitespaces.
 - (v2.5) (1) Replaced NX Game Info with a native hactoolnet implementation for deriving embedded metadata, (2) Added auto-import support for multi-title XCIs and full XCIs, (3) Upgraded to PyQt6 with dark mode support, (4) Fixed UTF-8 Japanese character bug, (5) Added scene RAR auto-extraction
 - (v2.2) (1) Further performance optimizations to minimize out-of-memory crashes, (2) Reintroduced manual import option for users who can't get the EXE dependency to work
