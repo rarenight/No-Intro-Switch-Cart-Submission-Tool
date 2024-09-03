@@ -15,10 +15,10 @@ Within nxdumptool select the following options which will dump each file to your
 - dump gamecard initial data
 - dump gamecard id set
 
-You can dump the Certificate and Card UID as well, but that is not needed for a No-Intro submission because those files contain all of the personalized metadata unique to your cart, and No-Intro only catalogues reproducible metadata. Dumping the header / cardinfo / HFS partitions / etc are also not necessary here, although feel free to do so if you want.
+You can dump the Certificate and Card UID as well, but that is not needed for a No-Intro submission because those files contain all of the personalized metadata unique to your cart, and No-Intro only catalogues reproducible metadata. Dumping the Header / Cardinfo / HFS partitions / etc are also not necessary here, although feel free to do so if you want.
 
 
-Move your dumped game files to your PC and concatenate the XCIs if dumped via SD card (you can concatenate by running `copy /b 00+01+02 "original filename".xci` in Command Prompt or use [NxDumpFuse](https://github.com/oMaN-Rod/nxDumpFuse) and rename the extension to .xci. This step is not necessary if you dump your Switch cart via USB, which I highly recommend. Ultimately though you should have three files that look something like this:
+Move your dumped game files to your PC and concatenate the XCIs if dumped via SD card (you can concatenate by running `copy /b 00+01+02 "original filename".xci` in Command Prompt or use [NxDumpFuse](https://github.com/oMaN-Rod/nxDumpFuse) and rename the extension to .xci). This step is not necessary if you dump your Switch cart via USB, which I highly recommend. Ultimately though you should have three files that look something like this:
 
 - Fast & Furious Spy Racers - Rise of SH1FT3R 1.0.2 [010034C013624000][v0] (Card ID Set) (6CD8FDA1).bin
 - Fast & Furious Spy Racers - Rise of SH1FT3R 1.0.2 [010034C013624000][v0] (Initial Data) (57A3A06C).bin
