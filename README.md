@@ -106,41 +106,6 @@ When creating a Switch cart submission to No-Intro, please upload the following:
 - Any images you wish to submit as well
 
 
-# Scene Release Submission Tutorial
-
-This is for advanced users who want to easily import new scene releases into No-Intro.
-
-When you click the "Scene Release" checkbox, a new Scene Cart tab becomes enabled. In order for the script to parse a scene release correctly, you need to select an unmodified Scene Directory with a .nfo file and a .sfv file all present in the original scene directory like this:
-
-![image](https://github.com/user-attachments/assets/37391fa5-3391-4ca7-acea-eda274fa1653)
-
-Once you select a scene directory, these options will be enabled:
-
-![image](https://github.com/user-attachments/assets/8113f105-342d-4a64-8038-c24fe8abd597)
-
-Make sure to set the applicable scene group or type in a custom one as needed. Note: P2P groups like KTHNX are not supported.
-
-Open NFO opens the NFO file in a separate text window so you can easy view and copy data as needed:
-
-![image](https://github.com/user-attachments/assets/2cf60a04-d107-43f7-b0ba-867b8a237fe1)
-
-Verify Scene RARs uses a built-in verification module along with the SFV file to verify that all scene RARs are valid:
-
-![image](https://github.com/user-attachments/assets/36619913-c3ae-4d87-bd86-8f971f823689)
-
-Extract RARs uses unrar (must be in the same directory as the script) to automatically extract all scene RARs. The directory will look like this when extracted with the XCI in the same directory:
-
-![image](https://github.com/user-attachments/assets/018dbcfb-129c-4895-a785-4e2dda1b7e75)
-
-Check "Keep Scene RARs" if you wish to preserve the original scene RARs for whatever reason.
-
-Once you extract the XCI, you can then continue onto the other tabs. Fill out Game Info and Media Info to the best of your abilities, and import the hashes for the Default XCI. The Dump Info tab along with the Initial Area and Full XCI fields have been disabled for your convenience. The XML file it generates will be tailor-made for an easy scene release import:
-
-![image](https://github.com/user-attachments/assets/02e37699-b4dc-4c6d-9b39-f292d909687b)
-
-![image](https://github.com/user-attachments/assets/8e2c518d-9798-452b-9ca2-2d5ddf39d00d)
-
-
 # Versions
 
 v2.7 - 2024-08-24
